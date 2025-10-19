@@ -1,1 +1,19 @@
 @import "tailwindcss";
+@import "@/assets/styles/fonts.css";
+
+@theme {
+  --font-display: Inter, sans-serif;
+
+  --radius-primary: 50px;
+  --radius-secondary: 30px;
+
+  --color-accent: #72d6f3;
+  --color-accent-secondary: #ef5d6b;
+  --color-accent-tertiary: #e1150b;
+}
+
+@layer base {
+  * {
+    font-family: var(--font-display);
+  }
+}

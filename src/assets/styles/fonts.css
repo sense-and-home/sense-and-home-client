@@ -1,0 +1,69 @@
+@font-face {
+  font-family: "Abhaya Libre";
+  src:
+    url("/fonts/abhaya-libre/AbhayaLibre-ExtraBold.woff2") format("woff2"),
+    url("/fonts/abhaya-libre/AbhayaLibre-ExtraBold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Abhaya Libre";
+  src:
+    url("/fonts/abhaya-libre/AbhayaLibre-Bold.woff2") format("woff2"),
+    url("/fonts/abhaya-libre/AbhayaLibre-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Abhaya Libre";
+  src:
+    url("/fonts/abhaya-libre/AbhayaLibre-SemiBold.woff2") format("woff2"),
+    url("/fonts/abhaya-libre/AbhayaLibre-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Abhaya Libre";
+  src:
+    url("/fonts/abhaya-libre/AbhayaLibre-Regular.woff2") format("woff2"),
+    url("/fonts/abhaya-libre/AbhayaLibre-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Abhaya Libre";
+  src:
+    url("/fonts/abhaya-libre/AbhayaLibre-Medium.woff2") format("woff2"),
+    url("/fonts/abhaya-libre/AbhayaLibre-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src:
+    url("/fonts/inter/Inter-Italic.woff2") format("woff2"),
+    url("/fonts/inter/Inter-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src:
+    url("/fonts/inter/Inter-Regular.woff2") format("woff2"),
+    url("/fonts/inter/Inter-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
