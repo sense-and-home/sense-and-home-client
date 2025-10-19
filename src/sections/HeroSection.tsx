@@ -23,7 +23,7 @@ export function HeroSection() {
         backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${HeroBackground})`,
       }}
     >
-      <div className="flex items-start justify-between px-4 py-4">
+      <div className="grid grid-cols-3 items-start px-4 py-4">
         <ul className="text-xl leading-normal">
           <li>
             <a className="hover:underline" href="#">
@@ -54,12 +54,12 @@ export function HeroSection() {
 
         <a
           href="#"
-          className="font-[Abhaya_Libre] text-[50px] leading-[1] font-extrabold hover:underline"
+          className="justify-self-center font-[Abhaya_Libre] text-[50px] leading-[1] font-extrabold hover:underline"
         >
           S&H
         </a>
 
-        <div className="rounded-primary flex justify-center bg-white/5 text-xl font-semibold">
+        <div className="rounded-primary flex justify-center justify-self-end bg-white/5 text-xl font-semibold">
           <a
             className="bg-accent/50 rounded-[inherit] px-10 py-3 hover:underline"
             href="#"
