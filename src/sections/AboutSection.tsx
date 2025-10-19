@@ -3,7 +3,7 @@ import AboutBackground from "@/assets/img/about-background.webp";
 export function AboutSection() {
   return (
     <div className="bg-white px-8 py-20 text-center text-black">
-      <h2 className="text-6xl leading-relaxed font-extrabold">О нас</h2>
+      <h2 className="heading leading-relaxed font-extrabold">О нас</h2>
 
       <p className="mb-10 text-2xl">
         Sense Home это инновационное VR\AR решение для увеличения конверсии
@@ -20,17 +20,17 @@ export function AboutSection() {
           style={{ backgroundImage: `url(${AboutBackground})` }}
         >
           <div className="text-center">
-            <div className="text-6xl font-extrabold">1000+</div>
+            <div className="heading font-extrabold">1000+</div>
             <div className="text-xl">Индивидуальных решений</div>
           </div>
 
           <div className="text-center">
-            <div className="text-6xl font-extrabold">85%</div>
+            <div className="heading font-extrabold">85%</div>
             <div className="text-xl">Успешного увеличения конверсии продаж</div>
           </div>
 
           <div className="text-center">
-            <div className="text-6xl font-extrabold">1</div>
+            <div className="heading font-extrabold">1</div>
             <div className="text-xl">На рынке в VR\AR</div>
           </div>
         </div>

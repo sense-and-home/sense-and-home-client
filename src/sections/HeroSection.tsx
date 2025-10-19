@@ -72,8 +72,8 @@ export function HeroSection() {
         </div>
       </div>
       <div className="flex items-center justify-around px-4">
-        <div className="max-w-7xl">
-          <h1 className="mb-10 text-7xl font-extrabold">
+        <div className="max-w-5xl leading-tight">
+          <h1 className="heading mb-10 font-extrabold">
             VR\AR технологии для строительства и архитектуры
           </h1>
 
