@@ -18,7 +18,7 @@ const marqueeWords = [
 export function HeroSection() {
   return (
     <div
-      className="relative min-h-screen overflow-hidden bg-black/40 bg-cover bg-center text-white"
+      className="relative min-h-screen overflow-hidden bg-cover bg-position-[0_55%] text-white"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${HeroBackground})`,
       }}
@@ -66,7 +66,7 @@ export function HeroSection() {
           >
             Регистрация
           </a>
-          <a className="px-10 py-3 hover:underline" href="#">
+          <a className="rounded-[inherit] px-10 py-3 hover:underline" href="#">
             Вход
           </a>
         </div>
@@ -82,7 +82,10 @@ export function HeroSection() {
             продаж
           </p>
 
-          <a href="#" className="flex items-center gap-4 hover:underline">
+          <a
+            href="#"
+            className="inline-flex items-center gap-4 hover:underline"
+          >
             <img
               className="aspect-square w-[60px]"
               src={DownArrowIcon}
