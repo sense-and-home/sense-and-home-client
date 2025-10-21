@@ -1,6 +1,7 @@
 import { AboutSection } from "@/sections/AboutSection";
 import { HeroSection } from "@/sections/HeroSection";
 import { StepsSection } from "@/sections/StepsSection";
+import { TechnologySection } from "@/sections/TechnologySection";
 
 export function MainPage() {
   return (
@@ -8,6 +9,7 @@ export function MainPage() {
       <HeroSection />
       <AboutSection />
       <StepsSection />
+      <TechnologySection />
 
       <p className="px-4 py-10">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus
