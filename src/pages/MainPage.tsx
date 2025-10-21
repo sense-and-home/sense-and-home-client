@@ -1,4 +1,5 @@
 import { AboutSection } from "@/sections/AboutSection";
+import { ApplicationSection } from "@/sections/ApplicationSection";
 import { FooterSection } from "@/sections/FooterSection";
 import { HeroSection } from "@/sections/HeroSection";
 import { MapSection } from "@/sections/MapSection";
@@ -14,6 +15,7 @@ export function MainPage() {
       <StepsSection />
       <TechnologySection />
       <MapSection />
+      <ApplicationSection />
       <QuestionSection />
       <FooterSection />
     </div>
