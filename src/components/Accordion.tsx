@@ -131,15 +131,15 @@ function AccordionPanel({
           id={`accordion-${id}`}
           onClick={onToggle}
           onKeyDown={onHeaderKeyDown}
-          className={`focus-visible:ring-accent rounded-secondary flex w-full items-center justify-between gap-4 px-6 py-3 text-left hover:cursor-pointer focus:outline-none focus-visible:ring-2`}
+          className={`focus-visible:ring-accent rounded-secondary flex w-full items-center justify-between gap-2 px-6 py-3 text-left hover:cursor-pointer focus:outline-none focus-visible:ring-2`}
         >
-          <span className="text-lg font-semibold">
+          <span className="font-semibold lg:text-lg">
             <span className="mr-4">{count + 1}.</span>
             <span>{title}</span>
           </span>
 
           <svg
-            className={`h-8 w-8 transform transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"}`}
+            className={`h-8 w-8 shrink-0 transform transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"}`}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

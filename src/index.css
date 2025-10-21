@@ -23,6 +23,10 @@
   html {
     @apply scroll-smooth;
   }
+
+  body {
+    @apply overflow-x-hidden;
+  }
 }
 
 .container {
@@ -34,4 +38,16 @@
 .heading {
   font-size: var(--text-6xl);
   font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: var(--text-5xl);
+  }
+}
+
+@media (max-width: 576px) {
+  .heading {
+    font-size: var(--text-4xl);
+  }
 }

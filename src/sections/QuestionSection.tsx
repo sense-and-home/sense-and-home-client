@@ -39,9 +39,11 @@ export function QuestionSection() {
   return (
     <div
       id="question-section"
-      className="bg-background text-foreground px-8 py-8"
+      className="bg-background text-foreground px-4 py-8 md:px-8"
     >
-      <h2 className="heading mb-8">Вопрос & Ответ</h2>
+      <h2 className="heading mb-6 text-3xl md:mb-8 md:text-4xl lg:text-6xl">
+        Вопрос & Ответ
+      </h2>
 
       <Accordion items={items} />
     </div>

@@ -10,24 +10,26 @@ export function StepsSection() {
   return (
     <div
       id="steps-section"
-      className="bg-background text-foreground flex flex-col gap-16 px-8 py-20"
+      className="bg-background text-foreground flex flex-col gap-8 px-4 py-12 md:gap-16 md:px-8 md:py-20"
     >
-      <h2 className="heading mb-12">Этапы работ</h2>
+      <h2 className="heading mb-8 text-3xl md:mb-12 md:text-4xl lg:text-6xl">
+        Этапы работ
+      </h2>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase1}
           alt=""
         />
 
-        <div className="relative">
-          <div className="relative z-10 text-right">
-            <h3 className="mb-6 text-4xl font-extrabold">
+        <div className="relative w-full lg:w-auto">
+          <div className="relative z-10 text-center lg:text-right">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Запрос исходных данных и их анализ
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Получение от застройщика архитектурных планов, чертежей,
               спецификаций отделочных материалов, панорамных видов с этажа,
               данных по инженерным сетям (расположение розеток, несущих стен).
@@ -36,20 +38,20 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute top-0 right-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             1
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <div className="relative z-10 text-left">
-            <h3 className="mb-6 text-4xl font-extrabold">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
+        <div className="relative order-2 w-full lg:order-1 lg:w-auto">
+          <div className="relative z-10 text-center lg:text-left">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Согласование технического задания и подписание договора
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Фиксация всех интерактивных функций VR-тура: список заменяемых
               материалов, каталог мебели, возможность смены времени суток,
               интеграция с CRM застройщика для вызова консультанта. Определение
@@ -58,32 +60,32 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute top-0 left-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             2
           </span>
         </div>
 
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase2}
           alt=""
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase3}
           alt=""
         />
 
-        <div className="relative">
-          <div className="relative z-10 text-right">
-            <h3 className="mb-6 text-4xl font-extrabold">
+        <div className="relative w-full lg:w-auto">
+          <div className="relative z-10 text-center lg:text-right">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Моделирование проекта
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Создание точной 3D-модели квартиры и видов из окна на основе
               планов и данных LiDAR-сканирования. На этом этапе объект — это
               "цифровой двойник" с чистыми стенами, готовый к настройке
@@ -91,20 +93,20 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute top-0 right-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             3
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <div className="relative z-10 text-left">
-            <h3 className="mb-6 text-4xl font-extrabold">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
+        <div className="relative order-2 w-full lg:order-1 lg:w-auto">
+          <div className="relative z-10 text-center lg:text-left">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Визуализация проекта
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Настройка в Unreal Engine 5 / Unity системы материалов, освещения
               Day/Night cycle и интерактивных элементов. Создание UI-интерфейса
               для пользователя, позволяющего менять отделку, мебель и время
@@ -113,52 +115,52 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute top-0 left-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             4
           </span>
         </div>
 
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase4}
           alt=""
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase5}
           alt=""
         />
 
-        <div className="relative">
-          <div className="relative z-10 text-right">
-            <h3 className="mb-6 text-4xl font-extrabold">
+        <div className="relative w-full lg:w-auto">
+          <div className="relative z-10 text-center lg:text-right">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Согласование демо версии и правки
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Передача застройщику билда приложения. Правки касаются не только
               визуала (оттенок дерева, цвет обоев), но и юзабилити, работы
               интерфейса, корректности подмены объектов и скорости работы.
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute top-0 right-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             5
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <div className="relative z-10 text-left">
-            <h3 className="mb-6 text-4xl font-extrabold">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
+        <div className="relative order-2 w-full lg:order-1 lg:w-auto">
+          <div className="relative z-10 text-center lg:text-left">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Рендер и сборка проекта
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Финальная оптимизация приложения для целевых платформ (VR-шлемы,
               компьютеры в офисе, веб-браузеры). Упаковка готового продукта,
               создание инструкций для менеджеров застройщика и, при
@@ -166,32 +168,32 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute top-0 left-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             6
           </span>
         </div>
 
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase6}
           alt=""
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
         <img
-          className="rounded-secondary grow-0 basis-1/3"
+          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
           src={Showcase7}
           alt=""
         />
 
-        <div className="relative">
-          <div className="relative z-10 text-right">
-            <h3 className="text-4xl leading-loose font-extrabold">
+        <div className="relative w-full lg:w-auto">
+          <div className="relative z-10 text-center lg:text-right">
+            <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
               Сдача проекта
             </h3>
 
-            <p className="text-2xl text-pretty">
+            <p className="text-lg text-pretty md:text-xl lg:text-2xl">
               Обучение менеджеров застройщика работе с системой, передача всех
               исходников и прав на использование, подключение технической
               поддержки. Результат — полностью работающий "цифровой шоурум",
@@ -199,15 +201,15 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute top-0 right-1/16 text-[300px] leading-[1] font-extrabold">
+          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             7
           </span>
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mt-6 text-center md:mt-8">
         <a
-          className="rounded-primary bg-accent inline-block px-10 py-3 text-xl font-bold text-black"
+          className="rounded-primary bg-accent inline-block px-6 py-3 text-lg font-bold text-black md:px-10 md:text-xl"
           href="#application-section"
         >
           Оставить заявку
