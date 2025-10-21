@@ -6,7 +6,7 @@ export function MapSection() {
     >
       <div className="mb-6 max-w-full md:mb-4 lg:max-w-2/3">
         <h2 className="heading mb-4 text-2xl leading-tight md:text-3xl lg:text-4xl xl:text-6xl">
-          Посетите наш офис и протестируйте VR тур на себе
+          Посетите офис и протестируйте VR тур на себе
         </h2>
 
         <p className="mb-6 text-lg md:mb-4 md:text-xl lg:text-2xl">
