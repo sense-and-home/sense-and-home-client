@@ -122,7 +122,7 @@ function AccordionPanel({
   }, [open]);
 
   return (
-    <div className="text-background bg-foreground w-full rounded-[30px] border">
+    <div className="text-background bg-foreground rounded-secondary w-full border">
       <h3>
         <button
           ref={headerRef}
@@ -131,7 +131,7 @@ function AccordionPanel({
           id={`accordion-${id}`}
           onClick={onToggle}
           onKeyDown={onHeaderKeyDown}
-          className={`focus-visible:ring-accent flex w-full items-center justify-between gap-4 px-6 py-3 text-left focus:outline-none focus-visible:ring-2`}
+          className={`focus-visible:ring-accent rounded-secondary flex w-full items-center justify-between gap-4 px-6 py-3 text-left hover:cursor-pointer focus:outline-none focus-visible:ring-2`}
         >
           <span className="text-lg font-semibold">
             <span className="mr-4">{count + 1}.</span>

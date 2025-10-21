@@ -23,7 +23,7 @@ export function HeroSection() {
         backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${HeroBackground})`,
       }}
     >
-      <div className="grid grid-cols-3 items-start px-4 py-4">
+      <div className="grid grid-cols-3 items-start px-8 py-4">
         <ul className="text-xl leading-normal">
           <li>
             <a className="hover:underline" href="#">
@@ -74,7 +74,7 @@ export function HeroSection() {
           </a>
         </div>
       </div>
-      <div className="flex items-center justify-around px-4">
+      <div className="flex items-center justify-between px-8">
         <div className="max-w-5xl leading-tight">
           <h1 className="heading mb-10 font-extrabold">
             VR\AR технологии для строительства и архитектуры
