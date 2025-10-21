@@ -1,19 +1,7 @@
 import DownArrowIcon from "@/assets/icons/down-arrow.svg";
 import HeroBackground from "@/assets/img/hero-background.webp";
 import HeroLogo from "@/assets/img/hero-logo.webp";
-import Marquee from "react-fast-marquee";
-
-const marqueeWords = [
-  "User experience",
-  "AI solutions",
-  "VR\\AR tech",
-  "Innovation lab",
-  "AR filter",
-  "LIDAR tech",
-  "3D design",
-  "Sell improvement",
-  "AI clues",
-];
+import { CustomMarquee } from "@/components/CustomMarquee";
 
 export function HeroSection() {
   return (
@@ -102,16 +90,7 @@ export function HeroSection() {
         <img src={HeroLogo} alt="" />
       </div>
 
-      <Marquee
-        pauseOnHover
-        className="absolute! bottom-0 overflow-y-hidden bg-black py-4"
-      >
-        {marqueeWords.map((word) => (
-          <span key={word} className="mx-4 text-4xl">
-            {word}
-          </span>
-        ))}
-      </Marquee>
+      <CustomMarquee className="absolute! bottom-0" />
     </div>
   );
 }
