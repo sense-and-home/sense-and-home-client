@@ -1,6 +1,6 @@
 export function MapSection() {
   return (
-    <div className="bg-background text-foreground px-8 py-8">
+    <div id="map-section" className="bg-background text-foreground px-8 py-8">
       <div className="mb-4 max-w-2/3">
         <h2 className="heading mb-4 leading-tight">
           Посетите наш офис и протестируйте VR тур на себе
@@ -13,7 +13,7 @@ export function MapSection() {
 
         <a
           className="rounded-primary bg-accent-secondary inline-block px-10 py-3 text-xl font-bold text-black"
-          href="#"
+          href="#application-section"
         >
           Оставить заявку
         </a>

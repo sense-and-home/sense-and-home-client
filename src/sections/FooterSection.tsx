@@ -46,7 +46,7 @@ export function FooterSection() {
         </ul>
       </div>
 
-      <div className="mb-12">
+      <div id="footer-section" className="mb-12">
         <h2 className="heading">Мы открыты к сотрудничеству</h2>
         <p className="mb-4 text-xl">
           Оставьте почту и мы свяжемся с Вами в течении дня!

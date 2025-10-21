@@ -37,7 +37,10 @@ const items: AccordionItem[] = [
 
 export function QuestionSection() {
   return (
-    <div className="bg-background text-foreground px-8 py-8">
+    <div
+      id="question-section"
+      className="bg-background text-foreground px-8 py-8"
+    >
       <h2 className="heading mb-8">Вопрос & Ответ</h2>
 
       <Accordion items={items} />

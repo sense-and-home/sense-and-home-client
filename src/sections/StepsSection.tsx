@@ -8,7 +8,10 @@ import Showcase7 from "@/assets/img/showcase-7.webp";
 
 export function StepsSection() {
   return (
-    <div className="bg-background text-foreground flex flex-col gap-16 px-8 py-20">
+    <div
+      id="steps-section"
+      className="bg-background text-foreground flex flex-col gap-16 px-8 py-20"
+    >
       <h2 className="heading mb-12">Этапы работ</h2>
 
       <div className="flex items-center gap-4">
@@ -205,7 +208,7 @@ export function StepsSection() {
       <div className="mt-8 text-center">
         <a
           className="rounded-primary bg-accent inline-block px-10 py-3 text-xl font-bold text-black"
-          href="#"
+          href="#application-section"
         >
           Оставить заявку
         </a>

@@ -36,7 +36,10 @@ export function HeroSection() {
             </a>
           </li>
           <li>
-            <a className="opacity-40 hover:underline" href="#">
+            <a
+              className="opacity-40 hover:underline"
+              href="#technology-section"
+            >
               Технология
             </a>
           </li>
@@ -83,7 +86,7 @@ export function HeroSection() {
           </p>
 
           <a
-            href="#"
+            href="#steps-section"
             className="inline-flex items-center gap-4 hover:underline"
           >
             <img

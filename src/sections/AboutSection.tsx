@@ -2,7 +2,10 @@ import AboutBackground from "@/assets/img/about-background.webp";
 
 export function AboutSection() {
   return (
-    <div className="bg-white px-8 py-20 text-center text-black">
+    <div
+      id="about-section"
+      className="bg-white px-8 py-20 text-center text-black"
+    >
       <h2 className="heading leading-relaxed font-extrabold">О нас</h2>
 
       <p className="mb-10 text-2xl">
@@ -38,7 +41,7 @@ export function AboutSection() {
         <div className="mt-8 text-center">
           <a
             className="rounded-primary bg-accent/50 inline-block px-10 py-3 text-xl font-bold"
-            href="#"
+            href="#technology-section"
           >
             Подробнее о технологии
           </a>
