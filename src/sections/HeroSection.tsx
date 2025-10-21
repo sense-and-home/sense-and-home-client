@@ -60,11 +60,11 @@ export function HeroSection() {
         <div className="rounded-primary flex justify-center justify-self-end bg-white/5 text-xl font-semibold">
           <a
             className="bg-accent/50 rounded-[inherit] px-10 py-3 hover:underline"
-            href="#"
+            href="/registration"
           >
             Регистрация
           </a>
-          <a className="rounded-[inherit] px-10 py-3 hover:underline" href="#">
+          <a className="rounded-[inherit] px-10 py-3 hover:underline" href="/registration">
             Вход
           </a>
         </div>
@@ -149,14 +149,14 @@ export function HeroSection() {
               <div className="flex flex-col space-y-3">
                 <a
                   className="bg-accent/50 rounded-primary px-6 py-3 text-center text-lg font-semibold hover:underline"
-                  href="#"
+                  href="/registration"
                   onClick={toggleMenu}
                 >
                   Регистрация
                 </a>
                 <a
                   className="rounded-primary border border-white/20 px-6 py-3 text-center text-lg font-semibold hover:underline"
-                  href="#"
+                  href="/registration"
                   onClick={toggleMenu}
                 >
                   Вход
