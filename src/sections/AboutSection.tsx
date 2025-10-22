@@ -4,7 +4,7 @@ export function AboutSection() {
   return (
     <div
       id="about-section"
-      className="bg-white px-4 py-12 text-center text-black md:px-8 md:py-20"
+      className="bg-white px-2 py-12 text-center text-black md:px-4 md:py-20 lg:px-8"
     >
       <h2 className="heading mb-6 text-3xl leading-relaxed font-extrabold md:mb-8 md:text-4xl lg:text-6xl">
         О нас

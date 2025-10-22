@@ -4,34 +4,113 @@ const items: AccordionItem[] = [
   {
     id: 1,
     title: "Какой конкретный рост продаж я могу ожидать?",
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam?",
+    content: (
+      <div>
+        <p>
+          Мы ориентируемся на рост конверсии на 15-30% после внедрения нашей
+          системы визуализации. Этот показатель складывается из:
+        </p>
+        <ul className="ml-6">
+          <li className="list-disc">Сокращения времени на принятие решения</li>
+          <li className="list-disc">
+            Уменьшения количества отказов по эмоциональным причинам
+          </li>
+          <li className="list-disc"> Увеличения среднего чека</li>
+        </ul>
+        <br />
+        <p>
+          Конкретная цифра будет зависеть от текущих показателей вашего отдела
+          продаж и этапа строительства. Мы проведем детальный анализ и
+          спрогнозируем KPI под вашу задачу.
+        </p>
+      </div>
+    ),
   },
   {
     id: 2,
     title:
       'Вы помогаете конвертировать "холодных" лидов или работаете с "горячими"?',
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam?",
+    content: (
+      <div>
+        <p>
+          Наша система эффективно работает на всех этапах воронки продаж, но
+          максимальный эффект получается именно с <strong>"холодными"</strong> и{" "}
+          <strong>"теплыми"</strong> лидами.
+        </p>
+        <br />
+        <p>
+          <strong>Для "холодных" лидов:</strong> Визуализация - мощный "крючок",
+          который быстро превращает безразличного посетителя в
+          заинтересованного.
+        </p>
+        <p>
+          <strong>Для "теплых" лидов:</strong> Это ключевой инструмент для
+          доведения до сделки, так как он напрямую борется с основными
+          возражениями
+        </p>
+        <p>
+          <strong>Для "горячих" лидов:</strong> Система служит финальным
+          аргументом, помогает выбрать между двумя последними вариантами и
+          ускоряет подписание договора.
+        </p>
+      </div>
+    ),
   },
   {
     id: 3,
     title:
       'Как происходит процесс "примерки"? Может ли клиент сохранить свою конфигурацию',
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam?",
+    content: (
+      <div>
+        <p>Процесс интуитивно понятен и занимает несколько минут:</p>
+        <ol>
+          <li>1. Выбор квартиры</li>
+          <li>
+            2. Персонализация - в реальном времени применяются различные
+            варианты отделки (стены, пол, потолок) и расставляется мебель из
+            нашего каталога.
+          </li>
+          <li>
+            3. Просмотр Да, клиент может сохранить свою конфигурацию, так как
+            каждый проект получает уникальную ссылку
+          </li>
+        </ol>
+      </div>
+    ),
   },
   {
     id: 4,
     title: "Какой каталог мебели и отделки у вас есть?",
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam?",
+    content: (
+      <p>
+        Мы предлагаем гибкий и расширяемый каталог, адаптируем его под ваши
+        конкретные материалы и коммерческое предложение.
+      </p>
+    ),
   },
   {
     id: 5,
     title: "Кто обучает наших менеджеров работе с системой?",
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque non quidem aperiam quos facilis sapiente minus possimus delectus fugiat voluptates perferendis placeat culpa, repellendus eveniet debitis quasi earum sunt quam?",
+    content: (
+      <div>
+        <p>
+          Мы обеспечиваем полный цикл обучения и поддержки: Проведем онлайн или
+          офлайн-обучение для ваших менеджеров "под ключ". Покажем не только
+          функционал кнопок, но и готовые скрипты продаж, как использовать
+          визуализацию для работы с возражениями.
+        </p>
+
+        <p>
+          Предоставим подробные инструкции и видео-уроки. Назначим персонального
+          менеджера техподдержки, который будет на связи для решения любых
+          вопросов в рабочем режиме.
+        </p>
+        <p>
+          Обучение занимает не более 1-2 часов, так как интерфейс системы очень
+          простой и ориентирован на пользователя.
+        </p>
+      </div>
+    ),
   },
 ];
 
@@ -39,7 +118,7 @@ export function QuestionSection() {
   return (
     <div
       id="question-section"
-      className="bg-background text-foreground px-4 py-8 md:px-8"
+      className="bg-background text-foreground px-2 py-8 md:px-4 lg:px-8"
     >
       <h2 className="heading mb-6 text-3xl md:mb-8 md:text-4xl lg:text-6xl">
         Вопрос & Ответ

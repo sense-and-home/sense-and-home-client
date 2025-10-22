@@ -55,7 +55,10 @@ export function ApplicationSection() {
   };
 
   return (
-    <div className="bg-background px-4 py-8 md:px-8" id="application-section">
+    <div
+      className="bg-background px-2 py-8 md:px-4 lg:px-8"
+      id="application-section"
+    >
       <div
         className="rounded-secondary grid min-h-[500px] grid-cols-1 place-content-center gap-6 bg-cover bg-bottom px-4 py-8 md:px-8 lg:grid-cols-2 lg:gap-4"
         style={{

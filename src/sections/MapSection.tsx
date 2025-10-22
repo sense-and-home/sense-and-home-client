@@ -4,7 +4,7 @@ export function MapSection() {
   return (
     <div
       id="map-section"
-      className="bg-background text-foreground px-4 py-8 md:px-8"
+      className="bg-background text-foreground px-2 py-8 md:px-4 lg:px-8"
     >
       <div className="mb-6 max-w-full md:mb-4 lg:max-w-2/3">
         <h2 className="heading mb-4 text-2xl leading-tight md:text-3xl lg:text-4xl xl:text-6xl">

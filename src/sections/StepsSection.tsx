@@ -10,7 +10,7 @@ export function StepsSection() {
   return (
     <div
       id="steps-section"
-      className="bg-background text-foreground flex flex-col gap-8 px-4 py-12 md:gap-16 md:px-8 md:py-20"
+      className="bg-background text-foreground flex flex-col gap-8 px-2 py-12 md:gap-16 md:px-4 md:py-20 lg:px-8"
     >
       <h2 className="heading mb-8 text-3xl md:mb-12 md:text-4xl lg:text-6xl">
         Этапы работ

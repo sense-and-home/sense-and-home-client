@@ -14,7 +14,7 @@ export function FooterSection() {
   };
 
   return (
-    <div className="bg-background text-foreground px-4 py-8 md:px-8">
+    <div className="bg-background text-foreground px-2 py-8 md:px-4 lg:px-8">
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
         <a
           href="#"

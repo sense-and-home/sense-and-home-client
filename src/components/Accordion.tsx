@@ -164,7 +164,7 @@ function AccordionPanel({
           transition: "height 300ms cubic-bezier(.2,.8,.2,1)",
         }}
       >
-        <div className="px-6 pb-6">{content}</div>
+        <div className="px-6 pb-6 leading-relaxed">{content}</div>
       </div>
     </div>
   );

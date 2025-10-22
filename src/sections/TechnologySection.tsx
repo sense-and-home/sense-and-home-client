@@ -4,7 +4,7 @@ import Technology3 from "@/assets/img/tech-3.webp";
 
 export function TechnologySection() {
   return (
-    <div id="technology-section" className="px-4 py-8 md:px-8">
+    <div id="technology-section" className="px-2 py-8 md:px-4 lg:px-8">
       <h2 className="heading mb-6 text-3xl md:text-4xl lg:text-6xl">
         О технологии
       </h2>
