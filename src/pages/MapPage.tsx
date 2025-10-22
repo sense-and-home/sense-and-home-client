@@ -37,7 +37,7 @@ export function MapPage() {
   return (
     <div className="bg-background">
       <div className="relative min-h-screen overflow-hidden bg-cover text-white">
-        <div className="relative mb-8 flex items-center justify-between px-4 py-6 md:px-8">
+        <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">
             <a
               href="/dashboard"
@@ -56,7 +56,7 @@ export function MapPage() {
           </a>
         </div>
 
-        <div className="mx-auto h-[700px] px-4 py-8">
+        <div className="mx-auto h-[700px] px-2 py-8 md:px-4">
           <MapComponent />
         </div>
 

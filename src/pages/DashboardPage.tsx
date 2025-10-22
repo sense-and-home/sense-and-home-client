@@ -73,7 +73,7 @@ export function Dashboard() {
           backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${HeroBackground})`,
         }}
       >
-        <div className="relative mb-8 flex items-center justify-between px-4 py-6 md:px-8">
+        <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">
             <a
               href="/"
@@ -92,14 +92,14 @@ export function Dashboard() {
           </a>
         </div>
 
-        <div className="mx-auto px-8 py-8">
+        <div className="mx-auto px-2 py-8 md:px-4 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="space-y-8">
+            <div className="order-2 space-y-8 lg:order-1">
               <div className="bg-foreground/90 rounded-2xl border border-white/20 p-8 backdrop-blur-sm">
                 <h1 className="mb-8 text-5xl font-bold text-black">
                   Сейчас в работе
                 </h1>
-                <div className="space-y-4 text-xl font-bold">
+                <div className="space-y-4 font-bold lg:text-xl">
                   <div className="rounded-primary border-2 border-black px-4 py-2">
                     <span className="text-black">
                       1. Запрос и анализ исходных данных
@@ -137,8 +137,8 @@ export function Dashboard() {
               </div>
             </div>
 
-            <div className="space-y-8">
-              <h2 className="text-right text-5xl font-bold text-white">
+            <div className="order-1 space-y-8 lg:order-2">
+              <h2 className="text-center text-5xl leading-tight font-bold text-white lg:text-right">
                 Здравствуйте, {user?.first_name || "Имя"}!
               </h2>
 
@@ -200,7 +200,9 @@ export function Dashboard() {
         <CustomMarquee className="absolute! bottom-0" />
       </div>
 
-      <FooterSection />
+      <div className="pt-16">
+        <FooterSection />
+      </div>
     </div>
   );
 }
