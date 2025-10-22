@@ -25,6 +25,27 @@ export function ApplicationSection() {
     setFormData((prev) => ({ ...prev, file }));
   };
 
+  const formatPhoneNumber = (value: string) => {
+    const digits = value.replace(/\D/g, "");
+
+    const limitedDigits = digits.slice(0, 11);
+
+    if (limitedDigits.length === 0) return "";
+    if (limitedDigits.length <= 1) return `+${limitedDigits}`;
+    if (limitedDigits.length <= 4)
+      return `+${limitedDigits.slice(0, 1)} (${limitedDigits.slice(1)})`;
+    if (limitedDigits.length <= 7)
+      return `+${limitedDigits.slice(0, 1)} (${limitedDigits.slice(1, 4)}) ${limitedDigits.slice(4)}`;
+    if (limitedDigits.length <= 9)
+      return `+${limitedDigits.slice(0, 1)} (${limitedDigits.slice(1, 4)}) ${limitedDigits.slice(4, 7)}-${limitedDigits.slice(7)}`;
+    return `+${limitedDigits.slice(0, 1)} (${limitedDigits.slice(1, 4)}) ${limitedDigits.slice(4, 7)}-${limitedDigits.slice(7, 9)}-${limitedDigits.slice(9)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData((prev) => ({ ...prev, phone: formatted }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name.trim() && formData.email.trim()) {
@@ -108,7 +129,7 @@ export function ApplicationSection() {
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="tel"
               value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
+              onChange={handlePhoneChange}
               placeholder="+7 (---) --- -- --"
             />
 
@@ -123,25 +144,55 @@ export function ApplicationSection() {
 
             <label
               htmlFor="customFileInput"
-              className={`${mode === "consultation" ? "invisible opacity-0" : "opacity-100"} bg-foreground rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base text-black/50 transition-opacity hover:cursor-pointer md:px-8 md:text-lg`}
+              className={`${mode === "consultation" ? "invisible opacity-0" : "opacity-100"} bg-foreground rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base transition-opacity hover:cursor-pointer md:px-8 md:text-lg ${
+                formData.file ? "text-black" : "text-black/50"
+              }`}
             >
-              <span className="truncate">Прикрепите информацию о проекте</span>
+              <span className="truncate">
+                {formData.file
+                  ? formData.file.name
+                  : "Прикрепите информацию о проекте"}
+              </span>
 
-              <svg
-                width="21"
-                height="25"
-                viewBox="0 0 23 27"
-                fill="none"
-                className="flex-shrink-0"
-              >
-                <path
-                  d="M7.7002 5.6998L11.6002 1.7998M11.6002 1.7998L15.5002 5.6998M11.6002 1.7998V14.7998M5.10049 10.8998C3.88905 10.8998 3.28332 10.8998 2.80552 11.0977C2.16844 11.3616 1.66199 11.8681 1.39811 12.5051C1.2002 12.9829 1.2002 13.5884 1.2002 14.7998V21.0398C1.2002 22.4959 1.2002 23.2235 1.48358 23.7797C1.73285 24.2689 2.13031 24.6674 2.61953 24.9167C3.17516 25.1998 3.90289 25.1998 5.35618 25.1998H17.8448C19.2981 25.1998 20.0248 25.1998 20.5804 24.9167C21.0697 24.6674 21.4678 24.2689 21.7171 23.7797C22.0002 23.224 22.0002 22.4971 22.0002 21.0438V14.7998C22.0002 13.5884 22.0001 12.9829 21.8021 12.5051C21.5383 11.8681 21.0322 11.3616 20.3952 11.0977C19.9174 10.8998 19.3116 10.8998 18.1002 10.8998"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <div className="flex items-center gap-2">
+                {formData.file && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setFormData((prev) => ({ ...prev, file: null }));
+                      const fileInput = document.getElementById(
+                        "customFileInput",
+                      ) as HTMLInputElement;
+                      if (fileInput) fileInput.value = "";
+                    }}
+                    className="text-red-500 transition-colors hover:cursor-pointer hover:text-red-700"
+                  >
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 6 6 18" />
+                      <path d="m6 6 12 12" />
+                    </svg>
+                  </button>
+                )}
+                <svg width="21" height="25" viewBox="0 0 23 27" fill="none">
+                  <path
+                    d="M7.7002 5.6998L11.6002 1.7998M11.6002 1.7998L15.5002 5.6998M11.6002 1.7998V14.7998M5.10049 10.8998C3.88905 10.8998 3.28332 10.8998 2.80552 11.0977C2.16844 11.3616 1.66199 11.8681 1.39811 12.5051C1.2002 12.9829 1.2002 13.5884 1.2002 14.7998V21.0398C1.2002 22.4959 1.2002 23.2235 1.48358 23.7797C1.73285 24.2689 2.13031 24.6674 2.61953 24.9167C3.17516 25.1998 3.90289 25.1998 5.35618 25.1998H17.8448C19.2981 25.1998 20.0248 25.1998 20.5804 24.9167C21.0697 24.6674 21.4678 24.2689 21.7171 23.7797C22.0002 23.224 22.0002 22.4971 22.0002 21.0438V14.7998C22.0002 13.5884 22.0001 12.9829 21.8021 12.5051C21.5383 11.8681 21.0322 11.3616 20.3952 11.0977C19.9174 10.8998 19.3116 10.8998 18.1002 10.8998"
+                    stroke="black"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </label>
 
             <input
