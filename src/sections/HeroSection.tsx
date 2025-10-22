@@ -93,7 +93,7 @@ export function HeroSection() {
       </div>
 
       <div
-        className={`fixed inset-0 z-50 bg-black/80 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-50 bg-black/80 transition-opacity duration-300 lg:hidden ${
           isMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={toggleMenu}
