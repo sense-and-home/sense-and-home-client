@@ -48,12 +48,6 @@ export function Dashboard() {
     return () => clearTimeout(timer);
   }, [navigate]);
 
-  const handleLogout = () => {
-    tokenStorage.clearTokens();
-    localStorage.removeItem("user_data");
-    navigate("/");
-  };
-
   if (isLoading) {
     return (
       <div className="bg-background text-foreground flex min-h-screen items-center justify-center">
