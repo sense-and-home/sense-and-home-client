@@ -61,7 +61,7 @@ export function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
 
-  const totalSteps = authMode === "registration" ? 4 : 2;
+  const totalSteps = authMode === "registration" ? 3 : 2;
 
   useEffect(() => {
     const newMode = getAuthModeFromUrl();
