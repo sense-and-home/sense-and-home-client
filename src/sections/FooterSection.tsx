@@ -1,4 +1,18 @@
+import { ThankYouModal } from "@/components/ThankYouModal";
+import { useState } from "react";
+
 export function FooterSection() {
+  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setIsThankYouModalOpen(true);
+      setEmail("");
+    }
+  };
+
   return (
     <div className="bg-background text-foreground px-4 py-8 md:px-8">
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
@@ -56,13 +70,16 @@ export function FooterSection() {
 
         <div className="flex flex-col items-start justify-between gap-6 text-lg md:text-xl lg:flex-row lg:items-center lg:gap-0">
           <form
-            action="#"
+            onSubmit={handleSubmit}
             className="flex w-full flex-col gap-3 sm:flex-row sm:gap-0 lg:w-auto"
           >
             <input
               className="bg-foreground rounded-primary inline-block w-full px-6 py-3 text-base text-black sm:w-auto sm:min-w-md md:px-8 md:text-lg"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="----------@mail.ru"
+              required
             />
             <button
               type="submit"
@@ -93,6 +110,12 @@ export function FooterSection() {
       </div>
 
       <div className="text-center">SenseHome, 2025</div>
+
+      <ThankYouModal
+        isOpen={isThankYouModalOpen}
+        onClose={() => setIsThankYouModalOpen(false)}
+        message="Мы свяжемся с Вами в ближайшем времени"
+      />
     </div>
   );
 }

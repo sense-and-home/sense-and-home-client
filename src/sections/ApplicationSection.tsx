@@ -1,10 +1,37 @@
 import ApplicationBackground from "@/assets/img/application-background.webp";
+import { CallRequestModal } from "@/components/CallRequestModal";
+import { ThankYouModal } from "@/components/ThankYouModal";
 import { useState } from "react";
 
 type TMode = "consultation" | "ready";
 
 export function ApplicationSection() {
   const [mode, setMode] = useState<TMode>("consultation");
+  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    file: null as File | null,
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setFormData((prev) => ({ ...prev, file }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name.trim() && formData.email.trim()) {
+      setIsThankYouModalOpen(true);
+      setFormData({ name: "", phone: "", email: "", file: null });
+    }
+  };
 
   return (
     <div className="bg-background px-4 py-8 md:px-8" id="application-section">
@@ -38,6 +65,7 @@ export function ApplicationSection() {
 
           <button
             type="button"
+            onClick={() => setIsCallModalOpen(true)}
             className="rounded-primary mt-6 inline-block w-full bg-black px-6 py-3 text-lg font-bold text-white hover:cursor-pointer md:px-10 md:text-xl lg:mt-10 lg:w-fit"
           >
             Запросить звонок
@@ -46,8 +74,8 @@ export function ApplicationSection() {
 
         <div className="order-1 lg:order-2">
           <form
+            onSubmit={handleSubmit}
             className="rounded-secondary flex h-full flex-col gap-3 bg-white/10 p-4 text-lg backdrop-blur-2xl md:p-6 md:text-xl"
-            action="#"
           >
             <div className="rounded-primary flex bg-black/20 p-[2px] text-sm font-bold md:text-lg lg:text-xl">
               <button
@@ -70,19 +98,27 @@ export function ApplicationSection() {
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="text"
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
               placeholder="Имя Фамилия"
+              required
             />
 
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="tel"
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
               placeholder="+7 (---) --- -- --"
             />
 
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
               placeholder="----------@mail.ru"
+              required
             />
 
             <label
@@ -108,7 +144,12 @@ export function ApplicationSection() {
               </svg>
             </label>
 
-            <input type="file" id="customFileInput" className="hidden" />
+            <input
+              type="file"
+              id="customFileInput"
+              className="hidden"
+              onChange={handleFileChange}
+            />
 
             <button
               type="submit"
@@ -119,6 +160,18 @@ export function ApplicationSection() {
           </form>
         </div>
       </div>
+
+      <CallRequestModal
+        isOpen={isCallModalOpen}
+        onClose={() => setIsCallModalOpen(false)}
+        onSuccess={() => setIsThankYouModalOpen(true)}
+      />
+
+      <ThankYouModal
+        isOpen={isThankYouModalOpen}
+        onClose={() => setIsThankYouModalOpen(false)}
+        message="Мы свяжемся с Вами в течении часа"
+      />
     </div>
   );
 }
