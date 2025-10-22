@@ -19,7 +19,6 @@ interface CustomMarqueeProps {
 export function CustomMarquee({ className }: CustomMarqueeProps) {
   return (
     <Marquee
-      pauseOnHover
       className={`${className} bg-background overflow-y-hidden py-2 md:py-4`}
     >
       {marqueeWords.map((word) => (
