@@ -19,7 +19,7 @@ export function Modal({
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
-      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflowY = "hidden";
 
       const timer = setTimeout(() => {
         setIsVisible(true);
@@ -28,7 +28,7 @@ export function Modal({
       return () => clearTimeout(timer);
     } else {
       setIsVisible(false);
-      document.body.style.overflow = "scroll";
+      document.documentElement.style.overflowY = "scroll";
 
       const timer = setTimeout(() => {
         setShouldRender(false);
@@ -36,7 +36,7 @@ export function Modal({
 
       return () => {
         clearTimeout(timer);
-        document.body.style.overflow = "scroll";
+        document.documentElement.style.overflowY = "scroll";
       };
     }
   }, [isOpen]);

@@ -1,3 +1,5 @@
+import { MapComponent } from "@/components/MapComponent";
+
 export function MapSection() {
   return (
     <div
@@ -22,15 +24,8 @@ export function MapSection() {
         </a>
       </div>
 
-      <div className="rounded-secondary w-full overflow-hidden">
-        <div className="relative overflow-hidden">
-          <iframe
-            className="relative h-[300px] w-full md:h-[400px] lg:h-[440px]"
-            src="https://yandex.ru/map-widget/v1/?ll=37.631452%2C55.743471&z=10"
-            allowFullScreen
-            title="Yandex map"
-          ></iframe>
-        </div>
+      <div className="rounded-secondary h-[400px] w-full overflow-hidden lg:h-[500px]">
+        <MapComponent />
       </div>
     </div>
   );

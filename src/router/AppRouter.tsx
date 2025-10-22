@@ -2,6 +2,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AuthPage } from "@/pages/AuthPage";
 import { Dashboard } from "@/pages/DashboardPage";
 import { MainPage } from "@/pages/MainPage";
+import { MapPage } from "@/pages/MapPage";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 export function AppRouter() {
@@ -17,6 +18,14 @@ export function AppRouter() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/map"
+          element={
+            <ProtectedRoute>
+              <MapPage />
             </ProtectedRoute>
           }
         />

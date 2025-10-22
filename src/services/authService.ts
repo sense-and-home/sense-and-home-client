@@ -100,6 +100,11 @@ export const authAPI = {
 
     const result = await response.json();
     console.log("Signup success:", result);
+
+    if (result.user) {
+      localStorage.setItem("user_data", JSON.stringify(result.user));
+    }
+
     return result;
   },
 
@@ -128,6 +133,11 @@ export const authAPI = {
 
     const result = await response.json();
     console.log("Login success:", result);
+
+    if (result.user) {
+      localStorage.setItem("user_data", JSON.stringify(result.user));
+    }
+
     return result;
   },
 
@@ -146,7 +156,13 @@ export const authAPI = {
       throw new Error("Failed to refresh token");
     }
 
-    return response.json();
+    const result = await response.json();
+
+    if (result.user) {
+      localStorage.setItem("user_data", JSON.stringify(result.user));
+    }
+
+    return result;
   },
 };
 
