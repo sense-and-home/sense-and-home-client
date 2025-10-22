@@ -96,7 +96,7 @@ export function Dashboard() {
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
               <div className="bg-foreground/90 rounded-2xl border border-white/20 p-8 backdrop-blur-sm">
-                <h1 className="mb-8 text-5xl font-bold text-black">
+                <h1 className="heading mb-8 font-bold text-black">
                   Сейчас в работе
                 </h1>
                 <div className="space-y-4 font-bold lg:text-xl">
@@ -138,7 +138,7 @@ export function Dashboard() {
             </div>
 
             <div className="order-1 space-y-8 lg:order-2">
-              <h2 className="text-center text-5xl leading-tight font-bold text-white lg:text-right">
+              <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
                 Здравствуйте, {user?.first_name || "Имя"}!
               </h2>
 
