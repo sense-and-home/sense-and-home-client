@@ -21,12 +21,12 @@ export function HeroSection() {
       <div className="hidden grid-cols-3 items-start px-8 py-4 lg:grid">
         <ul className="text-xl leading-normal">
           <li>
-            <a className="hover:underline" href="#">
+            <a className="hover:underline" href="/">
               Главная
             </a>
           </li>
           <li>
-            <a className="opacity-40 hover:underline" href="#">
+            <a className="opacity-40 hover:underline" href="/dashboard">
               Личный кабинет
             </a>
           </li>
@@ -64,7 +64,10 @@ export function HeroSection() {
           >
             Регистрация
           </a>
-          <a className="rounded-[inherit] px-10 py-3 hover:underline" href="/registration">
+          <a
+            className="rounded-[inherit] px-10 py-3 hover:underline"
+            href="/login"
+          >
             Вход
           </a>
         </div>
@@ -111,14 +114,14 @@ export function HeroSection() {
           <div className="mt-16 flex flex-col space-y-6">
             <a
               className="text-xl hover:underline"
-              href="#"
+              href="/"
               onClick={toggleMenu}
             >
               Главная
             </a>
             <a
               className="text-xl opacity-40 hover:underline"
-              href="#"
+              href="/dashboard"
               onClick={toggleMenu}
             >
               Личный кабинет
@@ -156,7 +159,7 @@ export function HeroSection() {
                 </a>
                 <a
                   className="rounded-primary border border-white/20 px-6 py-3 text-center text-lg font-semibold hover:underline"
-                  href="/registration"
+                  href="/login"
                   onClick={toggleMenu}
                 >
                   Вход

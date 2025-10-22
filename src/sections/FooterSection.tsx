@@ -11,12 +11,12 @@ export function FooterSection() {
 
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
           <li>
-            <a className="hover:underline" href="#">
+            <a className="hover:underline" href="/">
               Главная
             </a>
           </li>
           <li>
-            <a className="hover:underline" href="#">
+            <a className="hover:underline" href="/#technology-section">
               Технология
             </a>
           </li>
@@ -34,7 +34,7 @@ export function FooterSection() {
 
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
           <li>
-            <a className="hover:underline" href="#">
+            <a className="hover:underline" href="/dashboard">
               Личный кабинет
             </a>
           </li>
