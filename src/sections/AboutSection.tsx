@@ -42,7 +42,7 @@ export function AboutSection() {
 
           <div className="text-center">
             <div className="heading text-3xl font-extrabold md:text-4xl lg:text-6xl">
-              1
+              №1
             </div>
             <div className="text-lg md:text-xl">На рынке в VR\AR</div>
           </div>
