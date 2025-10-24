@@ -4,6 +4,35 @@ import HeroLogo from "@/assets/img/hero-logo.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { useState } from "react";
 
+const siteLinks = {
+  logo: {
+    text: "S&H",
+    href: "#",
+  },
+  nav: [
+    { name: "Главная", href: "/", active: true },
+    { name: "Личный кабинет", href: "/dashboard", active: false },
+    { name: "Технология", href: "#technology-section", active: false },
+    {
+      name: "Контакты",
+      href: "https://t.me/sense_home_cooperation",
+      active: false,
+    },
+    {
+      name: "Служба поддержки",
+      href: "https://t.me/Sense_home_support",
+      active: false,
+    },
+  ],
+  auth: [
+    { name: "Регистрация", href: "/registration" },
+    { name: "Вход", href: "/login" },
+  ],
+  hero: {
+    downArrow: { href: "#steps-section" },
+  },
+};
+
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,65 +49,48 @@ export function HeroSection() {
     >
       <div className="hidden grid-cols-3 items-start px-8 py-4 lg:grid">
         <ul className="text-xl leading-normal">
-          <li>
-            <a className="hover:underline" href="/">
-              Главная
-            </a>
-          </li>
-          <li>
-            <a className="opacity-40 hover:underline" href="/dashboard">
-              Личный кабинет
-            </a>
-          </li>
-          <li>
-            <a
-              className="opacity-40 hover:underline"
-              href="#technology-section"
-            >
-              Технология
-            </a>
-          </li>
-          <li>
-            <a className="opacity-40 hover:underline" href="#">
-              Контакты
-            </a>
-          </li>
-          <li>
-            <a className="opacity-40 hover:underline" href="#">
-              Служба поддержки
-            </a>
-          </li>
+          {siteLinks.nav.map((link) => (
+            <li key={link.name}>
+              <a
+                target="_blank"
+                className={`hover:underline ${!link.active ? "opacity-40" : ""}`}
+                href={link.href}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
         </ul>
 
         <a
-          href="#"
+          href={siteLinks.logo.href}
           className="justify-self-center font-[Abhaya_Libre] text-[50px] leading-[1] font-extrabold hover:underline"
         >
-          S&H
+          {siteLinks.logo.text}
         </a>
 
         <div className="rounded-primary flex justify-center justify-self-end bg-white/5 text-xl font-semibold">
-          <a
-            className="bg-accent/50 rounded-[inherit] px-10 py-3 hover:underline"
-            href="/registration"
-          >
-            Регистрация
-          </a>
-          <a
-            className="rounded-[inherit] px-10 py-3 hover:underline"
-            href="/login"
-          >
-            Вход
-          </a>
+          {siteLinks.auth.map((authLink, index) => (
+            <a
+              target="_blank"
+              key={authLink.name}
+              className={`rounded-[inherit] px-10 py-3 hover:underline ${
+                index === 0 ? "bg-accent/50" : ""
+              }`}
+              href={authLink.href}
+            >
+              {authLink.name}
+            </a>
+          ))}
         </div>
       </div>
 
       <div className="flex w-full items-center justify-between place-self-start px-4 py-4 lg:hidden">
         <a
-          href="#"
+          href={siteLinks.logo.href}
           className="font-[Abhaya_Libre] text-3xl font-extrabold hover:underline"
         >
-          S&H
+          {siteLinks.logo.text}
         </a>
 
         <button
@@ -112,58 +124,31 @@ export function HeroSection() {
             <span className="block h-0.5 w-6 -translate-y-1.5 -rotate-45 bg-white" />
           </button>
           <div className="mt-16 flex flex-col space-y-6">
-            <a
-              className="text-xl hover:underline"
-              href="/"
-              onClick={toggleMenu}
-            >
-              Главная
-            </a>
-            <a
-              className="text-xl opacity-40 hover:underline"
-              href="/dashboard"
-              onClick={toggleMenu}
-            >
-              Личный кабинет
-            </a>
-            <a
-              className="text-xl opacity-40 hover:underline"
-              href="#technology-section"
-              onClick={toggleMenu}
-            >
-              Технология
-            </a>
-            <a
-              className="text-xl opacity-40 hover:underline"
-              href="#"
-              onClick={toggleMenu}
-            >
-              Контакты
-            </a>
-            <a
-              className="text-xl opacity-40 hover:underline"
-              href="#"
-              onClick={toggleMenu}
-            >
-              Служба поддержки
-            </a>
+            {siteLinks.nav.map((link) => (
+              <a
+                key={link.name}
+                className={`text-xl hover:underline ${!link.active ? "opacity-40" : ""}`}
+                href={link.href}
+                onClick={toggleMenu}
+              >
+                {link.name}
+              </a>
+            ))}
 
             <div className="border-t border-white/20 pt-6">
               <div className="flex flex-col space-y-3">
-                <a
-                  className="bg-accent/50 rounded-primary px-6 py-3 text-center text-lg font-semibold hover:underline"
-                  href="/registration"
-                  onClick={toggleMenu}
-                >
-                  Регистрация
-                </a>
-                <a
-                  className="rounded-primary border border-white/20 px-6 py-3 text-center text-lg font-semibold hover:underline"
-                  href="/login"
-                  onClick={toggleMenu}
-                >
-                  Вход
-                </a>
+                {siteLinks.auth.map((authLink, index) => (
+                  <a
+                    key={authLink.name}
+                    className={`rounded-primary px-6 py-3 text-center text-lg font-semibold hover:underline ${
+                      index === 0 ? "bg-accent/50" : "border border-white/20"
+                    }`}
+                    href={authLink.href}
+                    onClick={toggleMenu}
+                  >
+                    {authLink.name}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -182,7 +167,7 @@ export function HeroSection() {
           </p>
 
           <a
-            href="#steps-section"
+            href={siteLinks.hero.downArrow.href}
             className="mx-auto inline-flex items-center justify-center gap-4 hover:underline md:mx-0 lg:justify-start"
           >
             <img
