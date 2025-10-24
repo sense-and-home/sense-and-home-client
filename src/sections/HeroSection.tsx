@@ -2,36 +2,8 @@ import DownArrowIcon from "@/assets/icons/down-arrow.svg";
 import HeroBackground from "@/assets/img/hero-background.webp";
 import HeroLogo from "@/assets/img/hero-logo.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { isExternalLink, siteLinks } from "@/constants/siteLinks";
 import { useState } from "react";
-
-const siteLinks = {
-  logo: {
-    text: "S&H",
-    href: "#",
-  },
-  nav: [
-    { name: "Главная", href: "/", active: true },
-    { name: "Личный кабинет", href: "/dashboard", active: false },
-    { name: "Технология", href: "#technology-section", active: false },
-    {
-      name: "Контакты",
-      href: "https://t.me/sense_home_cooperation",
-      active: false,
-    },
-    {
-      name: "Служба поддержки",
-      href: "https://t.me/Sense_home_support",
-      active: false,
-    },
-  ],
-  auth: [
-    { name: "Регистрация", href: "/registration" },
-    { name: "Вход", href: "/login" },
-  ],
-  hero: {
-    downArrow: { href: "#steps-section" },
-  },
-};
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,7 +24,10 @@ export function HeroSection() {
           {siteLinks.nav.map((link) => (
             <li key={link.name}>
               <a
-                target="_blank"
+                target={isExternalLink(link.href) ? "_blank" : undefined}
+                rel={
+                  isExternalLink(link.href) ? "noopener noreferrer" : undefined
+                }
                 className={`hover:underline ${!link.active ? "opacity-40" : ""}`}
                 href={link.href}
               >
@@ -72,7 +47,12 @@ export function HeroSection() {
         <div className="rounded-primary flex justify-center justify-self-end bg-white/5 text-xl font-semibold">
           {siteLinks.auth.map((authLink, index) => (
             <a
-              target="_blank"
+              target={isExternalLink(authLink.href) ? "_blank" : undefined}
+              rel={
+                isExternalLink(authLink.href)
+                  ? "noopener noreferrer"
+                  : undefined
+              }
               key={authLink.name}
               className={`rounded-[inherit] px-10 py-3 hover:underline ${
                 index === 0 ? "bg-accent/50" : ""
@@ -127,6 +107,10 @@ export function HeroSection() {
             {siteLinks.nav.map((link) => (
               <a
                 key={link.name}
+                target={isExternalLink(link.href) ? "_blank" : undefined}
+                rel={
+                  isExternalLink(link.href) ? "noopener noreferrer" : undefined
+                }
                 className={`text-xl hover:underline ${!link.active ? "opacity-40" : ""}`}
                 href={link.href}
                 onClick={toggleMenu}
@@ -140,6 +124,14 @@ export function HeroSection() {
                 {siteLinks.auth.map((authLink, index) => (
                   <a
                     key={authLink.name}
+                    target={
+                      isExternalLink(authLink.href) ? "_blank" : undefined
+                    }
+                    rel={
+                      isExternalLink(authLink.href)
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     className={`rounded-primary px-6 py-3 text-center text-lg font-semibold hover:underline ${
                       index === 0 ? "bg-accent/50" : "border border-white/20"
                     }`}
