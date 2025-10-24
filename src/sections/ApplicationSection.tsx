@@ -1,7 +1,7 @@
 import ApplicationBackground from "@/assets/img/application-background.webp";
 import { CallRequestModal } from "@/components/CallRequestModal";
 import { ThankYouModal } from "@/components/ThankYouModal";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TMode = "consultation" | "ready";
 
@@ -16,6 +16,17 @@ export function ApplicationSection() {
     file: null as File | null,
   });
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (mode === "consultation") {
+      setFormData((prev) => ({ ...prev, file: null }));
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  }, [mode]);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -23,6 +34,12 @@ export function ApplicationSection() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setFormData((prev) => ({ ...prev, file }));
+  };
+
+  const clearFile = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    setFormData((prev) => ({ ...prev, file: null }));
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const formatPhoneNumber = (value: string) => {
@@ -161,14 +178,7 @@ export function ApplicationSection() {
                 {formData.file && (
                   <button
                     type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setFormData((prev) => ({ ...prev, file: null }));
-                      const fileInput = document.getElementById(
-                        "customFileInput",
-                      ) as HTMLInputElement;
-                      if (fileInput) fileInput.value = "";
-                    }}
+                    onClick={clearFile}
                     className="text-red-500 transition-colors hover:cursor-pointer hover:text-red-700"
                   >
                     <svg
