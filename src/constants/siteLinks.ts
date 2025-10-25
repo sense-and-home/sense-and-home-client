@@ -5,7 +5,7 @@ export const isExternalLink = (href: string) => {
 export const siteLinks = {
   logo: {
     text: "S&H",
-    href: "#",
+    href: "/",
   },
   nav: [
     { name: "Главная", href: "/", active: true },
@@ -38,7 +38,7 @@ export const siteLinks = {
     ],
     account: [
       { name: "Личный кабинет", href: "/dashboard" },
-      { name: "Новости", href: "#" },
+      // { name: "Новости", href: "#" },
     ],
     legal: [
       { name: "Договор оферты", href: "#" },
