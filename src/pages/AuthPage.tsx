@@ -441,6 +441,9 @@ export function AuthPage() {
                   </p>
                 )}
               </div>
+              {error.show && (
+                <p className="text-center text-red-500">{error.message}</p>
+              )}
             </div>
           );
         } else {
