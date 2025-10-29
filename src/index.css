@@ -27,6 +27,27 @@
   body {
     @apply overflow-x-hidden;
   }
+
+  .custom-select-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+  }
+
+  .custom-select-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-select-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-select-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.12);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
 }
 
 .container {

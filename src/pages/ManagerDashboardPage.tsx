@@ -1,10 +1,12 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
-import HeroBackground from "@/assets/img/hero-background.webp";
+import ManagerDashboardBackground from "@/assets/img/manager-dashboard-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { CustomSelect } from "@/components/CustomSelect";
 import { FooterSection } from "@/sections/FooterSection";
 import { tokenStorage } from "@/services/authService";
+import { managerAPI } from "@/services/managerService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 interface User {
   id: number;
@@ -20,17 +22,37 @@ interface User {
   is_active: boolean;
 }
 
-export function DashboardPage() {
+interface Stats {
+  totalRequests: number;
+  processedRequests: number;
+}
+
+const periodOptions = [
+  { value: "today", label: "сегодня" },
+  { value: "week", label: "эта неделя", text: "эту неделю" },
+  { value: "month", label: "этот месяц" },
+];
+
+const cityOptions = [
+  { value: "moscow", label: "Москва" },
+  { value: "spb", label: "Санкт-Петербург" },
+  { value: "kazan", label: "Казань" },
+];
+
+export function ManagerDashboardPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
+  const [selectedPeriod, setSelectedPeriod] = useState(periodOptions[0]);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [isStatsLoading, setIsStatsLoading] = useState(true);
 
   useEffect(() => {
     if (!tokenStorage.isAuthenticated()) {
       navigate("/login");
       return;
     }
-
     const userData = localStorage.getItem("user_data");
     if (userData) {
       try {
@@ -40,13 +62,33 @@ export function DashboardPage() {
         console.error("Error parsing user data:", error);
       }
     }
-
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      setIsStatsLoading(true);
+      try {
+        const data = await managerAPI.getStats(
+          selectedCity.value,
+          selectedPeriod.value,
+        );
+        setStats(data);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+        setStats(null);
+      } finally {
+        setIsStatsLoading(false);
+      }
+    };
+
+    if (!isLoading) {
+      fetchStats();
+    }
+  }, [isLoading, selectedCity, selectedPeriod]);
 
   if (isLoading) {
     return (
@@ -64,78 +106,75 @@ export function DashboardPage() {
       <div
         className="relative min-h-screen overflow-hidden bg-cover text-white"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${HeroBackground})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${ManagerDashboardBackground})`,
         }}
       >
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">
-            <a
-              href="/"
+            <NavLink
+              to="/"
               className="flex items-center gap-2 text-white hover:underline"
             >
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
-            </a>
+            </NavLink>
           </div>
 
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
           >
             S&H
-          </a>
+          </NavLink>
         </div>
 
         <div className="mx-auto px-2 py-8 md:px-4 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="order-2 space-y-8 lg:order-1">
-              <div className="bg-foreground/90 rounded-2xl border border-white/20 p-8 backdrop-blur-sm">
-                <h1 className="heading mb-8 font-bold text-black">
-                  Сейчас в работе
-                </h1>
-                <div className="space-y-4 font-bold lg:text-xl">
-                  <div className="rounded-primary border-2 border-black px-4 py-2">
-                    <span className="text-black">
-                      1. Запрос и анализ исходных данных
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">
-                      2. Согласование тз и подписание договора
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">
-                      3. Моделирование проекта
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">
-                      4. Визуализация проекта
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">
-                      5. Согласование демоверсии и правки
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">
-                      6. Рендер и сборка проектов
-                    </span>
-                  </div>
-                  <div className="rounded-primary border-2 border-black/50 px-4 py-2">
-                    <span className="text-black/50">7. Сдача проекта</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="order-1 space-y-8 lg:order-2">
-              <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
+            <div className="order-2 space-y-8 text-white lg:order-1">
+              <h2 className="heading space-y-8 text-center leading-tight font-bold lg:text-left">
                 Здравствуйте, {user?.first_name || "Имя"}!
               </h2>
 
+              <div className="flex flex-col gap-3 space-y-8 lg:w-2/3 lg:flex-row lg:gap-0">
+                <CustomSelect
+                  options={cityOptions}
+                  value={selectedCity}
+                  onChange={(option) => setSelectedCity(option)}
+                  placeholder="Выберите город"
+                />
+                <CustomSelect
+                  options={periodOptions}
+                  value={selectedPeriod}
+                  onChange={(option) => setSelectedPeriod(option)}
+                  placeholder="Выберите период"
+                />
+              </div>
+
+              <div>
+                {isStatsLoading ? (
+                  <div className="space-y-2">
+                    <div className="h-8 animate-pulse rounded bg-gray-200"></div>
+                    <div className="h-8 animate-pulse rounded bg-gray-200"></div>
+                  </div>
+                ) : (
+                  <div className="space-y-2 text-xl font-bold text-white">
+                    <p>
+                      Заявок за {selectedPeriod.text || selectedPeriod.label}:{" "}
+                      {stats?.totalRequests ?? 0}
+                    </p>
+                    <p>
+                      Обработано заявок за{" "}
+                      {selectedPeriod.text || selectedPeriod.label}:{" "}
+                      {stats?.processedRequests ?? 0}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="order-1 space-y-8 lg:order-2">
+              <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
+                Заявка от 00.00.00
+              </h2>
               <div className="space-y-2">
                 <input
                   type="text"
@@ -144,7 +183,6 @@ export function DashboardPage() {
                   className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
                 />
-
                 {user?.phone && (
                   <input
                     type="tel"
@@ -154,7 +192,6 @@ export function DashboardPage() {
                     placeholder="+7 (---) --- -- --"
                   />
                 )}
-
                 <input
                   type="email"
                   value={user?.email || ""}
@@ -162,7 +199,6 @@ export function DashboardPage() {
                   className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
                 />
-
                 <input
                   type="text"
                   value={user?.specialization?.title || ""}
@@ -171,26 +207,9 @@ export function DashboardPage() {
                   placeholder="Компания*"
                 />
               </div>
-
-              <div className="flex justify-end">
-                <a
-                  href="/map"
-                  className="flex items-center gap-2 text-white transition-colors hover:text-white/80"
-                >
-                  <span className="text-lg font-bold italic">
-                    На карту объектов
-                  </span>
-                  <img
-                    src={ArrowBackIcon}
-                    alt="Вперед"
-                    className="h-6 w-6 rotate-180"
-                  />
-                </a>
-              </div>
             </div>
           </div>
         </div>
-
         <CustomMarquee className="absolute! bottom-0" />
       </div>
 

@@ -24,6 +24,7 @@ export interface UserResponse {
     title: string;
   };
   is_active: boolean;
+  role: string;
 }
 
 export interface AuthResponse {
@@ -58,6 +59,10 @@ export const tokenStorage = {
     localStorage.removeItem("refresh_token");
   },
   isAuthenticated: () => !!localStorage.getItem("access_token"),
+  getUser: () => {
+    const userData = localStorage.getItem("user_data");
+    return userData ? (JSON.parse(userData) as UserResponse) : null;
+  },
 };
 
 const createFetchOptions = (method: string, body?: unknown) => ({

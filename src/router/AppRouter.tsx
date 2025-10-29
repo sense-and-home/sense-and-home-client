@@ -1,7 +1,8 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AuthPage } from "@/pages/AuthPage";
-import { Dashboard } from "@/pages/DashboardPage";
+import { DashboardPage } from "@/pages/DashboardPage";
 import { MainPage } from "@/pages/MainPage";
+import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
 import { MapPage } from "@/pages/MapPage";
 import { BrowserRouter, Route, Routes } from "react-router";
 
@@ -16,8 +17,16 @@ export function AppRouter() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
-              <Dashboard />
+            <ProtectedRoute /* allowedRoles={["user"]} */>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manager-dashboard"
+          element={
+            <ProtectedRoute /* allowedRoles={["manager"]} */>
+              <ManagerDashboardPage />
             </ProtectedRoute>
           }
         />
