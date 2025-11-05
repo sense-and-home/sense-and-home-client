@@ -1,6 +1,7 @@
 import ApplicationBackground from "@/assets/img/application-background.webp";
 import { CallRequestModal } from "@/components/CallRequestModal";
 import { ThankYouModal } from "@/components/ThankYouModal";
+import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
 import { useState } from "react";
 
@@ -16,6 +17,8 @@ export function ApplicationSection() {
     email: "",
     file: null as File | null,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -31,11 +34,53 @@ export function ApplicationSection() {
     setFormData((prev) => ({ ...prev, phone: formatted }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name.trim() && formData.email.trim()) {
+
+    if (
+      !formData.name.trim() ||
+      !formData.phone.trim() ||
+      !formData.email.trim()
+    ) {
+      setErrorMessage("Пожалуйста, заполните все обязательные поля.");
+      return;
+    }
+
+    if (mode === "ready" && !formData.file) {
+      setErrorMessage(
+        "Пожалуйста, прикрепите информацию о проекте для этого режима.",
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const apiFormData = new FormData();
+      apiFormData.append("full_name", formData.name);
+      apiFormData.append("email", formData.email);
+      const cleanPhone = formData.phone.replace(/[\s()]/g, "");
+      apiFormData.append("phone", cleanPhone);
+      apiFormData.append(
+        "consultation_type",
+        mode === "consultation" ? "consult_without_details" : "consult_details",
+      );
+      if (formData.file) {
+        apiFormData.append("project_details", formData.file);
+      }
+
+      await bookingAPI.requestConsult(apiFormData);
+
       setIsThankYouModalOpen(true);
       setFormData({ name: "", phone: "", email: "", file: null });
+    } catch (error: any) {
+      console.error("Consult request error:", error);
+      setErrorMessage(
+        error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -55,23 +100,19 @@ export function ApplicationSection() {
             <h3 className="mb-4 text-2xl font-extrabold md:text-3xl lg:text-4xl">
               Свяжитесь с нами для старта работ или персональной консультации!
             </h3>
-
             <div className="mb-4 text-3xl leading-none font-extrabold md:text-4xl lg:text-5xl">
               ,,
             </div>
-
             <p className="mb-4">
               Sense&Home — проверенный партнер в инновациях и повышении
               конверсии продаж среди застройщиков.
             </p>
-
             <p>
               Для вашего удобства оставить заявку вы можете как с запросом на
               бесплатную консультацию, так и с возможностью обсуждения уже
               конкретных деталей.
             </p>
           </div>
-
           <button
             type="button"
             onClick={() => setIsCallModalOpen(true)}
@@ -80,7 +121,6 @@ export function ApplicationSection() {
             Запросить звонок
           </button>
         </div>
-
         <div className="order-1 lg:order-2">
           <form
             onSubmit={handleSubmit}
@@ -94,7 +134,6 @@ export function ApplicationSection() {
               >
                 Мне нужна консультация
               </button>
-
               <button
                 type="button"
                 className={`${mode == "ready" ? "bg-accent/70" : ""} w-1/2 rounded-[inherit] px-4 py-2 transition-colors hover:cursor-pointer md:px-6 md:py-3 lg:px-10`}
@@ -103,7 +142,6 @@ export function ApplicationSection() {
                 Я готов к 1 этапу
               </button>
             </div>
-
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="text"
@@ -112,15 +150,14 @@ export function ApplicationSection() {
               placeholder="Имя Фамилия"
               required
             />
-
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="tel"
               value={formData.phone}
               onChange={handlePhoneChange}
               placeholder="+7 (---) --- -- --"
+              required
             />
-
             <input
               className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
               type="email"
@@ -129,7 +166,6 @@ export function ApplicationSection() {
               placeholder="----------@mail.ru"
               required
             />
-
             <div className="min-h-[56px]">
               {mode === "ready" && (
                 <>
@@ -187,7 +223,6 @@ export function ApplicationSection() {
                       </svg>
                     </div>
                   </label>
-
                   <input
                     type="file"
                     id="customFileInput"
@@ -197,23 +232,26 @@ export function ApplicationSection() {
                 </>
               )}
             </div>
-
+            {errorMessage && (
+              <p className="text-sm text-red-600 md:text-base">
+                {errorMessage}
+              </p>
+            )}
             <button
               type="submit"
-              className="rounded-primary bg-black px-6 py-3 text-base font-bold text-white hover:cursor-pointer md:px-8 md:text-lg"
+              disabled={isSubmitting}
+              className="rounded-primary bg-black px-6 py-3 text-base font-bold text-white hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
             >
-              Оставить заявку
+              {isSubmitting ? "Отправка..." : "Оставить заявку"}
             </button>
           </form>
         </div>
       </div>
-
       <CallRequestModal
         isOpen={isCallModalOpen}
         onClose={() => setIsCallModalOpen(false)}
         onSuccess={() => setIsThankYouModalOpen(true)}
       />
-
       <ThankYouModal
         isOpen={isThankYouModalOpen}
         onClose={() => setIsThankYouModalOpen(false)}
