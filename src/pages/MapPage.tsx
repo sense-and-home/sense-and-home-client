@@ -4,7 +4,7 @@ import { MapComponent } from "@/components/MapComponent";
 import { FooterSection } from "@/sections/FooterSection";
 import { tokenStorage } from "@/services/authService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 export function MapPage() {
   const navigate = useNavigate();
@@ -39,13 +39,13 @@ export function MapPage() {
       <div className="relative min-h-screen overflow-hidden bg-cover text-white">
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">
-            <a
-              href="/dashboard"
+            <NavLink
+              to="/dashboard"
               className="flex items-center gap-2 text-white hover:underline"
             >
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">В личный кабинет</span>
-            </a>
+            </NavLink>
           </div>
 
           <a

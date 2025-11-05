@@ -4,7 +4,7 @@ import { CustomMarquee } from "@/components/CustomMarquee";
 import { FooterSection } from "@/sections/FooterSection";
 import { tokenStorage } from "@/services/authService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 interface User {
   id: number;
@@ -69,13 +69,13 @@ export function DashboardPage() {
       >
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">
-            <a
-              href="/"
+            <NavLink
+              to="/"
               className="flex items-center gap-2 text-white hover:underline"
             >
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
-            </a>
+            </NavLink>
           </div>
 
           <a
@@ -173,8 +173,8 @@ export function DashboardPage() {
               </div>
 
               <div className="flex justify-end">
-                <a
-                  href="/map"
+                <NavLink
+                  to="/map"
                   className="flex items-center gap-2 text-white transition-colors hover:text-white/80"
                 >
                   <span className="text-lg font-bold italic">
@@ -185,7 +185,7 @@ export function DashboardPage() {
                     alt="Вперед"
                     className="h-6 w-6 rotate-180"
                   />
-                </a>
+                </NavLink>
               </div>
             </div>
           </div>

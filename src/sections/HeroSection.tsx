@@ -147,7 +147,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-between px-2 pt-8 md:px-4 md:pt-0 lg:flex-row lg:px-8">
+      <div className="flex min-h-[650px] flex-col items-center justify-between px-2 pt-8 md:px-4 md:pt-0 lg:flex-row lg:px-8">
         <div className="mb-8 max-w-5xl text-center leading-tight lg:mb-0 lg:text-left">
           <h1 className="heading mb-6 text-4xl font-extrabold md:mb-10 md:text-5xl lg:text-6xl">
             VR\AR технологии для строительства и архитектуры
@@ -172,7 +172,7 @@ export function HeroSection() {
           </a>
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden min-w-[300px] pl-8 lg:block">
           <img src={HeroLogo} alt="" className="h-auto max-w-full" />
         </div>
       </div>
