@@ -26,6 +26,10 @@ export function ApplicationSection() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
+    if (file && file.size > 10 * 1024 * 1024) {
+      setErrorMessage("Файл слишком большой. Максимальный размер: 10MB.");
+      return;
+    }
     setFormData((prev) => ({ ...prev, file }));
   };
 
@@ -34,22 +38,37 @@ export function ApplicationSection() {
     setFormData((prev) => ({ ...prev, phone: formatted }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      return "Пожалуйста, введите имя и фамилию.";
+    }
+    if (formData.name.trim().split(/\s+/).length < 2) {
+      return "Пожалуйста, введите полное имя (имя и фамилия).";
+    }
 
-    if (
-      !formData.name.trim() ||
-      !formData.phone.trim() ||
-      !formData.email.trim()
-    ) {
-      setErrorMessage("Пожалуйста, заполните все обязательные поля.");
-      return;
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+    if (phoneDigits.length !== 11 || !phoneDigits.startsWith("7")) {
+      return "Неверный формат номера телефона. Должен быть в формате +7XXXXXXXXXX (российский номер).";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      return "Неверный формат email адреса.";
     }
 
     if (mode === "ready" && !formData.file) {
-      setErrorMessage(
-        "Пожалуйста, прикрепите информацию о проекте для этого режима.",
-      );
+      return "Пожалуйста, прикрепите информацию о проекте для этого режима.";
+    }
+
+    return null;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMessage(validationError);
       return;
     }
 
@@ -58,9 +77,10 @@ export function ApplicationSection() {
 
     try {
       const apiFormData = new FormData();
-      apiFormData.append("full_name", formData.name);
-      apiFormData.append("email", formData.email);
-      const cleanPhone = formData.phone.replace(/[\s()]/g, "");
+      apiFormData.append("full_name", formData.name.trim());
+      apiFormData.append("email", formData.email.trim());
+      const phoneDigits = formData.phone.replace(/\D/g, "");
+      const cleanPhone = `+${phoneDigits}`;
       apiFormData.append("phone", cleanPhone);
       apiFormData.append(
         "consultation_type",
@@ -69,9 +89,7 @@ export function ApplicationSection() {
       if (formData.file) {
         apiFormData.append("project_details", formData.file);
       }
-
       await bookingAPI.requestConsult(apiFormData);
-
       setIsThankYouModalOpen(true);
       setFormData({ name: "", phone: "", email: "", file: null });
     } catch (error: any) {
