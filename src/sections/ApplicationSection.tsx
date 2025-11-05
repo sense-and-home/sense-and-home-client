@@ -17,69 +17,81 @@ export function ApplicationSection() {
     email: "",
     file: null as File | null,
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    file: "",
+    general: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    if (file && file.size > 10 * 1024 * 1024) {
-      setErrorMessage("Файл слишком большой. Максимальный размер: 10MB.");
-      return;
-    }
     setFormData((prev) => ({ ...prev, file }));
+    setErrors((prev) => ({ ...prev, file: "" }));
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
     setFormData((prev) => ({ ...prev, phone: formatted }));
+    setErrors((prev) => ({ ...prev, phone: "" }));
   };
 
   const validateForm = () => {
+    let hasError = false;
+    const newErrors = { name: "", phone: "", email: "", file: "", general: "" };
+
     if (!formData.name.trim()) {
-      return "Пожалуйста, введите имя и фамилию.";
-    }
-    if (formData.name.trim().split(/\s+/).length < 2) {
-      return "Пожалуйста, введите полное имя (имя и фамилия).";
+      newErrors.name = "Пожалуйста, введите своё имя.";
+      hasError = true;
     }
 
     const phoneDigits = formData.phone.replace(/\D/g, "");
     if (phoneDigits.length !== 11 || !phoneDigits.startsWith("7")) {
-      return "Неверный формат номера телефона. Должен быть в формате +7XXXXXXXXXX (российский номер).";
+      newErrors.phone =
+        "Неверный формат номера телефона. Должен быть в формате +7 (XXX) XXX-XX-XX (российский номер).";
+      hasError = true;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email.trim())) {
-      return "Неверный формат email адреса.";
+      newErrors.email = "Неверный формат email адреса.";
+      hasError = true;
     }
 
     if (mode === "ready" && !formData.file) {
-      return "Пожалуйста, прикрепите информацию о проекте для этого режима.";
+      newErrors.file =
+        "Пожалуйста, прикрепите информацию о проекте для этого режима.";
+      hasError = true;
     }
 
-    return null;
+    setErrors(newErrors);
+    return !hasError;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validationError = validateForm();
-    if (validationError) {
-      setErrorMessage(validationError);
+    if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    setErrorMessage(null);
 
     try {
       const apiFormData = new FormData();
       apiFormData.append("full_name", formData.name.trim());
       apiFormData.append("email", formData.email.trim());
-      const phoneDigits = formData.phone.replace(/\D/g, "");
+      let phoneDigits = formData.phone.replace(/\D/g, "");
+      if (phoneDigits.startsWith("8")) {
+        phoneDigits = "7" + phoneDigits.slice(1);
+      }
       const cleanPhone = `+${phoneDigits}`;
       apiFormData.append("phone", cleanPhone);
       apiFormData.append(
@@ -94,9 +106,11 @@ export function ApplicationSection() {
       setFormData({ name: "", phone: "", email: "", file: null });
     } catch (error: any) {
       console.error("Consult request error:", error);
-      setErrorMessage(
-        error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
-      );
+      setErrors((prev) => ({
+        ...prev,
+        general:
+          error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
+      }));
     } finally {
       setIsSubmitting(false);
     }
@@ -160,36 +174,51 @@ export function ApplicationSection() {
                 Я готов к 1 этапу
               </button>
             </div>
-            <input
-              className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-              type="text"
-              value={formData.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
-              placeholder="Имя Фамилия"
-              required
-            />
-            <input
-              className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-              type="tel"
-              value={formData.phone}
-              onChange={handlePhoneChange}
-              placeholder="+7 (---) --- -- --"
-              required
-            />
-            <input
-              className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              placeholder="----------@mail.ru"
-              required
-            />
+            <div>
+              <input
+                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.name ? "border-2 border-red-500" : ""}`}
+                type="text"
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                placeholder="Имя Фамилия"
+                required
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+              )}
+            </div>
+            <div>
+              <input
+                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.phone ? "border-2 border-red-500" : ""}`}
+                type="tel"
+                value={formData.phone}
+                onChange={handlePhoneChange}
+                placeholder="+7 (---) --- -- --"
+                required
+              />
+              {errors.phone && (
+                <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+              )}
+            </div>
+            <div>
+              <input
+                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.email ? "border-2 border-red-500" : ""}`}
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                placeholder="----------@mail.ru"
+                required
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
             <div className="min-h-[56px]">
               {mode === "ready" && (
-                <>
+                <div>
                   <label
                     htmlFor="customFileInput"
-                    className="bg-foreground rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base text-black/50 hover:cursor-pointer md:px-8 md:text-lg"
+                    className={`bg-foreground rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base text-black/50 hover:cursor-pointer md:px-8 md:text-lg ${errors.file ? "border-2 border-red-500" : ""}`}
                   >
                     <span className="truncate">
                       {formData.file
@@ -203,6 +232,7 @@ export function ApplicationSection() {
                           onClick={(e) => {
                             e.preventDefault();
                             setFormData((prev) => ({ ...prev, file: null }));
+                            setErrors((prev) => ({ ...prev, file: "" }));
                             const fileInput = document.getElementById(
                               "customFileInput",
                             ) as HTMLInputElement;
@@ -247,12 +277,15 @@ export function ApplicationSection() {
                     className="hidden"
                     onChange={handleFileChange}
                   />
-                </>
+                  {errors.file && (
+                    <p className="mt-1 text-sm text-red-600">{errors.file}</p>
+                  )}
+                </div>
               )}
             </div>
-            {errorMessage && (
+            {errors.general && (
               <p className="text-sm text-red-600 md:text-base">
-                {errorMessage}
+                {errors.general}
               </p>
             )}
             <button
