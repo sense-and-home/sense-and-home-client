@@ -1,5 +1,6 @@
 import CallBackBackground from "@/assets/img/call-back-background.webp";
 import { Modal } from "@/components/Modal";
+import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
 import React, { useState } from "react";
 
@@ -16,6 +17,7 @@ export function CallRequestModal({
 }: CallRequestModalProps) {
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
@@ -27,15 +29,24 @@ export function CallRequestModal({
     if (!phone.trim()) return;
 
     setIsSubmitting(true);
+    setErrorMessage(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const cleanPhone = phone.replace(/[\s()]/g, "");
+      await bookingAPI.requestCall({ phone: cleanPhone });
 
-    setIsSubmitting(false);
-    onClose();
-
-    if (onSuccess) {
-      onSuccess();
+      onClose();
+      if (onSuccess) {
+        onSuccess();
+      }
       setPhone("");
+    } catch (error: any) {
+      console.error("Callback request error:", error);
+      setErrorMessage(
+        error.message || "Произошла ошибка, пожалуйста попробуйте позже.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -65,7 +76,6 @@ export function CallRequestModal({
             <path d="m6 6 12 12" />
           </svg>
         </button>
-
         <div className="p-6 md:p-8">
           <h2 className="mb-2 text-xl font-extrabold md:text-2xl">
             Оставьте номер телефона
@@ -73,7 +83,11 @@ export function CallRequestModal({
           <p className="mb-6 text-sm md:text-base">
             и мы перезвоним в ближайшие 15 минут
           </p>
-
+          {errorMessage && (
+            <p className="mb-4 text-sm text-red-600 md:text-base">
+              {errorMessage}
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               className="text-foreground rounded-primary inline-block w-full bg-black px-4 py-3 text-base md:px-8 md:text-lg"
@@ -83,7 +97,6 @@ export function CallRequestModal({
               placeholder="+7 (---) --- -- --"
               required
             />
-
             <button
               type="submit"
               disabled={isSubmitting || !phone.trim()}
