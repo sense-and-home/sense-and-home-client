@@ -16,9 +16,9 @@ export function StepsSection() {
         Этапы работ
       </h2>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <img
-          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary h-auto w-full max-w-full object-cover lg:max-w-[45%]"
           src={Showcase1}
           alt=""
         />
@@ -44,7 +44,7 @@ export function StepsSection() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <div className="relative order-2 w-full lg:order-1 lg:w-auto">
           <div className="relative z-10 text-center lg:text-left">
             <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
@@ -66,15 +66,15 @@ export function StepsSection() {
         </div>
 
         <img
-          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary order-1 h-auto w-full max-w-full object-cover lg:order-2 lg:max-w-[45%]"
           src={Showcase2}
           alt=""
         />
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <img
-          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary h-auto w-full max-w-full object-cover lg:max-w-[45%]"
           src={Showcase3}
           alt=""
         />
@@ -99,7 +99,7 @@ export function StepsSection() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <div className="relative order-2 w-full lg:order-1 lg:w-auto">
           <div className="relative z-10 text-center lg:text-left">
             <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
@@ -121,15 +121,15 @@ export function StepsSection() {
         </div>
 
         <img
-          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary order-1 h-auto w-full max-w-full object-cover lg:order-2 lg:max-w-[45%]"
           src={Showcase4}
           alt=""
         />
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <img
-          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary h-auto w-full max-w-full object-cover lg:max-w-[45%]"
           src={Showcase5}
           alt=""
         />
@@ -154,7 +154,7 @@ export function StepsSection() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <div className="relative order-2 w-full lg:order-1 lg:w-auto">
           <div className="relative z-10 text-center lg:text-left">
             <h3 className="mb-4 text-2xl font-extrabold md:mb-6 md:text-3xl lg:text-4xl">
@@ -175,15 +175,15 @@ export function StepsSection() {
         </div>
 
         <img
-          className="rounded-secondary order-1 w-full max-w-md lg:order-2 lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary order-1 h-auto w-full max-w-full object-cover lg:order-2 lg:max-w-[45%]"
           src={Showcase6}
           alt=""
         />
       </div>
 
-      <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <img
-          className="rounded-secondary w-full max-w-md lg:max-w-none lg:grow-0 lg:basis-1/3"
+          className="rounded-secondary h-auto w-full max-w-full object-cover lg:max-w-[45%]"
           src={Showcase7}
           alt=""
         />
