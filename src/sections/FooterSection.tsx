@@ -1,16 +1,39 @@
 import { ThankYouModal } from "@/components/ThankYouModal";
 import { isExternalLink, siteLinks } from "@/constants/siteLinks";
+import { bookingAPI } from "@/services/bookingService";
 import { useState } from "react";
 
 export function FooterSection() {
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage("Неверный формат email адреса.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      await bookingAPI.requestEmail({ email: trimmedEmail });
       setIsThankYouModalOpen(true);
       setEmail("");
+    } catch (error: any) {
+      console.error("Email request error:", error);
+      setErrorMessage(
+        error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -23,7 +46,6 @@ export function FooterSection() {
         >
           {siteLinks.logo.text}
         </a>
-
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
           {siteLinks.footer.main.map((link) => (
             <li key={link.name}>
@@ -40,7 +62,6 @@ export function FooterSection() {
             </li>
           ))}
         </ul>
-
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
           {siteLinks.footer.account.map((link) => (
             <li key={link.name}>
@@ -58,7 +79,6 @@ export function FooterSection() {
           ))}
         </ul>
       </div>
-
       <div id="footer-section" className="mb-8 md:mb-12">
         <h2 className="heading mb-4 text-2xl md:text-3xl lg:text-4xl xl:text-6xl">
           Мы открыты к сотрудничеству
@@ -66,7 +86,6 @@ export function FooterSection() {
         <p className="mb-6 text-lg md:mb-4 md:text-xl">
           Оставьте почту и мы свяжемся с Вами в течении дня!
         </p>
-
         <div className="flex flex-col items-start justify-between gap-6 text-lg md:text-xl lg:flex-row lg:items-center lg:gap-0">
           <form
             onSubmit={handleSubmit}
@@ -82,12 +101,12 @@ export function FooterSection() {
             />
             <button
               type="submit"
-              className="bg-foreground rounded-primary px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer md:px-8 md:text-lg"
+              disabled={isSubmitting}
+              className="bg-foreground rounded-primary px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
             >
-              Отправить
+              {isSubmitting ? "Отправка..." : "Отправить"}
             </button>
           </form>
-
           <ul className="space-y-2 text-sm md:text-base lg:text-lg xl:text-xl">
             {siteLinks.footer.legal.map((link) => (
               <li key={link.name}>
@@ -107,10 +126,13 @@ export function FooterSection() {
             ))}
           </ul>
         </div>
+        {errorMessage && (
+          <p className="mt-4 text-sm text-red-600 md:text-base">
+            {errorMessage}
+          </p>
+        )}
       </div>
-
       <div className="text-center">SenseHome, 2025</div>
-
       <ThankYouModal
         isOpen={isThankYouModalOpen}
         onClose={() => setIsThankYouModalOpen(false)}
