@@ -1,5 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-// const API_BASE_URL = "http://localhost:8000/api/v1";
+import { apiClient } from "./apiClient";
 
 export interface UserSignUpRequest {
   full_name: string;
@@ -54,93 +53,55 @@ export const tokenStorage = {
   getRefreshToken: () => localStorage.getItem("refresh_token"),
   setRefreshToken: (token: string) =>
     localStorage.setItem("refresh_token", token),
-  clearTokens: () => {
+  clear: () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_data");
   },
   isAuthenticated: () => !!localStorage.getItem("access_token"),
-  getUser: () => {
-    const userData = localStorage.getItem("user_data");
-    return userData ? (JSON.parse(userData) as UserResponse) : null;
+  getUser: (): UserResponse | null => {
+    const data = localStorage.getItem("user_data");
+    return data ? JSON.parse(data) : null;
+  },
+  setUser: (user: UserResponse) => {
+    localStorage.setItem("user_data", JSON.stringify(user));
   },
 };
 
-const createFetchOptions = (method: string, body?: unknown) => ({
-  method,
-  mode: "cors" as RequestMode,
-  credentials: "omit" as RequestCredentials,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  },
-  body: body ? JSON.stringify(body) : undefined,
-});
-
 export const authAPI = {
   signup: async (data: UserSignUpRequest): Promise<AuthResponse> => {
-    console.log("Making signup request to:", `${API_BASE_URL}/auth/signup`);
-
-    const response = await fetch(
-      `${API_BASE_URL}/auth/signup`,
-      createFetchOptions("POST", data),
-    );
-
-    console.log("Signup response status:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Signup error response:", errorText);
-
-      let error;
-      try {
-        error = JSON.parse(errorText);
-      } catch {
-        error = { message: errorText, code: response.status };
-      }
-      throw error;
-    }
-
-    const result = await response.json();
-    console.log("Signup success:", result);
+    const result = await apiClient<AuthResponse>("/auth/signup", {
+      method: "POST",
+      body: data,
+    });
 
     if (result.user) {
-      localStorage.setItem("user_data", JSON.stringify(result.user));
+      tokenStorage.setUser(result.user);
+    }
+    if (result.access_token) {
+      tokenStorage.setAccessToken(result.access_token);
+    }
+    if (result.refresh_token) {
+      tokenStorage.setRefreshToken(result.refresh_token);
     }
 
     return result;
   },
 
   login: async (data: LoginRequest): Promise<AuthResponse> => {
-    console.log("Making login request to:", `${API_BASE_URL}/auth/login`);
-
-    const response = await fetch(
-      `${API_BASE_URL}/auth/login`,
-      createFetchOptions("POST", data),
-    );
-
-    console.log("Login response status:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Login error response:", errorText);
-
-      let error;
-      try {
-        error = JSON.parse(errorText);
-      } catch {
-        error = { message: errorText, code: response.status };
-      }
-      throw error;
-    }
-
-    const result = await response.json();
-    console.log("Login success:", result);
+    const result = await apiClient<AuthResponse>("/auth/login", {
+      method: "POST",
+      body: data,
+    });
 
     if (result.user) {
-      localStorage.setItem("user_data", JSON.stringify(result.user));
+      tokenStorage.setUser(result.user);
+    }
+    if (result.access_token) {
+      tokenStorage.setAccessToken(result.access_token);
+    }
+    if (result.refresh_token) {
+      tokenStorage.setRefreshToken(result.refresh_token);
     }
 
     return result;
@@ -148,23 +109,21 @@ export const authAPI = {
 
   refreshToken: async (): Promise<AuthResponse> => {
     const refreshToken = tokenStorage.getRefreshToken();
-    if (!refreshToken) {
-      throw new Error("No refresh token available");
-    }
+    if (!refreshToken) throw new Error("No refresh token available");
 
-    const response = await fetch(
-      `${API_BASE_URL}/auth/refresh`,
-      createFetchOptions("POST", { refresh_token: refreshToken }),
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to refresh token");
-    }
-
-    const result = await response.json();
+    const result = await apiClient<AuthResponse>("/auth/refresh", {
+      method: "POST",
+      body: { refresh_token: refreshToken },
+    });
 
     if (result.user) {
-      localStorage.setItem("user_data", JSON.stringify(result.user));
+      tokenStorage.setUser(result.user);
+    }
+    if (result.access_token) {
+      tokenStorage.setAccessToken(result.access_token);
+    }
+    if (result.refresh_token) {
+      tokenStorage.setRefreshToken(result.refresh_token);
     }
 
     return result;

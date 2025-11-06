@@ -1,6 +1,7 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import SignUpBackground from "@/assets/img/sign-up-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { useAuth } from "@/context/AuthContext";
 import { FooterSection } from "@/sections/FooterSection";
 import { authAPI, tokenStorage, validation } from "@/services/authService";
 import React, { useEffect, useState } from "react";
@@ -37,6 +38,14 @@ export function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
   const getAuthModeFromUrl = (): AuthMode => {
     if (location.pathname === "/login") return "login";
     return "registration";
@@ -58,7 +67,7 @@ export function AuthPage() {
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {},
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   const totalSteps = authMode === "registration" ? 3 : 2;
@@ -161,7 +170,7 @@ export function AuthPage() {
   };
 
   const handleRegistration = async () => {
-    setIsLoading(true);
+    setIsFormLoading(true);
     setError({ show: false, message: "" });
 
     try {
@@ -198,12 +207,12 @@ export function AuthPage() {
         });
       }
     } finally {
-      setIsLoading(false);
+      setIsFormLoading(false);
     }
   };
 
   const handlePasswordVerification = async () => {
-    setIsLoading(true);
+    setIsFormLoading(true);
     setError({ show: false, message: "" });
 
     try {
@@ -234,12 +243,12 @@ export function AuthPage() {
         });
       }
     } finally {
-      setIsLoading(false);
+      setIsFormLoading(false);
     }
   };
 
   const handleLogin = async () => {
-    setIsLoading(true);
+    setIsFormLoading(true);
     setError({ show: false, message: "" });
 
     try {
@@ -275,7 +284,7 @@ export function AuthPage() {
         });
       }
     } finally {
-      setIsLoading(false);
+      setIsFormLoading(false);
     }
   };
 
@@ -291,6 +300,10 @@ export function AuthPage() {
       navigate("/registration");
     }
   };
+
+  if (isLoading || isAuthenticated) {
+    return <div className="bg-background h-screen" />;
+  }
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -581,7 +594,7 @@ export function AuthPage() {
             <button
               onClick={handleMainButtonClick}
               disabled={
-                isLoading ||
+                isFormLoading ||
                 (authMode === "login" &&
                   currentStep === 1 &&
                   !formData.password) ||
@@ -591,7 +604,7 @@ export function AuthPage() {
               }
               className="bg-background text-foreground hover:bg-accent rounded-primary w-full flex-1 px-6 py-3 font-semibold transition-colors disabled:opacity-50"
             >
-              {isLoading
+              {isFormLoading
                 ? "Загрузка..."
                 : authMode === "registration"
                   ? currentStep === 3

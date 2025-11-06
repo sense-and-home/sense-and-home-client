@@ -1,4 +1,5 @@
-import { API_BASE_URL, tokenStorage } from "./authService";
+import { apiClient } from "./apiClient";
+import { tokenStorage } from "./tokenStorage";
 
 export interface BookingCallRequest {
   phone: string;
@@ -42,135 +43,38 @@ export interface ValidationErrorResponse {
   }>;
 }
 
-const createJsonFetchOptions = (method: string, body?: unknown) => ({
-  method,
-  mode: "cors" as RequestMode,
-  credentials: "omit" as RequestCredentials,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  },
-  body: body ? JSON.stringify(body) : undefined,
-});
-
-const createMultipartFetchOptions = (method: string) => ({
-  method,
-  mode: "cors" as RequestMode,
-  credentials: "omit" as RequestCredentials,
-  headers: {
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  },
-});
-
 export const bookingAPI = {
   requestCall: async (data: BookingCallRequest): Promise<BookingResponse> => {
-    console.log(
-      "Making booking call request to:",
-      `${API_BASE_URL}/booking/call`,
-    );
-
-    const response = await fetch(
-      `${API_BASE_URL}/booking/call`,
-      createJsonFetchOptions("POST", data),
-    );
-
-    console.log("Booking call response status:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Booking call error response:", errorText);
-
-      let error;
-      try {
-        error = JSON.parse(errorText);
-      } catch {
-        error = { message: errorText, code: response.status };
-      }
-      throw error;
-    }
-
-    const result = await response.json();
-    console.log("Booking call success:", result);
+    const result = await apiClient<BookingResponse>("/booking/call", {
+      method: "POST",
+      body: data,
+    });
 
     tokenStorage.setAccessToken(result.access_token);
     tokenStorage.setRefreshToken(result.refresh_token);
-
     return result;
   },
 
   requestEmail: async (data: BookingEmailRequest): Promise<BookingResponse> => {
-    console.log(
-      "Making booking email request to:",
-      `${API_BASE_URL}/booking/email`,
-    );
-
-    const response = await fetch(
-      `${API_BASE_URL}/booking/email`,
-      createJsonFetchOptions("POST", data),
-    );
-
-    console.log("Booking email response status:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Booking email error response:", errorText);
-
-      let error;
-      try {
-        error = JSON.parse(errorText);
-      } catch {
-        error = { message: errorText, code: response.status };
-      }
-      throw error;
-    }
-
-    const result = await response.json();
-    console.log("Booking email success:", result);
+    const result = await apiClient<BookingResponse>("/booking/email", {
+      method: "POST",
+      body: data,
+    });
 
     tokenStorage.setAccessToken(result.access_token);
     tokenStorage.setRefreshToken(result.refresh_token);
-
     return result;
   },
 
   requestConsult: async (formData: FormData): Promise<BookingResponse> => {
-    console.log(
-      "Making booking consult request to:",
-      `${API_BASE_URL}/booking/consult`,
-    );
-
-    const options = createMultipartFetchOptions("POST");
-    (options as any).body = formData;
-
-    const response = await fetch(`${API_BASE_URL}/booking/consult`, options);
-
-    console.log("Booking consult response status:", response.status);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Booking consult error response:", errorText);
-
-      let error;
-      try {
-        error = JSON.parse(errorText);
-      } catch {
-        error = { message: errorText, code: response.status };
-      }
-      throw error;
-    }
-
-    const result = await response.json();
-    console.log("Booking consult success:", result);
+    const result = await apiClient<BookingResponse>("/booking/consult", {
+      method: "POST",
+      body: formData,
+      isMultipart: true,
+    });
 
     tokenStorage.setAccessToken(result.access_token);
     tokenStorage.setRefreshToken(result.refresh_token);
-
     return result;
   },
 };

@@ -41,7 +41,6 @@ const cityOptions = [
 
 export function ManagerDashboardPage() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
   const [selectedPeriod, setSelectedPeriod] = useState(periodOptions[0]);
@@ -62,10 +61,6 @@ export function ManagerDashboardPage() {
         console.error("Error parsing user data:", error);
       }
     }
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
   }, [navigate]);
 
   useEffect(() => {
@@ -85,21 +80,8 @@ export function ManagerDashboardPage() {
       }
     };
 
-    if (!isLoading) {
-      fetchStats();
-    }
-  }, [isLoading, selectedCity, selectedPeriod]);
-
-  if (isLoading) {
-    return (
-      <div className="bg-background text-foreground flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-foreground mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2"></div>
-          <p className="text-lg">Загрузка...</p>
-        </div>
-      </div>
-    );
-  }
+    fetchStats();
+  }, [selectedCity, selectedPeriod]);
 
   return (
     <div className="bg-background">

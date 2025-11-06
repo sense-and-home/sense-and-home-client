@@ -3,36 +3,18 @@ import { CustomMarquee } from "@/components/CustomMarquee";
 import { MapComponent } from "@/components/MapComponent";
 import { FooterSection } from "@/sections/FooterSection";
 import { tokenStorage } from "@/services/authService";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 
 export function MapPage() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!tokenStorage.isAuthenticated()) {
       navigate("/login");
       return;
     }
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
   }, [navigate]);
-
-  if (isLoading) {
-    return (
-      <div className="bg-background text-foreground flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-foreground mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2"></div>
-          <p className="text-lg">Загрузка...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-background">

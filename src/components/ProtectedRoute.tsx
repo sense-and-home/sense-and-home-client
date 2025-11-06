@@ -1,4 +1,4 @@
-import { tokenStorage } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import React from "react";
 import { Navigate } from "react-router";
 
@@ -11,13 +11,15 @@ export function ProtectedRoute({
   children,
   allowedRoles,
 }: ProtectedRouteProps) {
-  const isAuthenticated = tokenStorage.isAuthenticated();
+  const { isAuthenticated, user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div className="bg-background h-screen" />;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-
-  const user = tokenStorage.getUser();
 
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;

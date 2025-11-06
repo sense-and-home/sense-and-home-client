@@ -22,7 +22,6 @@ interface User {
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -40,24 +39,7 @@ export function DashboardPage() {
         console.error("Error parsing user data:", error);
       }
     }
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
   }, [navigate]);
-
-  if (isLoading) {
-    return (
-      <div className="bg-background text-foreground flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-foreground mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2"></div>
-          <p className="text-lg">Загрузка...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-background">
