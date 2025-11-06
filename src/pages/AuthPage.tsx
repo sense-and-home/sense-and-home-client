@@ -38,7 +38,7 @@ export function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isAuthenticated, isLoading } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
@@ -257,15 +257,9 @@ export function AuthPage() {
         password: formData.password,
       });
 
-      const response = await authAPI.login({
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await login(formData.email, formData.password);
 
       console.log("Login response:", response);
-
-      tokenStorage.setAccessToken(response.access_token);
-      tokenStorage.setRefreshToken(response.refresh_token);
 
       navigate("/dashboard");
     } catch (error: any) {

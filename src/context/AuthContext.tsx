@@ -1,3 +1,4 @@
+import { authAPI } from "@/services/authService";
 import { tokenStorage } from "@/services/tokenStorage";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -14,6 +15,7 @@ interface AuthContextType {
   isLoading: boolean;
   setUser: (user: AuthUser | null) => void;
   logout: () => void;
+  login: (email: string, password: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,6 +37,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(false);
   }, []);
 
+  const login = async (email: string, password: string) => {
+    const response = await authAPI.login({ email, password });
+    tokenStorage.setAccessToken(response.access_token);
+    tokenStorage.setRefreshToken(response.refresh_token);
+
+    const userData = tokenStorage.getUser();
+    setUser(userData);
+  };
+
   const logout = () => {
     tokenStorage.clearTokens();
     setUser(null);
@@ -46,6 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading,
     setUser,
     logout,
+    login,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
