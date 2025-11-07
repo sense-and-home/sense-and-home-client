@@ -9,6 +9,7 @@ export interface Stats {
 
 export const managerAPI = {
   getStats: async (city: string, period: string): Promise<Stats> => {
+    console.log(city, period);
     // Mocking the API response for now
     // In a real scenario, uncomment the fetch code below and remove the mock
     /*
