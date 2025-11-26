@@ -14,30 +14,12 @@ export function AppRouter() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/registration" element={<AuthPage />} />
         <Route path="/login" element={<AuthPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute /* allowedRoles={["user"]} */>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/manager-dashboard"
-          element={
-            <ProtectedRoute /* allowedRoles={["manager"]} */>
-              <ManagerDashboardPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/map"
-          element={
-            <ProtectedRoute>
-              <MapPage />
-            </ProtectedRoute>
-          }
-        />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/manager-dashboard" element={<ManagerDashboardPage />} />
+          <Route path="/map" element={<MapPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

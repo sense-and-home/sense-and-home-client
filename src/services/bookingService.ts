@@ -45,7 +45,7 @@ export interface ValidationErrorResponse {
 
 export const bookingAPI = {
   requestCall: async (data: BookingCallRequest): Promise<BookingResponse> => {
-    const result = await apiClient<BookingResponse>("/booking/call", {
+    const result = await apiClient<BookingResponse>("booking/call", {
       method: "POST",
       body: data,
     });
@@ -56,7 +56,7 @@ export const bookingAPI = {
   },
 
   requestEmail: async (data: BookingEmailRequest): Promise<BookingResponse> => {
-    const result = await apiClient<BookingResponse>("/booking/email", {
+    const result = await apiClient<BookingResponse>("booking/email", {
       method: "POST",
       body: data,
     });
@@ -67,7 +67,7 @@ export const bookingAPI = {
   },
 
   requestConsult: async (formData: FormData): Promise<BookingResponse> => {
-    const result = await apiClient<BookingResponse>("/booking/consult", {
+    const result = await apiClient<BookingResponse>("booking/consult", {
       method: "POST",
       body: formData,
       isMultipart: true,

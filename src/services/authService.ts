@@ -70,7 +70,7 @@ export const tokenStorage = {
 
 export const authAPI = {
   signup: async (data: UserSignUpRequest): Promise<AuthResponse> => {
-    const result = await apiClient<AuthResponse>("/auth/signup", {
+    const result = await apiClient<AuthResponse>("auth/signup", {
       method: "POST",
       body: data,
     });
@@ -89,7 +89,7 @@ export const authAPI = {
   },
 
   login: async (data: LoginRequest): Promise<AuthResponse> => {
-    const result = await apiClient<AuthResponse>("/auth/login", {
+    const result = await apiClient<AuthResponse>("auth/login", {
       method: "POST",
       body: data,
     });
@@ -111,7 +111,7 @@ export const authAPI = {
     const refreshToken = tokenStorage.getRefreshToken();
     if (!refreshToken) throw new Error("No refresh token available");
 
-    const result = await apiClient<AuthResponse>("/auth/refresh", {
+    const result = await apiClient<AuthResponse>("auth/refresh", {
       method: "POST",
       body: { refresh_token: refreshToken },
     });
