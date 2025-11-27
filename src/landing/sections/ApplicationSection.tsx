@@ -1,6 +1,6 @@
 import ApplicationBackground from "@/assets/img/application-background.webp";
-import { CallRequestModal } from "@/components/CallRequestModal";
-import { ThankYouModal } from "@/components/ThankYouModal";
+import { CallRequestModal } from "@/landing/components/CallRequestModal";
+import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
 import { useState } from "react";

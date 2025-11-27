@@ -1,5 +1,5 @@
-import { ThankYouModal } from "@/components/ThankYouModal";
 import { isExternalLink, siteLinks } from "@/constants/siteLinks";
+import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { bookingAPI } from "@/services/bookingService";
 import { useState } from "react";
 
