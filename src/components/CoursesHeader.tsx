@@ -1,9 +1,14 @@
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
+import { CoursesSearchbar } from "./CoursesSearchBar";
 
-export function HeaderCourses() {
+export function CoursesHeader() {
+  const location = useLocation();
+
+  const hasSearchBar = location.pathname === "/courses";
+
   return (
     <header>
-      <nav className="flex items-end p-4 align-bottom">
+      <nav className="p-4 align-bottom">
         <NavLink
           to="/"
           className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline"
@@ -11,7 +16,7 @@ export function HeaderCourses() {
           S&H
         </NavLink>
 
-        <div>
+        <div className="grid grid-flow-row">
           <ul className="flex gap-4">
             <li>
               <NavLink
@@ -46,6 +51,8 @@ export function HeaderCourses() {
               </NavLink>
             </li>
           </ul>
+
+          {hasSearchBar && <CoursesSearchbar />}
         </div>
       </nav>
     </header>

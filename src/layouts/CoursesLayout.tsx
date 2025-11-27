@@ -1,10 +1,10 @@
-import { HeaderCourses } from "@/components/HeaderCourses";
+import { CoursesHeader } from "@/components/CoursesHeader";
 import { Outlet } from "react-router";
 
 export function CoursesLayout() {
   return (
     <div>
-      <HeaderCourses />
+      <CoursesHeader />
 
       <Outlet />
     </div>

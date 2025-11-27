@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   build_and_push_docker_image:
-    name: Build and Push to Yandex CR 
+    name: Build and Push to Yandex CR
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -16,14 +16,14 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_KEY }}
       - name: Build image
         if: ${{ (github.ref == 'refs/heads/main') }}
-        env: 
+        env:
           CR_REGISTRY: crpftbrsrru52q0qfefi
           CR_REPO: sense-and-home-client
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:latest .
       - name: Push image
         if: ${{ (github.ref == 'refs/heads/main') }}
-        env: 
+        env:
           CR_REGISTRY: crpftbrsrru52q0qfefi
           CR_REPO: sense-and-home-client
         run: |
