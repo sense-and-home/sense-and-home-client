@@ -8,16 +8,16 @@ export function CoursesHeader() {
 
   return (
     <header>
-      <nav className="p-4 align-bottom">
+      <nav className="relative flex flex-col items-center py-4 sm:flex-row sm:items-start sm:p-4">
         <NavLink
           to="/"
-          className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline"
+          className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline lg:absolute"
         >
           S&H
         </NavLink>
 
-        <div className="grid grid-flow-row">
-          <ul className="flex gap-4">
+        <div className="m-auto grid grid-flow-row sm:w-10/12">
+          <ul className="mt-3 flex justify-center gap-4 sm:justify-start">
             <li>
               <NavLink
                 to="courses"
@@ -52,7 +52,11 @@ export function CoursesHeader() {
             </li>
           </ul>
 
-          {hasSearchBar && <CoursesSearchbar />}
+          {hasSearchBar && (
+            <div className="mt-4">
+              <CoursesSearchbar />
+            </div>
+          )}
         </div>
       </nav>
     </header>
