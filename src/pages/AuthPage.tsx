@@ -1,8 +1,8 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import SignUpBackground from "@/assets/img/sign-up-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { Footer } from "@/components/Footer";
 import { useAuth } from "@/context/AuthContext";
-import { FooterSection } from "@/sections/FooterSection";
 import { authAPI, tokenStorage, validation } from "@/services/authService";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -615,7 +615,7 @@ export function AuthPage() {
       </div>
 
       <div className="pt-16">
-        <FooterSection />
+        <Footer />
       </div>
     </div>
   );

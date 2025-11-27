@@ -2,7 +2,7 @@ import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import ManagerDashboardBackground from "@/assets/img/manager-dashboard-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { CustomSelect } from "@/components/CustomSelect";
-import { FooterSection } from "@/sections/FooterSection";
+import { Footer } from "@/components/Footer";
 import { tokenStorage } from "@/services/authService";
 import { managerAPI } from "@/services/managerService";
 import { useEffect, useState } from "react";
@@ -196,7 +196,7 @@ export function ManagerDashboardPage() {
       </div>
 
       <div className="pt-16">
-        <FooterSection />
+        <Footer />
       </div>
     </div>
   );

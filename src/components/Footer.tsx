@@ -3,7 +3,7 @@ import { isExternalLink, siteLinks } from "@/constants/siteLinks";
 import { bookingAPI } from "@/services/bookingService";
 import { useState } from "react";
 
-export function FooterSection() {
+export function Footer() {
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);

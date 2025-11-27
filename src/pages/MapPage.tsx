@@ -1,7 +1,7 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { Footer } from "@/components/Footer";
 import { MapComponent } from "@/components/MapComponent";
-import { FooterSection } from "@/sections/FooterSection";
 import { tokenStorage } from "@/services/authService";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
@@ -45,7 +45,7 @@ export function MapPage() {
         <CustomMarquee className="absolute! bottom-0" />
       </div>
       <div className="pt-16">
-        <FooterSection />
+        <Footer />
       </div>
     </div>
   );

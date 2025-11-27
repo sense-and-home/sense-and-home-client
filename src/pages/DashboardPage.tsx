@@ -1,7 +1,7 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import HeroBackground from "@/assets/img/hero-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
-import { FooterSection } from "@/sections/FooterSection";
+import { Footer } from "@/components/Footer";
 import { tokenStorage } from "@/services/authService";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
@@ -177,7 +177,7 @@ export function DashboardPage() {
       </div>
 
       <div className="pt-16">
-        <FooterSection />
+        <Footer />
       </div>
     </div>
   );
