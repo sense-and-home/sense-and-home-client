@@ -14,7 +14,7 @@ export function HeroSection() {
 
   return (
     <div
-      className="relative grid min-h-screen overflow-hidden bg-cover bg-[center_55%] text-white lg:block"
+      className="text-surface-1-foreground relative grid min-h-screen overflow-hidden bg-cover bg-[center_55%] lg:block"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${HeroBackground})`,
       }}

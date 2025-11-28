@@ -38,10 +38,8 @@ a.transitioning .course-badges {
 
 a.transitioning .course-description {
   view-transition-name: course-description;
-  width: fit-content;
 }
 
 .course-page-description {
   view-transition-name: course-description;
-  width: fit-content;
 }

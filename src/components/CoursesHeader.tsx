@@ -17,7 +17,7 @@ export function CoursesHeader() {
         </NavLink>
 
         <div className="m-auto grid w-full grid-flow-row px-4 sm:w-10/12">
-          <ul className="mt-3 flex justify-center gap-4 sm:justify-start">
+          <ul className="mt-3 flex flex-wrap justify-center gap-4 sm:justify-start">
             <li>
               <NavLink
                 to="courses"
