@@ -1,4 +1,7 @@
-export const formatPhoneNumber = (value: string): string => {
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function formatPhoneNumber(value: string): string {
   let clean = value.replace(/\D/g, "");
   if (clean.startsWith("8")) {
     clean = "7" + clean.slice(1);
@@ -19,4 +22,8 @@ export const formatPhoneNumber = (value: string): string => {
     formatted += "-" + clean.slice(9);
   }
   return formatted;
-};
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
