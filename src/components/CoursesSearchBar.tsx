@@ -3,7 +3,7 @@ import { SearchIcon } from "lucide-react";
 
 export function CoursesSearchbar() {
   return (
-    <div className="flex flex-col items-center gap-2 rounded-xl bg-[#F3F4F6] p-3 sm:flex-row sm:gap-4">
+    <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-[#F3F4F6] p-3 sm:flex-row sm:gap-4">
       <div className="flex h-full w-full items-center rounded-lg bg-white px-2 outline-gray-500 transition-colors focus-within:outline-2">
         <label htmlFor="search-input">
           <SearchIcon />
@@ -17,7 +17,7 @@ export function CoursesSearchbar() {
         />
       </div>
 
-      <Button className="bg-accent-2 outline-gray-500 focus:outline-2">
+      <Button className="bg-accent-2 w-full outline-gray-500 focus:outline-2 sm:max-w-36">
         Поиск
       </Button>
     </div>

@@ -2,8 +2,8 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LandingPage } from "@/landing/LandingPage";
 import { CoursesLayout } from "@/layouts/CoursesLayout";
 import { AuthPage } from "@/pages/AuthPage";
+import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
 import { DashboardPage } from "@/pages/DashboardPage";
-import { MainCoursesPage } from "@/pages/MainCoursesPage";
 import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
 import { MapPage } from "@/pages/MapPage";
 import { StudyingPage } from "@/pages/StudyingPage";
@@ -26,7 +26,7 @@ export function AppRouter() {
 
         {/* <Route element={<ProtectedRoute />}> */}
         <Route element={<CoursesLayout />}>
-          <Route path="/courses" element={<MainCoursesPage />} />
+          <Route path="/courses" element={<CourseCatalogPage />} />
           <Route path="/studying" element={<StudyingPage />} />
         </Route>
         {/* </Route> */}

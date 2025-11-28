@@ -16,7 +16,7 @@ export function CoursesHeader() {
           S&H
         </NavLink>
 
-        <div className="m-auto grid grid-flow-row sm:w-10/12">
+        <div className="m-auto grid w-full grid-flow-row px-4 sm:w-10/12">
           <ul className="mt-3 flex justify-center gap-4 sm:justify-start">
             <li>
               <NavLink
