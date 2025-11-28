@@ -10,12 +10,10 @@ export function CourseCatalogPage() {
           Обучайтесь работе с VR турами и клиентами вместе с Sense&Home!
         </p>
 
-        <div className="mt-8 grid grid-flow-row gap-8 lg:grid-cols-2">
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
+        <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <CourseCard key={i} id={String(i)} />
+          ))}
         </div>
       </div>
 

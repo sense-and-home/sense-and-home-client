@@ -1,27 +1,17 @@
-import { NavLink } from "react-router";
-
-interface CourseCardProps {
-  id: string;
-}
-
-export function CourseCard({ id }: CourseCardProps) {
+export function CoursePage() {
   return (
-    <NavLink
-      to={id}
-      className="rounded-secondary flex justify-between gap-4 p-4 shadow-[0_0_4px_rgba(0,0,0,0.25)]"
-      viewTransition
-    >
+    <div>
       <div className="flex flex-1 flex-col justify-between">
         <div>
-          <h2 className="course-title text-2xl font-semibold">
+          <h2 className="course-page-title text-2xl font-semibold">
             Как работает VR-тур в глазах клиента?
           </h2>
-          <p className="course-description">
+          <p className="course-page-description">
             Курс по работе с системой и интерфейсом
           </p>
         </div>
 
-        <ul className="course-badges flex gap-2 text-nowrap">
+        <ul className="course-page-badges flex gap-2 text-nowrap">
           <li className="rounded-lg bg-red-300 px-2 py-1">VR\AR</li>
           <li className="rounded-lg bg-blue-200 px-2 py-1">Коммуникация</li>
           <li className="rounded-lg bg-green-200 px-2 py-1">
@@ -32,11 +22,11 @@ export function CourseCard({ id }: CourseCardProps) {
 
       <div className="rounded-secondary max-w-64 overflow-hidden">
         <img
-          className="course-image"
+          className="course-page-image"
           src="https://placehold.co/300x300"
           alt=""
         />
       </div>
-    </NavLink>
+    </div>
   );
 }

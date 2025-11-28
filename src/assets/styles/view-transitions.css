@@ -1,0 +1,47 @@
+a.transitioning .course-title {
+  view-transition-name: course-title;
+  width: fit-content;
+}
+
+.course-page-title {
+  view-transition-name: course-title;
+  width: fit-content;
+}
+
+a.transitioning .course-image {
+  view-transition-name: course-image;
+}
+
+.course-page-image {
+  view-transition-name: course-image;
+}
+
+.course-image,
+.course-page-image {
+  will-change: transform, border-radius;
+}
+
+a.transitioning .course-image,
+.course-page-image {
+  border-radius: inherit;
+}
+
+a.transitioning .course-badges {
+  view-transition-name: course-badges;
+  width: fit-content;
+}
+
+.course-page-badges {
+  view-transition-name: course-badges;
+  width: fit-content;
+}
+
+a.transitioning .course-description {
+  view-transition-name: course-description;
+  width: fit-content;
+}
+
+.course-page-description {
+  view-transition-name: course-description;
+  width: fit-content;
+}
