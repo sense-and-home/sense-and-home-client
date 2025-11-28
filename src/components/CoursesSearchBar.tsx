@@ -16,7 +16,7 @@ export function CoursesSearchbar() {
         />
       </div>
 
-      <button className="bg-accent-secondary h-full w-full rounded-lg py-2 font-bold outline-gray-500 hover:cursor-pointer focus:outline-2 sm:w-36">
+      <button className="bg-accent-2 h-full w-full rounded-lg py-2 font-bold outline-gray-500 hover:cursor-pointer focus:outline-2 sm:w-36">
         Поиск
       </button>
     </div>

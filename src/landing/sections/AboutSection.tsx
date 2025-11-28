@@ -50,7 +50,7 @@ export function AboutSection() {
 
         <div className="mt-6 text-center md:mt-8">
           <a
-            className="rounded-primary bg-accent/50 inline-block px-6 py-3 text-lg font-bold md:px-10 md:text-xl"
+            className="rounded-primary bg-accent-1/50 inline-block px-6 py-3 text-lg font-bold md:px-10 md:text-xl"
             href="#technology-section"
           >
             Подробнее о технологии

@@ -55,7 +55,7 @@ export function HeroSection() {
               }
               key={authLink.name}
               className={`rounded-[inherit] px-10 py-3 hover:underline ${
-                index === 0 ? "bg-accent/50" : ""
+                index === 0 ? "bg-accent-1/50" : ""
               }`}
               href={authLink.href}
             >
@@ -91,7 +91,7 @@ export function HeroSection() {
         onClick={toggleMenu}
       >
         <div
-          className="bg-background/95 absolute top-0 right-0 h-full w-80 px-4 py-6 backdrop-blur-sm"
+          className="bg-surface-1/95 absolute top-0 right-0 h-full w-80 px-4 py-6 backdrop-blur-sm"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -133,7 +133,7 @@ export function HeroSection() {
                         : undefined
                     }
                     className={`rounded-primary px-6 py-3 text-center text-lg font-semibold hover:underline ${
-                      index === 0 ? "bg-accent/50" : "border border-white/20"
+                      index === 0 ? "bg-accent-1/50" : "border border-white/20"
                     }`}
                     href={authLink.href}
                     onClick={toggleMenu}

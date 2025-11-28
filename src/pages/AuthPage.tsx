@@ -296,7 +296,7 @@ export function AuthPage() {
   };
 
   if (isLoading || isAuthenticated) {
-    return <div className="bg-background h-screen" />;
+    return <div className="bg-surface-1 h-screen" />;
   }
 
   const renderStepContent = () => {
@@ -307,7 +307,7 @@ export function AuthPage() {
             <div className="space-y-4">
               <div className="flex flex-col gap-2">
                 <input
-                  className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
+                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
                     validationErrors.fullName ? "border-2 border-red-500" : ""
                   }`}
                   type="text"
@@ -324,7 +324,7 @@ export function AuthPage() {
                 )}
 
                 <input
-                  className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
+                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
                     validationErrors.email ? "border-2 border-red-500" : ""
                   }`}
                   type="email"
@@ -340,7 +340,7 @@ export function AuthPage() {
 
                 <label
                   htmlFor="data-collection"
-                  className="bg-foreground rounded-primary inline-flex w-full justify-between px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-flex w-full justify-between px-4 py-3 text-base text-black md:px-8 md:text-lg"
                 >
                   <span>Я даю согласие на обработку персональных данных</span>
                   <input
@@ -358,7 +358,7 @@ export function AuthPage() {
             <div className="space-y-4">
               <div className="flex flex-col gap-2">
                 <input
-                  className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
+                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
                     validationErrors.email ? "border-2 border-red-500" : ""
                   }`}
                   type="email"
@@ -373,7 +373,7 @@ export function AuthPage() {
                 )}
 
                 <input
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   type="password"
                   value={formData.password}
                   onChange={(e) =>
@@ -415,7 +415,7 @@ export function AuthPage() {
             <div className="space-y-4">
               <div className="flex flex-col gap-2">
                 <input
-                  className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
+                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
                     validationErrors.company ? "border-2 border-red-500" : ""
                   }`}
                   type="text"
@@ -430,7 +430,7 @@ export function AuthPage() {
                 )}
 
                 <input
-                  className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
+                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
                     validationErrors.specialization
                       ? "border-2 border-red-500"
                       : ""
@@ -474,7 +474,7 @@ export function AuthPage() {
               </p>
 
               <input
-                className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                 type="password"
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
@@ -534,7 +534,7 @@ export function AuthPage() {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-surface-1">
       <div
         className="relative min-h-screen overflow-hidden bg-cover text-white"
         style={{
@@ -565,7 +565,7 @@ export function AuthPage() {
             <button
               onClick={() => handleAuthModeToggle("registration")}
               className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${
-                authMode === "registration" ? "bg-accent/50" : ""
+                authMode === "registration" ? "bg-accent-1/50" : ""
               }`}
             >
               Регистрация
@@ -573,7 +573,7 @@ export function AuthPage() {
             <button
               onClick={() => handleAuthModeToggle("login")}
               className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${
-                authMode === "login" ? "bg-accent/50" : ""
+                authMode === "login" ? "bg-accent-1/50" : ""
               }`}
             >
               Вход
@@ -596,7 +596,7 @@ export function AuthPage() {
                   currentStep === 3 &&
                   !formData.password)
               }
-              className="bg-background text-foreground hover:bg-accent rounded-primary w-full flex-1 px-6 py-3 font-semibold transition-colors disabled:opacity-50"
+              className="bg-surface-1 text-surface-1-foreground hover:bg-accent-1 rounded-primary w-full flex-1 px-6 py-3 font-semibold transition-colors disabled:opacity-50"
             >
               {isFormLoading
                 ? "Загрузка..."

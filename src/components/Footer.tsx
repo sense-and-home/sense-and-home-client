@@ -38,7 +38,7 @@ export function Footer() {
   };
 
   return (
-    <div className="bg-background text-foreground px-2 py-8 md:px-4 lg:px-8">
+    <div className="bg-surface-1 text-surface-1-foreground px-2 py-8 md:px-4 lg:px-8">
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
         <a
           href={siteLinks.logo.href}
@@ -92,7 +92,7 @@ export function Footer() {
             className="flex w-full flex-col gap-3 sm:flex-row sm:gap-0 lg:w-auto"
           >
             <input
-              className="bg-foreground rounded-primary inline-block w-full px-6 py-3 text-base text-black sm:w-auto sm:min-w-md md:px-8 md:text-lg"
+              className="bg-surface-2 rounded-primary inline-block w-full px-6 py-3 text-base text-black sm:w-auto sm:min-w-md md:px-8 md:text-lg"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -102,7 +102,7 @@ export function Footer() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-foreground rounded-primary px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
+              className="bg-surface-2 rounded-primary px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
             >
               {isSubmitting ? "Отправка..." : "Отправить"}
             </button>

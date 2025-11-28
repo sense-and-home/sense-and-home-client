@@ -118,7 +118,7 @@ export function ApplicationSection() {
 
   return (
     <div
-      className="bg-background px-2 py-8 md:px-4 lg:px-8"
+      className="bg-surface-1 px-2 py-8 md:px-4 lg:px-8"
       id="application-section"
     >
       <div
@@ -161,14 +161,14 @@ export function ApplicationSection() {
             <div className="rounded-primary flex bg-black/20 p-[2px] text-sm font-bold md:text-lg lg:text-xl">
               <button
                 type="button"
-                className={`${mode == "consultation" ? "bg-accent/70" : ""} w-1/2 rounded-[inherit] px-4 py-2 transition-colors hover:cursor-pointer md:px-6 md:py-3 lg:px-10`}
+                className={`${mode == "consultation" ? "bg-accent-1/70" : ""} w-1/2 rounded-[inherit] px-4 py-2 transition-colors hover:cursor-pointer md:px-6 md:py-3 lg:px-10`}
                 onClick={() => setMode("consultation")}
               >
                 Мне нужна консультация
               </button>
               <button
                 type="button"
-                className={`${mode == "ready" ? "bg-accent/70" : ""} w-1/2 rounded-[inherit] px-4 py-2 transition-colors hover:cursor-pointer md:px-6 md:py-3 lg:px-10`}
+                className={`${mode == "ready" ? "bg-accent-1/70" : ""} w-1/2 rounded-[inherit] px-4 py-2 transition-colors hover:cursor-pointer md:px-6 md:py-3 lg:px-10`}
                 onClick={() => setMode("ready")}
               >
                 Я готов к 1 этапу
@@ -176,7 +176,7 @@ export function ApplicationSection() {
             </div>
             <div>
               <input
-                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.name ? "border-2 border-red-500" : ""}`}
+                className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.name ? "border-2 border-red-500" : ""}`}
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
@@ -189,7 +189,7 @@ export function ApplicationSection() {
             </div>
             <div>
               <input
-                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.phone ? "border-2 border-red-500" : ""}`}
+                className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.phone ? "border-2 border-red-500" : ""}`}
                 type="tel"
                 value={formData.phone}
                 onChange={handlePhoneChange}
@@ -202,7 +202,7 @@ export function ApplicationSection() {
             </div>
             <div>
               <input
-                className={`bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.email ? "border-2 border-red-500" : ""}`}
+                className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${errors.email ? "border-2 border-red-500" : ""}`}
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
@@ -218,7 +218,7 @@ export function ApplicationSection() {
                 <div>
                   <label
                     htmlFor="customFileInput"
-                    className={`bg-foreground rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base text-black/50 hover:cursor-pointer md:px-8 md:text-lg ${errors.file ? "border-2 border-red-500" : ""}`}
+                    className={`bg-surface-2 rounded-primary inline-flex w-full items-center justify-between px-4 py-3 text-base text-black/50 hover:cursor-pointer md:px-8 md:text-lg ${errors.file ? "border-2 border-red-500" : ""}`}
                   >
                     <span className="truncate">
                       {formData.file

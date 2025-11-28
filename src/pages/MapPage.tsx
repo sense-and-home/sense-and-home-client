@@ -17,7 +17,7 @@ export function MapPage() {
   }, [navigate]);
 
   return (
-    <div className="bg-background">
+    <div className="bg-surface-1">
       <div className="relative min-h-screen overflow-hidden bg-cover text-white">
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
           <div className="flex items-center">

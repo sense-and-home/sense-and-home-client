@@ -42,7 +42,7 @@ export function DashboardPage() {
   }, [navigate]);
 
   return (
-    <div className="bg-background">
+    <div className="bg-surface-1">
       <div
         className="relative min-h-screen overflow-hidden bg-cover text-white"
         style={{
@@ -71,7 +71,7 @@ export function DashboardPage() {
         <div className="mx-auto px-2 py-8 md:px-4 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
-              <div className="bg-foreground/90 rounded-2xl border border-white/20 p-8 backdrop-blur-sm">
+              <div className="bg-surface-1-foreground/90 rounded-2xl border border-white/20 p-8 backdrop-blur-sm">
                 <h1 className="heading mb-8 font-bold text-black">
                   Сейчас в работе
                 </h1>
@@ -123,7 +123,7 @@ export function DashboardPage() {
                   type="text"
                   value={user?.full_name || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
                 />
 
@@ -132,7 +132,7 @@ export function DashboardPage() {
                     type="tel"
                     value={user.phone}
                     readOnly
-                    className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                    className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                     placeholder="+7 (---) --- -- --"
                   />
                 )}
@@ -141,7 +141,7 @@ export function DashboardPage() {
                   type="email"
                   value={user?.email || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
                 />
 
@@ -149,7 +149,7 @@ export function DashboardPage() {
                   type="text"
                   value={user?.specialization?.title || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Компания*"
                 />
               </div>

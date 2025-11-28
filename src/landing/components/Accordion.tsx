@@ -122,7 +122,7 @@ function AccordionPanel({
   }, [open]);
 
   return (
-    <div className="text-background bg-foreground rounded-secondary w-full border">
+    <div className="text-surface-2-foreground bg-surface-2 rounded-secondary w-full border">
       <h3>
         <button
           ref={headerRef}

@@ -19,7 +19,7 @@ interface CustomMarqueeProps {
 export function CustomMarquee({ className }: CustomMarqueeProps) {
   return (
     <Marquee
-      className={`${className} bg-background overflow-y-hidden py-2 md:py-4`}
+      className={`${className} bg-surface-1 overflow-y-hidden py-2 md:py-4`}
     >
       {marqueeWords.map((word) => (
         <span key={word} className="mx-2 text-2xl md:mx-4 md:text-4xl">

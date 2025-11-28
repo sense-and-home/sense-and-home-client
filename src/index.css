@@ -7,12 +7,14 @@
   --radius-primary: 50px;
   --radius-secondary: 30px;
 
-  --color-background: #090011;
-  --color-foreground: #ffffff;
+  --color-surface-1: #090011;
+  --color-surface-1-foreground: #ffffff;
+  --color-surface-2: #ffffff;
+  --color-surface-2-foreground: #090011;
 
-  --color-accent: #72d6f3;
-  --color-accent-secondary: #ef5d6b;
-  --color-accent-tertiary: #e1150b;
+  --color-accent-1: #72d6f3;
+  --color-accent-2: #ef5d6b;
+  --color-accent-3: #e1150b;
 }
 
 @layer base {

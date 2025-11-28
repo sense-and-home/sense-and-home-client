@@ -90,7 +90,7 @@ export function CallRequestModal({
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
-              className="text-foreground rounded-primary inline-block w-full bg-black px-4 py-3 text-base md:px-8 md:text-lg"
+              className="text-surface-1-foreground rounded-primary inline-block w-full bg-black px-4 py-3 text-base md:px-8 md:text-lg"
               type="tel"
               value={phone}
               onChange={handlePhoneChange}

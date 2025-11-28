@@ -14,7 +14,7 @@ export function ProtectedRoute({
   const { isAuthenticated, user, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div className="bg-background h-screen" />;
+    return <div className="bg-surface-1 h-screen" />;
   }
 
   if (!isAuthenticated) {

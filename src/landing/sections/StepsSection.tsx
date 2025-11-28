@@ -10,7 +10,7 @@ export function StepsSection() {
   return (
     <div
       id="steps-section"
-      className="bg-background text-foreground flex flex-col gap-8 px-2 py-12 md:gap-16 md:px-4 md:py-20 lg:px-8"
+      className="bg-surface-1 text-surface-1-foreground flex flex-col gap-8 px-2 py-12 md:gap-16 md:px-4 md:py-20 lg:px-8"
     >
       <h2 className="heading mb-8 text-3xl md:mb-12 md:text-4xl lg:text-6xl">
         Этапы работ
@@ -38,7 +38,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
+          <span className="text-accent-3/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             1
           </span>
         </div>
@@ -60,7 +60,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
+          <span className="text-accent-1/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             2
           </span>
         </div>
@@ -93,7 +93,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
+          <span className="text-accent-3/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             3
           </span>
         </div>
@@ -115,7 +115,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
+          <span className="text-accent-1/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             4
           </span>
         </div>
@@ -148,7 +148,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
+          <span className="text-accent-3/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             5
           </span>
         </div>
@@ -169,7 +169,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
+          <span className="text-accent-1/30 absolute -top-4 left-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:left-1/16 lg:text-[300px]">
             6
           </span>
         </div>
@@ -202,7 +202,7 @@ export function StepsSection() {
             </p>
           </div>
 
-          <span className="text-accent-tertiary/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
+          <span className="text-accent-3/30 absolute -top-4 right-0 text-[120px] leading-[1] font-extrabold md:text-[200px] lg:top-0 lg:right-1/16 lg:text-[300px]">
             7
           </span>
         </div>
@@ -210,7 +210,7 @@ export function StepsSection() {
 
       <div className="mt-6 text-center md:mt-8">
         <a
-          className="rounded-primary bg-accent inline-block px-6 py-3 text-lg font-bold text-black md:px-10 md:text-xl"
+          className="rounded-primary bg-accent-1 inline-block px-6 py-3 text-lg font-bold text-black md:px-10 md:text-xl"
           href="#application-section"
         >
           Оставить заявку

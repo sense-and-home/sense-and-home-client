@@ -118,7 +118,7 @@ export function QuestionSection() {
   return (
     <div
       id="question-section"
-      className="bg-background text-foreground px-2 py-8 md:px-4 lg:px-8"
+      className="bg-surface-1 text-surface-1-foreground px-2 py-8 md:px-4 lg:px-8"
     >
       <h2 className="heading mb-6 text-3xl md:mb-8 md:text-4xl lg:text-6xl">
         Вопрос & Ответ

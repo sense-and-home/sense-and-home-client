@@ -84,7 +84,7 @@ export function ManagerDashboardPage() {
   }, [selectedCity, selectedPeriod]);
 
   return (
-    <div className="bg-background">
+    <div className="bg-surface-1">
       <div
         className="relative min-h-screen overflow-hidden bg-cover text-white"
         style={{
@@ -162,7 +162,7 @@ export function ManagerDashboardPage() {
                   type="text"
                   value={user?.full_name || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
                 />
                 {user?.phone && (
@@ -170,7 +170,7 @@ export function ManagerDashboardPage() {
                     type="tel"
                     value={user.phone}
                     readOnly
-                    className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                    className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                     placeholder="+7 (---) --- -- --"
                   />
                 )}
@@ -178,14 +178,14 @@ export function ManagerDashboardPage() {
                   type="email"
                   value={user?.email || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
                 />
                 <input
                   type="text"
                   value={user?.specialization?.title || ""}
                   readOnly
-                  className="bg-foreground rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Компания*"
                 />
               </div>
