@@ -30,12 +30,12 @@ export function MapPage() {
             </NavLink>
           </div>
 
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
           >
             S&H
-          </a>
+          </NavLink>
         </div>
 
         <div className="mx-auto h-[700px] px-2 py-8 md:px-4">

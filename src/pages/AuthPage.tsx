@@ -2,10 +2,11 @@ import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import SignUpBackground from "@/assets/img/sign-up-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { authAPI, tokenStorage, validation } from "@/services/authService";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 type AuthMode = "registration" | "login";
 
@@ -552,12 +553,12 @@ export function AuthPage() {
             </button>
           </div>
 
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
           >
             S&H
-          </a>
+          </NavLink>
         </div>
 
         <div className="mb-8 flex justify-center">
@@ -585,7 +586,8 @@ export function AuthPage() {
           <div className="w-full max-w-xl">
             <div className="mb-8">{renderStepContent()}</div>
 
-            <button
+            <Button
+              shape="round"
               onClick={handleMainButtonClick}
               disabled={
                 isFormLoading ||
@@ -607,7 +609,7 @@ export function AuthPage() {
                       ? "Завершить"
                       : "Продолжить"
                   : "Продолжить"}
-            </button>
+            </Button>
           </div>
         </div>
 

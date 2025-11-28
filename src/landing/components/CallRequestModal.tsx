@@ -1,4 +1,5 @@
 import CallBackBackground from "@/assets/img/call-back-background.webp";
+import { Button } from "@/components/ui/Button";
 import { Modal } from "@/landing/components/Modal";
 import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
@@ -97,13 +98,14 @@ export function CallRequestModal({
               placeholder="+7 (---) --- -- --"
               required
             />
-            <button
+            <Button
+              shape="round"
               type="submit"
               disabled={isSubmitting || !phone.trim()}
-              className={`rounded-primary mt-6 inline-block w-fit bg-black px-6 py-2 font-bold text-white hover:cursor-pointer disabled:bg-black/50 md:px-10 lg:mt-10 lg:w-fit`}
+              className="text-surface-1-foreground mt-6 inline-block w-fit bg-black px-6 py-2 font-bold hover:cursor-pointer disabled:bg-black/50 md:px-10 lg:mt-10 lg:w-fit"
             >
               {isSubmitting ? "Отправка..." : "Запросить звонок"}
-            </button>
+            </Button>
           </form>
         </div>
       </div>

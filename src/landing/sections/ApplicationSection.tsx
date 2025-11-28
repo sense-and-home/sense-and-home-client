@@ -1,4 +1,5 @@
 import ApplicationBackground from "@/assets/img/application-background.webp";
+import { Button } from "@/components/ui/Button";
 import { CallRequestModal } from "@/landing/components/CallRequestModal";
 import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { bookingAPI } from "@/services/bookingService";
@@ -145,13 +146,14 @@ export function ApplicationSection() {
               конкретных деталей.
             </p>
           </div>
-          <button
+          <Button
+            shape="round"
             type="button"
             onClick={() => setIsCallModalOpen(true)}
-            className="rounded-primary mt-6 inline-block w-full bg-black px-6 py-3 text-lg font-bold text-white hover:cursor-pointer md:px-10 md:text-xl lg:mt-10 lg:w-fit"
+            className="text-surface-1-foreground mt-6 inline-block w-full bg-black px-6 py-3 text-lg font-bold hover:cursor-pointer md:px-10 md:text-xl lg:mt-10 lg:w-fit"
           >
             Запросить звонок
-          </button>
+          </Button>
         </div>
         <div className="order-1 lg:order-2">
           <form
@@ -288,13 +290,14 @@ export function ApplicationSection() {
                 {errors.general}
               </p>
             )}
-            <button
+            <Button
+              shape="round"
               type="submit"
               disabled={isSubmitting}
-              className="rounded-primary bg-black px-6 py-3 text-base font-bold text-white hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
+              className="text-surface-1-foreground bg-black px-6 py-3 text-base font-bold disabled:bg-black/50 md:px-8 md:text-lg"
             >
               {isSubmitting ? "Отправка..." : "Оставить заявку"}
-            </button>
+            </Button>
           </form>
         </div>
       </div>

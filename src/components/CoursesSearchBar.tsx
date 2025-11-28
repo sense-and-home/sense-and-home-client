@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/Button";
 import { SearchIcon } from "lucide-react";
 
 export function CoursesSearchbar() {
@@ -16,9 +17,9 @@ export function CoursesSearchbar() {
         />
       </div>
 
-      <button className="bg-accent-2 h-full w-full rounded-lg py-2 font-bold outline-gray-500 hover:cursor-pointer focus:outline-2 sm:w-36">
+      <Button className="bg-accent-2 outline-gray-500 focus:outline-2">
         Поиск
-      </button>
+      </Button>
     </div>
   );
 }

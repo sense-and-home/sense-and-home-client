@@ -131,7 +131,7 @@ function AccordionPanel({
           id={`accordion-${id}`}
           onClick={onToggle}
           onKeyDown={onHeaderKeyDown}
-          className={`focus-visible:ring-accent rounded-secondary flex w-full items-center justify-between gap-2 px-6 py-3 text-left hover:cursor-pointer focus:outline-none focus-visible:ring-2`}
+          className={`focus-visible:ring-accent-1 rounded-secondary flex w-full items-center justify-between gap-2 px-6 py-3 text-left hover:cursor-pointer focus:outline-none focus-visible:ring-2`}
         >
           <span className="font-semibold lg:text-lg">
             <span className="mr-4">{count + 1}.</span>

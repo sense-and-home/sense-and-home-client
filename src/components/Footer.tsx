@@ -2,6 +2,8 @@ import { isExternalLink, siteLinks } from "@/constants/siteLinks";
 import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { bookingAPI } from "@/services/bookingService";
 import { useState } from "react";
+import { NavLink } from "react-router";
+import { Button } from "./ui/Button";
 
 export function Footer() {
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
@@ -40,12 +42,12 @@ export function Footer() {
   return (
     <div className="bg-surface-1 text-surface-1-foreground px-2 py-8 md:px-4 lg:px-8">
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
-        <a
-          href={siteLinks.logo.href}
+        <NavLink
+          to={siteLinks.logo.href}
           className="justify-self-center font-[Abhaya_Libre] text-4xl leading-[1] font-extrabold hover:underline md:text-[50px]"
         >
           {siteLinks.logo.text}
-        </a>
+        </NavLink>
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
           {siteLinks.footer.main.map((link) => (
             <li key={link.name}>
@@ -99,13 +101,14 @@ export function Footer() {
               placeholder="----------@mail.ru"
               required
             />
-            <button
+            <Button
+              shape="round"
               type="submit"
               disabled={isSubmitting}
-              className="bg-surface-2 rounded-primary px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
+              className="bg-surface-2 px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
             >
               {isSubmitting ? "Отправка..." : "Отправить"}
-            </button>
+            </Button>
           </form>
           <ul className="space-y-2 text-sm md:text-base lg:text-lg xl:text-xl">
             {siteLinks.footer.legal.map((link) => (
