@@ -12,7 +12,11 @@ export function CourseCatalogPage() {
 
         <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
           {Array.from({ length: 5 }).map((_, i) => (
-            <CourseCard key={i} id={String(i)} />
+            <CourseCard
+              key={i}
+              title="Как работает VR-тур в глазах клиента?"
+              id={String(i)}
+            />
           ))}
         </div>
       </div>

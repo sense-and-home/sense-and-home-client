@@ -36,6 +36,7 @@ export function CoursesHeader() {
                 className={({ isActive }) =>
                   `${isActive ? "font-bold" : "font-light"} hover:underline`
                 }
+                viewTransition
               >
                 Моё обучение
               </NavLink>

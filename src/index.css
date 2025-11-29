@@ -16,6 +16,9 @@
   --color-accent-1: #72d6f3;
   --color-accent-2: #ef5d6b;
   --color-accent-3: #e1150b;
+
+  --color-action: #6153f8;
+  --color-action-foreground: #ffffff;
 }
 
 @layer base {
