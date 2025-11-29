@@ -7,7 +7,7 @@ import { CoursePage } from "@/pages/CoursePage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
 import { MapPage } from "@/pages/MapPage";
-import { StudyingPage } from "@/pages/StudyingPage";
+import { MyLearningPage } from "@/pages/MyLearningPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
@@ -56,8 +56,8 @@ const router = createBrowserRouter([
         element: <CoursePage />,
       },
       {
-        path: "/studying",
-        element: <StudyingPage />,
+        path: "/my-learning",
+        element: <MyLearningPage />,
       },
     ],
   },

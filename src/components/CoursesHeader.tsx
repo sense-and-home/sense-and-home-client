@@ -32,7 +32,7 @@ export function CoursesHeader() {
 
             <li>
               <NavLink
-                to="studying"
+                to="my-learning"
                 className={({ isActive }) =>
                   `${isActive ? "font-bold" : "font-light"} hover:underline`
                 }

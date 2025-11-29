@@ -110,7 +110,7 @@ export function CoursePage() {
           <Button className="bg-action text-action-foreground w-full sm:text-xl">
             <NavLink
               className="border-none outline-none"
-              to="/studying"
+              to="/my-learning"
               viewTransition
             >
               Начать обучение
