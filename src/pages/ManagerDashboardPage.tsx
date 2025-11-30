@@ -1,12 +1,16 @@
+import { getManagerProfile } from "@/api/userApi";
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import ManagerDashboardBackground from "@/assets/img/manager-dashboard-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { CustomSelect } from "@/components/CustomSelect";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
-import { managerAPI } from "@/services/managerService";
-import type { ManagerStatistics } from "@/types/manager";
-import { useEffect, useMemo, useState } from "react";
+import type {
+  ManagerProfileQueryParameters,
+  ManagerProfileResponse,
+} from "@/types/manager";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 
 const periodOptions = [
@@ -21,51 +25,71 @@ const cityOptions = [
   { value: "kazan", label: "Казань" },
 ];
 
+const cityMap: Record<string, string> = {
+  moscow: "Moscow",
+  spb: "Saint Petersburg",
+  kazan: "Kazan",
+};
+
+function computeDateRange(period: string) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const toIsoDate = (d: Date) => {
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  };
+
+  const today = new Date();
+  if (period === "today") {
+    return { date_from: toIsoDate(today), date_to: toIsoDate(today) };
+  }
+  if (period === "week") {
+    const from = new Date();
+    from.setDate(today.getDate() - 6);
+    return { date_from: toIsoDate(from), date_to: toIsoDate(today) };
+  }
+  const from = new Date();
+  from.setDate(today.getDate() - 29);
+  return { date_from: toIsoDate(from), date_to: toIsoDate(today) };
+}
+
 export function ManagerDashboardPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
   const [selectedPeriod, setSelectedPeriod] = useState(periodOptions[0]);
-  const [stats, setStats] = useState<ManagerStatistics | null>(null);
-  const [isStatsLoading, setIsStatsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const displayName = useMemo(
     () => user?.firstName || user?.lastName || "Имя",
     [user],
   );
 
-  useEffect(() => {
-    let mounted = true;
-
-    const fetchStats = async () => {
-      setIsStatsLoading(true);
-      setError(null);
-      try {
-        const data = await managerAPI.getStats(
-          selectedCity.value,
-          selectedPeriod.value,
-        );
-        if (!mounted) return;
-        setStats(data || null);
-      } catch (err) {
-        console.error("Error fetching stats:", err);
-        if (!mounted) return;
-        setStats(null);
-        setError("Не удалось загрузить статистику");
-      } finally {
-        if (!mounted) return;
-        setIsStatsLoading(false);
-      }
-    };
-
-    fetchStats();
-
-    return () => {
-      mounted = false;
+  const managerQueryParams = useMemo<ManagerProfileQueryParameters>(() => {
+    const { date_from, date_to } = computeDateRange(selectedPeriod.value);
+    return {
+      city: cityMap[selectedCity.value] ?? selectedCity.value,
+      date_from,
+      date_to,
     };
   }, [selectedCity, selectedPeriod]);
+
+  const managerProfileQuery = useQuery<ManagerProfileResponse>({
+    queryKey: [
+      "manager-profile",
+      user?.id,
+      selectedCity.value,
+      selectedPeriod.value,
+      managerQueryParams.dateFrom,
+      managerQueryParams.dateTo,
+    ],
+    queryFn: async () => {
+      return await getManagerProfile(user!.id, managerQueryParams);
+    },
+    enabled: !!user?.id && !!selectedCity?.value,
+  });
+
+  const isStatsLoading = managerProfileQuery.isLoading;
+  const error = managerProfileQuery.error;
+  const managerData = managerProfileQuery.data;
 
   const handleLogout = () => {
     logout();
@@ -135,17 +159,19 @@ export function ManagerDashboardPage() {
                     <div className="h-8 animate-pulse rounded bg-gray-200" />
                   </div>
                 ) : error ? (
-                  <div className="text-red-400">{error}</div>
+                  <div className="text-red-400">
+                    Не удалось загрузить статистику
+                  </div>
                 ) : (
                   <div className="space-y-2 text-xl font-bold text-white">
                     <p>
                       Заявок за {selectedPeriod.text || selectedPeriod.label}:{" "}
-                      {stats?.totalRequests ?? 0}
+                      {managerData?.stats?.totalRequests ?? 0}
                     </p>
                     <p>
                       Обработано заявок за{" "}
                       {selectedPeriod.text || selectedPeriod.label}:{" "}
-                      {stats?.newRequestsCount ?? 0}
+                      {managerData?.stats?.newRequestsCount ?? 0}
                     </p>
                   </div>
                 )}
@@ -160,10 +186,7 @@ export function ManagerDashboardPage() {
               <div className="space-y-2">
                 <input
                   type="text"
-                  value={
-                    user?.lastName ??
-                    `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
-                  }
+                  value={`${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
