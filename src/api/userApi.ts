@@ -5,7 +5,8 @@ import type {
 } from "@/types/manager";
 import type { UserProfileResponse } from "@/types/user";
 
-export async function getUserProfile(id: number) {
+export async function getUserProfile(id?: number) {
+  if (!id) return null;
   const response = await api.get<UserProfileResponse>(
     `auth/profile/user/${id}`,
   );

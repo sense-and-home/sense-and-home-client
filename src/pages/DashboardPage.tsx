@@ -1,15 +1,28 @@
+import { getUserProfile } from "@/api/userApi";
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import HeroBackground from "@/assets/img/hero-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 import { NavLink, useNavigate } from "react-router";
 
 export function DashboardPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  const displayName = user?.firstName || user?.lastName || "Имя";
+  const { data, isLoading } = useQuery({
+    queryKey: ["userProfile", user?.id],
+    queryFn: () => getUserProfile(user?.id),
+    enabled: !!user?.id,
+  });
+
+  if (isLoading) {
+    return <div className="bg-surface-1 h-screen" />;
+  }
+
+  const profileUser = data?.user;
+  const displayName = profileUser?.firstName || profileUser?.lastName || "Имя";
 
   const handleLogout = () => {
     logout();
@@ -33,7 +46,6 @@ export function DashboardPage() {
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
             </NavLink>
-
             <button
               onClick={handleLogout}
               className="hidden rounded-md border border-white/20 px-3 py-1 text-sm hover:bg-white/5 md:inline-block"
@@ -41,7 +53,6 @@ export function DashboardPage() {
               Выйти
             </button>
           </div>
-
           <NavLink
             to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
@@ -49,7 +60,6 @@ export function DashboardPage() {
             S&H
           </NavLink>
         </div>
-
         <div className="mx-auto px-2 py-8 md:px-4 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
@@ -94,51 +104,42 @@ export function DashboardPage() {
                 </div>
               </div>
             </div>
-
             <div className="order-1 space-y-8 lg:order-2">
               <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
                 Здравствуйте, {displayName}!
               </h2>
-
               <div className="space-y-2">
                 <input
                   type="text"
-                  value={
-                    user?.firstName ??
-                    `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
-                  }
+                  value={`${profileUser?.firstName ?? ""} ${profileUser?.lastName ?? ""}`.trim()}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
                 />
-
-                {user?.phone && (
+                {profileUser?.phone && (
                   <input
                     type="tel"
-                    value={user.phone}
+                    value={profileUser.phone}
                     readOnly
                     className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                     placeholder="+7 (---) --- -- --"
                   />
                 )}
-
                 <input
                   type="email"
-                  value={user?.email ?? ""}
+                  value={profileUser?.email ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
                 />
-
                 <input
                   type="text"
-                  value={user?.specialization?.title ?? ""}
+                  value={profileUser?.specialization?.title ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Специализация"
                 />
               </div>
-
               <div className="flex justify-end">
                 <NavLink
                   to="/map"
@@ -157,10 +158,8 @@ export function DashboardPage() {
             </div>
           </div>
         </div>
-
         <CustomMarquee className="absolute! bottom-0" />
       </div>
-
       <div className="pt-16">
         <Footer />
       </div>

@@ -77,7 +77,7 @@ api.interceptors.response.use(
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = tokenStorage.getAccessToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -97,7 +97,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
+        const refreshToken = tokenStorage.getRefreshToken();
         const response = await publicApi.post("/auth/refresh", {
           refreshToken,
         });
