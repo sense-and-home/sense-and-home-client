@@ -1,6 +1,6 @@
+import { requestEmail } from "@/api/bookingApi";
 import { isExternalLink, siteLinks } from "@/constants/siteLinks";
 import { ThankYouModal } from "@/landing/components/ThankYouModal";
-import { bookingAPI } from "@/services/bookingService";
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { Button } from "./ui/Button";
@@ -26,7 +26,7 @@ export function Footer() {
     setErrorMessage(null);
 
     try {
-      await bookingAPI.requestEmail({ email: trimmedEmail });
+      await requestEmail({ email: trimmedEmail });
       setIsThankYouModalOpen(true);
       setEmail("");
     } catch (error: any) {

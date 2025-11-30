@@ -1,8 +1,8 @@
+import { requestConsultation } from "@/api/bookingApi";
 import ApplicationBackground from "@/assets/img/application-background.webp";
 import { Button } from "@/components/ui/Button";
 import { CallRequestModal } from "@/landing/components/CallRequestModal";
 import { ThankYouModal } from "@/landing/components/ThankYouModal";
-import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
 import { useState } from "react";
 
@@ -87,6 +87,7 @@ export function ApplicationSection() {
 
     try {
       const apiFormData = new FormData();
+      console.log("Selected file:", formData.file);
       apiFormData.append("full_name", formData.name.trim());
       apiFormData.append("email", formData.email.trim());
       let phoneDigits = formData.phone.replace(/\D/g, "");
@@ -102,11 +103,11 @@ export function ApplicationSection() {
       if (formData.file) {
         apiFormData.append("project_details", formData.file);
       }
-      await bookingAPI.requestConsult(apiFormData);
+      await requestConsultation(apiFormData);
       setIsThankYouModalOpen(true);
       setFormData({ name: "", phone: "", email: "", file: null });
     } catch (error: any) {
-      console.error("Consult request error:", error);
+      console.error("Consultation request error:", error);
       setErrors((prev) => ({
         ...prev,
         general:

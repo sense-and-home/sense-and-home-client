@@ -1,7 +1,7 @@
+import { requestCall } from "@/api/bookingApi";
 import CallBackBackground from "@/assets/img/call-back-background.webp";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/landing/components/Modal";
-import { bookingAPI } from "@/services/bookingService";
 import { formatPhoneNumber } from "@/utils";
 import React, { useState } from "react";
 
@@ -34,7 +34,7 @@ export function CallRequestModal({
 
     try {
       const cleanPhone = phone.replace(/[\s()]/g, "");
-      await bookingAPI.requestCall({ phone: cleanPhone });
+      await requestCall({ phone: cleanPhone });
 
       onClose();
       if (onSuccess) {

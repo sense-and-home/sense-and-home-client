@@ -7,7 +7,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 const axiosConfig: AxiosRequestConfig = {
   baseURL: API_URL,
   headers: {
-    "Content-Type": "application/json",
     Accept: "application/json",
   },
 };
@@ -17,6 +16,10 @@ export const publicApi = axios.create(axiosConfig);
 
 publicApi.interceptors.request.use(
   (config) => {
+    if (config.data instanceof FormData) {
+      return config;
+    }
+
     if (config.data) {
       config.data = keysToSnakeCase(config.data);
     }
@@ -45,6 +48,10 @@ export const api = axios.create(axiosConfig);
 
 api.interceptors.request.use(
   (config) => {
+    if (config.data instanceof FormData) {
+      return config;
+    }
+
     if (config.data) {
       config.data = keysToSnakeCase(config.data);
     }
