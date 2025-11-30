@@ -125,7 +125,7 @@ export function CoursePage() {
       <div className="space-y-4 sm:space-y-8">
         <h2 className="px-6 text-3xl font-bold lg:px-24">Похожие курсы</h2>
 
-        <div className="overflow-hidden" ref={emblaRef}>
+        <div className="overflow-hidden select-none" ref={emblaRef}>
           <div className="mr-6 flex items-stretch gap-4 px-6 py-2 sm:mr-24 sm:gap-8 lg:px-24">
             {titles.map((title) => (
               <CourseCard
