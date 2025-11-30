@@ -2,6 +2,7 @@ import { getManagerProfile } from "@/api/userApi";
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import ManagerDashboardBackground from "@/assets/img/manager-dashboard-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import type { Option } from "@/components/CustomSelect";
 import { CustomSelect } from "@/components/CustomSelect";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
@@ -13,13 +14,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 
-const periodOptions = [
+const periodOptions: Option[] = [
   { value: "today", label: "сегодня", text: "сегодня" },
   { value: "week", label: "эта неделя", text: "эту неделю" },
   { value: "month", label: "этот месяц", text: "этот месяц" },
 ];
 
-const cityOptions = [
+const cityOptions: Option[] = [
   { value: "moscow", label: "Москва" },
   { value: "spb", label: "Санкт-Петербург" },
   { value: "kazan", label: "Казань" },

@@ -1,8 +1,9 @@
 import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 
-interface Option {
+export interface Option {
   value: string;
   label: string;
+  text?: string;
 }
 
 interface CustomSelectProps {
