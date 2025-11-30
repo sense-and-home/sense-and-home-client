@@ -3,34 +3,16 @@ import ManagerDashboardBackground from "@/assets/img/manager-dashboard-backgroun
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { CustomSelect } from "@/components/CustomSelect";
 import { Footer } from "@/components/Footer";
-import { tokenStorage } from "@/services/authService";
+import { useAuth } from "@/hooks/useAuth";
 import { managerAPI } from "@/services/managerService";
-import { useEffect, useState } from "react";
+import type { ManagerStatistics } from "@/types/manager";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 
-interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  full_name: string;
-  phone?: string;
-  specialization: {
-    id: number;
-    title: string;
-  };
-  is_active: boolean;
-}
-
-interface Stats {
-  totalRequests: number;
-  processedRequests: number;
-}
-
 const periodOptions = [
-  { value: "today", label: "сегодня" },
+  { value: "today", label: "сегодня", text: "сегодня" },
   { value: "week", label: "эта неделя", text: "эту неделю" },
-  { value: "month", label: "этот месяц" },
+  { value: "month", label: "этот месяц", text: "этот месяц" },
 ];
 
 const cityOptions = [
@@ -41,47 +23,54 @@ const cityOptions = [
 
 export function ManagerDashboardPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, logout } = useAuth();
+
   const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
   const [selectedPeriod, setSelectedPeriod] = useState(periodOptions[0]);
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<ManagerStatistics | null>(null);
   const [isStatsLoading, setIsStatsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const displayName = useMemo(
+    () => user?.firstName || user?.lastName || "Имя",
+    [user],
+  );
 
   useEffect(() => {
-    if (!tokenStorage.isAuthenticated()) {
-      navigate("/login");
-      return;
-    }
-    const userData = localStorage.getItem("user_data");
-    if (userData) {
-      try {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, [navigate]);
+    let mounted = true;
 
-  useEffect(() => {
     const fetchStats = async () => {
       setIsStatsLoading(true);
+      setError(null);
       try {
         const data = await managerAPI.getStats(
           selectedCity.value,
           selectedPeriod.value,
         );
-        setStats(data);
-      } catch (error) {
-        console.error("Error fetching stats:", error);
+        if (!mounted) return;
+        setStats(data || null);
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+        if (!mounted) return;
         setStats(null);
+        setError("Не удалось загрузить статистику");
       } finally {
+        if (!mounted) return;
         setIsStatsLoading(false);
       }
     };
 
     fetchStats();
+
+    return () => {
+      mounted = false;
+    };
   }, [selectedCity, selectedPeriod]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="bg-surface-1">
@@ -92,7 +81,7 @@ export function ManagerDashboardPage() {
         }}
       >
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <NavLink
               to="/"
               className="flex items-center gap-2 text-white hover:underline"
@@ -100,6 +89,13 @@ export function ManagerDashboardPage() {
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
             </NavLink>
+
+            <button
+              onClick={handleLogout}
+              className="hidden rounded-md border border-white/20 px-3 py-1 text-sm hover:bg-white/5 md:inline-block"
+            >
+              Выйти
+            </button>
           </div>
 
           <NavLink
@@ -114,7 +110,7 @@ export function ManagerDashboardPage() {
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 text-white lg:order-1">
               <h2 className="heading space-y-8 text-center leading-tight font-bold lg:text-left">
-                Здравствуйте, {user?.first_name || "Имя"}!
+                Здравствуйте, {displayName}!
               </h2>
 
               <div className="flex flex-col gap-3 space-y-8 lg:w-2/3 lg:flex-row lg:gap-0">
@@ -135,9 +131,11 @@ export function ManagerDashboardPage() {
               <div>
                 {isStatsLoading ? (
                   <div className="space-y-2">
-                    <div className="h-8 animate-pulse rounded bg-gray-200"></div>
-                    <div className="h-8 animate-pulse rounded bg-gray-200"></div>
+                    <div className="h-8 animate-pulse rounded bg-gray-200" />
+                    <div className="h-8 animate-pulse rounded bg-gray-200" />
                   </div>
+                ) : error ? (
+                  <div className="text-red-400">{error}</div>
                 ) : (
                   <div className="space-y-2 text-xl font-bold text-white">
                     <p>
@@ -147,24 +145,30 @@ export function ManagerDashboardPage() {
                     <p>
                       Обработано заявок за{" "}
                       {selectedPeriod.text || selectedPeriod.label}:{" "}
-                      {stats?.processedRequests ?? 0}
+                      {stats?.newRequestsCount ?? 0}
                     </p>
                   </div>
                 )}
               </div>
             </div>
+
             <div className="order-1 space-y-8 lg:order-2">
               <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
                 Заявка от 00.00.00
               </h2>
+
               <div className="space-y-2">
                 <input
                   type="text"
-                  value={user?.full_name || ""}
+                  value={
+                    user?.lastName ??
+                    `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
+                  }
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
                 />
+
                 {user?.phone && (
                   <input
                     type="tel"
@@ -174,24 +178,27 @@ export function ManagerDashboardPage() {
                     placeholder="+7 (---) --- -- --"
                   />
                 )}
+
                 <input
                   type="email"
-                  value={user?.email || ""}
+                  value={user?.email ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
                 />
+
                 <input
                   type="text"
-                  value={user?.specialization?.title || ""}
+                  value={user?.specialization?.title ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-                  placeholder="Компания*"
+                  placeholder="Специализация"
                 />
               </div>
             </div>
           </div>
         </div>
+
         <CustomMarquee className="absolute! bottom-0" />
       </div>
 

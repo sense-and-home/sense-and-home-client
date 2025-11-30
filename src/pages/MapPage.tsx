@@ -2,19 +2,19 @@ import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
 import { MapComponent } from "@/components/MapComponent";
-import { tokenStorage } from "@/services/authService";
+import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 
 export function MapPage() {
   const navigate = useNavigate();
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
-    if (!tokenStorage.isAuthenticated()) {
+    if (!isLoading && !isAuthenticated) {
       navigate("/login");
-      return;
     }
-  }, [navigate]);
+  }, [isAuthenticated, isLoading, navigate]);
 
   return (
     <div className="bg-surface-1">

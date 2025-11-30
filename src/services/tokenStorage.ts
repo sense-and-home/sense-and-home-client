@@ -1,19 +1,21 @@
-import { type UserResponse } from "./authService";
+import type { User } from "@/types/user";
 
 export const tokenStorage = {
-  getAccessToken: () => localStorage.getItem("access_token"),
-  setAccessToken: (token: string) =>
-    localStorage.setItem("access_token", token),
-  getRefreshToken: () => localStorage.getItem("refresh_token"),
+  getAccessToken: () => localStorage.getItem("accessToken"),
+  setAccessToken: (token: string) => localStorage.setItem("accessToken", token),
+  getRefreshToken: () => localStorage.getItem("refreshToken"),
   setRefreshToken: (token: string) =>
-    localStorage.setItem("refresh_token", token),
+    localStorage.setItem("refreshToken", token),
   clearTokens: () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   },
-  isAuthenticated: () => !!localStorage.getItem("access_token"),
+  isAuthenticated: () => !!localStorage.getItem("accessToken"),
+  setUser: (userData: User) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+  },
   getUser: () => {
-    const userData = localStorage.getItem("user_data");
-    return userData ? (JSON.parse(userData) as UserResponse) : null;
+    const userData = localStorage.getItem("user");
+    return userData ? (JSON.parse(userData) as User) : null;
   },
 };

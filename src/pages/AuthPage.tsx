@@ -1,11 +1,13 @@
+import { logIn, recoverPassword, signUp } from "@/api/authApi";
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import SignUpBackground from "@/assets/img/sign-up-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
-import { useAuth } from "@/context/AuthContext";
-import { authAPI, tokenStorage, validation } from "@/services/authService";
-import React, { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { tokenStorage } from "@/services/tokenStorage";
+import { validation } from "@/utils/validation";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 
 type AuthMode = "registration" | "login";
@@ -39,7 +41,7 @@ export function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
@@ -83,34 +85,40 @@ export function AuthPage() {
       setPasswordRecovery(false);
       setTimer({ active: false, seconds: 0 });
       setValidationErrors({});
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        company: "",
+        specialization: "",
+      });
     }
-  }, [location.pathname, authMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
-  React.useEffect(() => {
-    let interval: number;
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (timer.active && timer.seconds > 0) {
       interval = setInterval(() => {
-        setTimer((prev) => ({
-          ...prev,
-          seconds: prev.seconds - 1,
-        }));
+        setTimer((prev) => ({ ...prev, seconds: prev.seconds - 1 }));
       }, 1000);
-    } else if (timer.seconds === 0) {
+    } else if (timer.seconds === 0 && timer.active) {
       setTimer({ active: false, seconds: 0 });
     }
-    return () => clearInterval(interval);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [timer.active, timer.seconds]);
 
-  const startTimer = () => {
-    setTimer({ active: true, seconds: 60 });
-  };
+  const startTimer = () => setTimer({ active: true, seconds: 60 });
 
   const handleNextStep = () => {
     if (validateCurrentStep()) {
       const nextStep = currentStep + 1;
       if (nextStep <= totalSteps) {
         setCurrentStep(nextStep);
-        setStepHistory([...stepHistory, nextStep]);
+        setStepHistory((h) => [...h, nextStep]);
         setError({ show: false, message: "" });
         setValidationErrors({});
       } else {
@@ -170,6 +178,28 @@ export function AuthPage() {
     return Object.keys(errors).length === 0;
   };
 
+  const applyTokensFromResponse = (data: any) => {
+    const accessToken =
+      data?.accessToken || data?.token || data?.access_token || data?.jwt;
+    const refreshToken =
+      data?.refreshToken ||
+      data?.refresh_token ||
+      data?.refreshTokenValue ||
+      data?.refresh;
+
+    if (accessToken) tokenStorage.setAccessToken(accessToken);
+    if (refreshToken) tokenStorage.setRefreshToken(refreshToken);
+
+    if (data?.user) tokenStorage.setUser(data.user);
+    if (!data.user && data?.email) {
+      try {
+        tokenStorage.setUser({ ...data } as any);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   const handleRegistration = async () => {
     setIsFormLoading(true);
     setError({ show: false, message: "" });
@@ -182,29 +212,35 @@ export function AuthPage() {
         company_name: formData.company,
       });
 
-      const response = await authAPI.signup({
-        full_name: formData.fullName,
+      const response = await signUp({
+        fullName: formData.fullName,
         email: formData.email,
-        specialization_title: formData.specialization,
-        company_name: formData.company,
-      });
+        specializationTitle: formData.specialization,
+        companyName: formData.company,
+      } as any);
+
+      // response shape may vary; normalise and store tokens/user if present
+      applyTokensFromResponse(response);
 
       console.log("Registration response:", response);
 
       handleNextStep();
-    } catch (error: any) {
-      console.error("Registration error:", error);
-      if (error.code === 2000) {
+    } catch (err: any) {
+      console.error("Registration error:", err);
+      const code =
+        err?.code || err?.response?.data?.code || err?.response?.status;
+
+      if (code === 2000) {
         setError({
           show: true,
           message: "Пользователь с таким email уже существует",
         });
-      } else if (error.code === 2001) {
+      } else if (code === 2001) {
         setError({ show: true, message: "Ошибка валидации данных" });
       } else {
         setError({
           show: true,
-          message: error.message || "Произошла ошибка при регистрации",
+          message: err?.message || "Произошла ошибка при регистрации",
         });
       }
     } finally {
@@ -222,25 +258,26 @@ export function AuthPage() {
         password: formData.password,
       });
 
-      const response = await authAPI.login({
+      const response = await logIn({
         email: formData.email,
         password: formData.password,
-      });
+      } as any);
 
       console.log("Password verification response:", response);
 
-      tokenStorage.setAccessToken(response.access_token);
-      tokenStorage.setRefreshToken(response.refresh_token);
+      applyTokensFromResponse(response);
 
       navigate("/dashboard");
-    } catch (error: any) {
-      console.error("Password verification error:", error);
-      if (error.code === 3000) {
+    } catch (err: any) {
+      console.error("Password verification error:", err);
+      const code =
+        err?.code || err?.response?.data?.code || err?.response?.status;
+      if (code === 3000) {
         setError({ show: true, message: "Неверный пароль" });
       } else {
         setError({
           show: true,
-          message: error.message || "Произошла ошибка при входе",
+          message: err?.message || "Произошла ошибка при входе",
         });
       }
     } finally {
@@ -258,16 +295,23 @@ export function AuthPage() {
         password: formData.password,
       });
 
-      const response = await login(formData.email, formData.password);
+      const response = await logIn({
+        email: formData.email,
+        password: formData.password,
+      } as any);
 
       console.log("Login response:", response);
 
+      applyTokensFromResponse(response);
+
       navigate("/dashboard");
-    } catch (error: any) {
-      console.error("Login error:", error);
-      if (error.code === 3000) {
+    } catch (err: any) {
+      console.error("Login error:", err);
+      const code =
+        err?.code || err?.response?.data?.code || err?.response?.status;
+      if (code === 3000) {
         setError({ show: true, message: "Неверный пароль" });
-      } else if (error.code === 3001) {
+      } else if (code === 3001) {
         setError({
           show: true,
           message: "Ваш аккаунт неактивен. Обратитесь в поддержку.",
@@ -275,7 +319,7 @@ export function AuthPage() {
       } else {
         setError({
           show: true,
-          message: error.message || "Произошла ошибка при входе",
+          message: err?.message || "Произошла ошибка при входе",
         });
       }
     } finally {
@@ -283,9 +327,41 @@ export function AuthPage() {
     }
   };
 
-  const handlePasswordRecovery = () => {
-    setPasswordRecovery(true);
-    startTimer();
+  const handlePasswordRecovery = async () => {
+    setIsFormLoading(true);
+    setError({ show: false, message: "" });
+
+    try {
+      if (!validation.email(formData.email)) {
+        setValidationErrors({ email: "Введите корректный email" });
+        setIsFormLoading(false);
+        return;
+      }
+
+      const response = await recoverPassword({ email: formData.email } as any);
+      console.log("Recover password response:", response);
+
+      setPasswordRecovery(true);
+      startTimer();
+    } catch (err: any) {
+      console.error("Recover password error:", err);
+      const code =
+        err?.code || err?.response?.data?.code || err?.response?.status;
+
+      if (code === 400 || code === 404) {
+        setError({
+          show: true,
+          message: "Пользователь с таким email не найден",
+        });
+      } else {
+        setError({
+          show: true,
+          message: err?.message || "Не удалось отправить письмо восстановления",
+        });
+      }
+    } finally {
+      setIsFormLoading(false);
+    }
   };
 
   const handleAuthModeToggle = (mode: AuthMode) => {
@@ -391,7 +467,10 @@ export function AuthPage() {
                 )}
 
                 <button
-                  onClick={handlePasswordRecovery}
+                  onClick={() => {
+                    // trigger password recovery flow
+                    handlePasswordRecovery();
+                  }}
                   disabled={timer.active}
                   className={`bg-transparent text-white disabled:opacity-50 ${
                     timer.active ? "" : "hover:cursor-pointer hover:underline"
@@ -475,7 +554,7 @@ export function AuthPage() {
               </p>
 
               <input
-                className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
+                className="bg-surface-2 rounded-primary текст-base inline-block w-full px-4 py-3 text-black md:px-8 md:text-lg"
                 type="password"
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
@@ -565,17 +644,13 @@ export function AuthPage() {
           <div className="rounded-primary flex bg-white/5 text-xl font-semibold">
             <button
               onClick={() => handleAuthModeToggle("registration")}
-              className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${
-                authMode === "registration" ? "bg-accent-1/50" : ""
-              }`}
+              className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${authMode === "registration" ? "bg-accent-1/50" : ""}`}
             >
               Регистрация
             </button>
             <button
               onClick={() => handleAuthModeToggle("login")}
-              className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${
-                authMode === "login" ? "bg-accent-1/50" : ""
-              }`}
+              className={`rounded-[inherit] px-10 py-3 hover:cursor-pointer ${authMode === "login" ? "bg-accent-1/50" : ""}`}
             >
               Вход
             </button>

@@ -2,44 +2,19 @@ import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import HeroBackground from "@/assets/img/hero-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
-import { tokenStorage } from "@/services/authService";
-import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { NavLink, useNavigate } from "react-router";
-
-interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  full_name: string;
-  phone?: string;
-  specialization: {
-    id: number;
-    title: string;
-  };
-  is_active: boolean;
-}
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, logout } = useAuth();
 
-  useEffect(() => {
-    if (!tokenStorage.isAuthenticated()) {
-      navigate("/login");
-      return;
-    }
+  const displayName = user?.firstName || user?.lastName || "Имя";
 
-    const userData = localStorage.getItem("user_data");
-    if (userData) {
-      try {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, [navigate]);
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="bg-surface-1">
@@ -50,7 +25,7 @@ export function DashboardPage() {
         }}
       >
         <div className="relative mb-8 flex items-center justify-between px-2 py-6 md:px-4 lg:px-8">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <NavLink
               to="/"
               className="flex items-center gap-2 text-white hover:underline"
@@ -58,6 +33,13 @@ export function DashboardPage() {
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
             </NavLink>
+
+            <button
+              onClick={handleLogout}
+              className="hidden rounded-md border border-white/20 px-3 py-1 text-sm hover:bg-white/5 md:inline-block"
+            >
+              Выйти
+            </button>
           </div>
 
           <NavLink
@@ -115,13 +97,16 @@ export function DashboardPage() {
 
             <div className="order-1 space-y-8 lg:order-2">
               <h2 className="heading text-center leading-tight font-bold text-white lg:text-right">
-                Здравствуйте, {user?.first_name || "Имя"}!
+                Здравствуйте, {displayName}!
               </h2>
 
               <div className="space-y-2">
                 <input
                   type="text"
-                  value={user?.full_name || ""}
+                  value={
+                    user?.firstName ??
+                    `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
+                  }
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="Имя Фамилия"
@@ -139,7 +124,7 @@ export function DashboardPage() {
 
                 <input
                   type="email"
-                  value={user?.email || ""}
+                  value={user?.email ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
                   placeholder="-------@gmail.com"
@@ -147,10 +132,10 @@ export function DashboardPage() {
 
                 <input
                   type="text"
-                  value={user?.specialization?.title || ""}
+                  value={user?.specialization?.title ?? ""}
                   readOnly
                   className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-                  placeholder="Компания*"
+                  placeholder="Специализация"
                 />
               </div>
 
