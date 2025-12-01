@@ -1,6 +1,7 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LandingPage } from "@/landing/LandingPage";
 import { CoursesHeaderLayout } from "@/layouts/CoursesHeaderLayout";
+import { MyLearningSidebarLayout } from "@/layouts/MyLearningSidebarLayout";
 import { AuthPage } from "@/pages/AuthPage";
 import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
 import { CoursePage } from "@/pages/CoursePage";
@@ -56,8 +57,13 @@ const router = createBrowserRouter([
         element: <CoursePage />,
       },
       {
-        path: "/my-learning",
-        element: <MyLearningPage />,
+        element: <MyLearningSidebarLayout />,
+        children: [
+          {
+            path: "/my-learning",
+            element: <MyLearningPage />,
+          },
+        ],
       },
     ],
   },
