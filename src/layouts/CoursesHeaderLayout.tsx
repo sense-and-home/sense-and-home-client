@@ -1,7 +1,7 @@
 import { CoursesHeader } from "@/components/CoursesHeader";
 import { Outlet, ScrollRestoration } from "react-router";
 
-export function CoursesLayout() {
+export function CoursesHeaderLayout() {
   return (
     <div>
       <ScrollRestoration />
