@@ -5,7 +5,7 @@ import { NavLink, Outlet } from "react-router";
 export function MyLearningSidebarLayout() {
   return (
     <div className="grid grid-cols-5">
-      <aside className="bg-surface-2-secondary col-span-1 h-full min-h-screen space-y-3 px-4 py-8">
+      <aside className="bg-surface-2-secondary col-span-1 flex h-full min-h-screen flex-col space-y-3 px-4 py-8">
         <img src={MyLearningImage} alt="" />
 
         <NavLink
@@ -17,7 +17,7 @@ export function MyLearningSidebarLayout() {
           <span>Моё обучение</span>
         </NavLink>
 
-        <div>
+        <div className="grow">
           <div className="text-action mb-2 flex items-center gap-2 text-lg font-medium">
             <BookOpen strokeWidth={2} className="w-5" />
 
@@ -47,7 +47,7 @@ export function MyLearningSidebarLayout() {
               className={({ isActive }) =>
                 `${isActive ? "font-medium" : "opacity-60"} transition-colors hover:underline hover:opacity-100`
               }
-              to="/favorites"
+              to="/my-learning/favorite-courses"
             >
               Избранное
             </NavLink>
@@ -62,9 +62,15 @@ export function MyLearningSidebarLayout() {
             </NavLink>
           </div>
         </div>
+
+        <div>
+          <a href="https://t.me/Sense_home_support" target="_blank">
+            Помощь
+          </a>
+        </div>
       </aside>
 
-      <div className="p-4">
+      <div className="col-span-4 p-4">
         <Outlet />
       </div>
     </div>

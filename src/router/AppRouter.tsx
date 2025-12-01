@@ -6,6 +6,7 @@ import { AuthPage } from "@/pages/AuthPage";
 import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
 import { CoursePage } from "@/pages/CoursePage";
 import { DashboardPage } from "@/pages/DashboardPage";
+import { FavoriteCoursesPage } from "@/pages/FavoriteCoursesPage";
 import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
 import { MapPage } from "@/pages/MapPage";
 import { MyLearningPage } from "@/pages/MyLearningPage";
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
           {
             path: "/my-learning",
             element: <MyLearningPage />,
+          },
+          {
+            path: "/my-learning/favorite-courses",
+            element: <FavoriteCoursesPage />,
           },
         ],
       },

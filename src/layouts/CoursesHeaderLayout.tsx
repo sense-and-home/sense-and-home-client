@@ -1,4 +1,5 @@
 import { CoursesHeader } from "@/components/CoursesHeader";
+import { Footer } from "@/components/Footer";
 import { Outlet, ScrollRestoration } from "react-router";
 
 export function CoursesHeaderLayout() {
@@ -8,6 +9,8 @@ export function CoursesHeaderLayout() {
       <CoursesHeader />
 
       <Outlet />
+
+      <Footer />
     </div>
   );
 }

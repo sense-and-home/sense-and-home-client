@@ -1,6 +1,5 @@
 import CoursePageBackground from "@/assets/img/course-page-background.webp";
 import { CourseCard } from "@/components/CourseCard";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
 import useEmblaCarousel from "embla-carousel-react";
 import {
@@ -36,7 +35,7 @@ export function CoursePage() {
   }, [emblaApi]);
 
   return (
-    <div className="space-y-16">
+    <div className="mb-16 space-y-16">
       <div
         className="text-surface-1-foreground grid grid-cols-1 gap-8 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-24"
         style={{
@@ -155,8 +154,6 @@ export function CoursePage() {
           </button>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
