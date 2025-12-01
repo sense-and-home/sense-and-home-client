@@ -2,7 +2,7 @@ import { cn } from "@/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { type ComponentProps } from "react";
 
-const buttonVariants = cva(["py-2 px-12 font-bold hover:cursor-pointer"], {
+const inputVariants = cva([""], {
   variants: {
     shape: {
       soft: "rounded-lg",
@@ -15,15 +15,17 @@ const buttonVariants = cva(["py-2 px-12 font-bold hover:cursor-pointer"], {
   },
 });
 
-export function Button({
+export function Input({
   shape,
-  children,
   className,
+  type,
   ...props
-}: ComponentProps<"button"> & VariantProps<typeof buttonVariants>) {
+}: ComponentProps<"input"> & VariantProps<typeof inputVariants>) {
   return (
-    <button className={cn(buttonVariants({ shape }), className)} {...props}>
-      {children}
-    </button>
+    <input
+      type={type}
+      className={cn(inputVariants({ shape }), className)}
+      {...props}
+    />
   );
 }

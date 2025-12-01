@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { SearchIcon } from "lucide-react";
 
 export function CoursesSearchbar() {
@@ -9,10 +10,10 @@ export function CoursesSearchbar() {
           <SearchIcon />
         </label>
 
-        <input
-          id="search-input"
-          className="ml-2 w-full border-none p-2 shadow-none outline-none"
+        <Input
           type="search"
+          className="ml-2 w-full border-none p-2 shadow-none outline-none"
+          id="search-input"
           placeholder="Название курса или навыка..."
         />
       </div>
