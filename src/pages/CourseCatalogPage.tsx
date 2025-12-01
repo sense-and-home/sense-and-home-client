@@ -1,7 +1,14 @@
+import { getCourses } from "@/api/courseApi";
 import { CourseCard } from "@/components/CourseCard";
 import { Footer } from "@/components/Footer";
+import { useQuery } from "@tanstack/react-query";
 
 export function CourseCatalogPage() {
+  const { isPending, data } = useQuery({
+    queryKey: ["courses"],
+    queryFn: () => getCourses(),
+  });
+
   return (
     <div>
       <div className="mb-16 p-4">
@@ -10,15 +17,19 @@ export function CourseCatalogPage() {
           Обучайтесь работе с VR турами и клиентами вместе с Sense&Home!
         </p>
 
-        <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <CourseCard
-              key={i}
-              title="Как работает VR-тур в глазах клиента?"
-              id={String(i)}
-            />
-          ))}
-        </div>
+        {isPending ? (
+          <div>Загрузка</div>
+        ) : (
+          <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
+            {data?.items?.map((course) => (
+              <CourseCard
+                key={course.id}
+                title="Как работает VR-тур в глазах клиента?"
+                id={String(course.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <Footer />
