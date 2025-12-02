@@ -5,7 +5,7 @@ import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, ScrollRestoration, useNavigate } from "react-router";
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ export function DashboardPage() {
 
   return (
     <div className="bg-surface-1">
+      <ScrollRestoration />
       <div
         className="relative min-h-screen overflow-hidden bg-cover text-white"
         style={{

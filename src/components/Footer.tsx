@@ -1,9 +1,14 @@
 import { requestEmail } from "@/api/bookingApi";
-import { isExternalLink, siteLinks } from "@/constants/siteLinks";
+import { SmartLink } from "@/components/SmartLink";
+import { Button } from "@/components/ui/Button";
+import {
+  footerAccount,
+  footerLegal,
+  footerMain,
+  logoLink,
+} from "@/config/navigation";
 import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { useState } from "react";
-import { NavLink } from "react-router";
-import { Button } from "./ui/Button";
 
 export function Footer() {
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
@@ -32,7 +37,7 @@ export function Footer() {
     } catch (error: any) {
       console.error("Email request error:", error);
       setErrorMessage(
-        error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
+        error?.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
       );
     } finally {
       setIsSubmitting(false);
@@ -42,45 +47,34 @@ export function Footer() {
   return (
     <div className="bg-surface-1 text-surface-1-foreground px-2 py-8 md:px-4 lg:px-8">
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
-        <NavLink
-          to={siteLinks.logo.href}
+        <SmartLink
+          to={logoLink.href}
           className="justify-self-center font-[Abhaya_Libre] text-4xl leading-[1] font-extrabold hover:underline md:text-[50px]"
         >
-          {siteLinks.logo.text}
-        </NavLink>
+          {logoLink.name}
+        </SmartLink>
+
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
-          {siteLinks.footer.main.map((link) => (
-            <li key={link.name}>
-              <a
-                target={isExternalLink(link.href) ? "_blank" : undefined}
-                rel={
-                  isExternalLink(link.href) ? "noopener noreferrer" : undefined
-                }
-                className="hover:underline"
-                href={link.href}
-              >
+          {footerMain.map((link) => (
+            <li key={link.id ?? link.name}>
+              <SmartLink to={link.href} className="hover:underline">
                 {link.name}
-              </a>
+              </SmartLink>
             </li>
           ))}
         </ul>
+
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
-          {siteLinks.footer.account.map((link) => (
-            <li key={link.name}>
-              <a
-                target={isExternalLink(link.href) ? "_blank" : undefined}
-                rel={
-                  isExternalLink(link.href) ? "noopener noreferrer" : undefined
-                }
-                className="hover:underline"
-                href={link.href}
-              >
+          {footerAccount.map((link) => (
+            <li key={link.id ?? link.name}>
+              <SmartLink to={link.href} className="hover:underline">
                 {link.name}
-              </a>
+              </SmartLink>
             </li>
           ))}
         </ul>
       </div>
+
       <div id="footer-section" className="mb-8 md:mb-12">
         <h2 className="heading mb-4 text-2xl md:text-3xl lg:text-4xl xl:text-6xl">
           Мы открыты к сотрудничеству
@@ -88,6 +82,7 @@ export function Footer() {
         <p className="mb-6 text-lg md:mb-4 md:text-xl">
           Оставьте почту и мы свяжемся с Вами в течении дня!
         </p>
+
         <div className="flex flex-col items-start justify-between gap-6 text-lg md:text-xl lg:flex-row lg:items-center lg:gap-0">
           <form
             onSubmit={handleSubmit}
@@ -110,32 +105,27 @@ export function Footer() {
               {isSubmitting ? "Отправка..." : "Отправить"}
             </Button>
           </form>
+
           <ul className="space-y-2 text-sm md:text-base lg:text-lg xl:text-xl">
-            {siteLinks.footer.legal.map((link) => (
-              <li key={link.name}>
-                <a
-                  target={isExternalLink(link.href) ? "_blank" : undefined}
-                  rel={
-                    isExternalLink(link.href)
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="hover:underline"
-                  href={link.href}
-                >
+            {footerLegal.map((link) => (
+              <li key={link.id ?? link.name}>
+                <SmartLink to={link.href} className="hover:underline">
                   {link.name}
-                </a>
+                </SmartLink>
               </li>
             ))}
           </ul>
         </div>
+
         {errorMessage && (
           <p className="mt-4 text-sm text-red-600 md:text-base">
             {errorMessage}
           </p>
         )}
       </div>
+
       <div className="text-center">SenseHome, 2025</div>
+
       <ThankYouModal
         isOpen={isThankYouModalOpen}
         onClose={() => setIsThankYouModalOpen(false)}
@@ -144,3 +134,5 @@ export function Footer() {
     </div>
   );
 }
+
+export default Footer;
