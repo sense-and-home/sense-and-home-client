@@ -2,7 +2,7 @@ import { tokenStorage } from "@/services/tokenStorage";
 import { keysToCamelCase, keysToSnakeCase } from "@/utils/caseConverters";
 import axios, { type AxiosRequestConfig } from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "/api";
+// const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const axiosConfig: AxiosRequestConfig = {
   baseURL: "/api",
