@@ -19,7 +19,7 @@ export function CoursesSearchBar({
 
   useEffect(() => {
     onChange(debouncedInputValue);
-  }, [debouncedInputValue]);
+  }, [onChange, debouncedInputValue]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);

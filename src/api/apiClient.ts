@@ -25,6 +25,10 @@ publicApi.interceptors.request.use(
       config.data = keysToSnakeCase(config.data);
     }
 
+    if (config.params) {
+      config.params = keysToSnakeCase(config.params);
+    }
+
     return config;
   },
   (error) => {
@@ -55,6 +59,10 @@ api.interceptors.request.use(
 
     if (config.data) {
       config.data = keysToSnakeCase(config.data);
+    }
+
+    if (config.params) {
+      config.params = keysToSnakeCase(config.params);
     }
 
     return config;

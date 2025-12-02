@@ -3,6 +3,7 @@ import { LandingPage } from "@/landing/LandingPage";
 import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";
 import { MyLearningSidebarLayout } from "@/layouts/MyLearningSidebarLayout";
 import { AuthPage } from "@/pages/AuthPage";
+import { CompletedCoursesPage } from "@/pages/CompletedCoursesPage";
 import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
 import { CoursePage } from "@/pages/CoursePage";
 import { DashboardPage } from "@/pages/DashboardPage";
@@ -10,6 +11,7 @@ import { FavoriteCoursesPage } from "@/pages/FavoriteCoursesPage";
 import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
 import { MapPage } from "@/pages/MapPage";
 import { MyLearningPage } from "@/pages/MyLearningPage";
+import { RequiredCoursesPage } from "@/pages/RequiredCoursesPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
@@ -68,8 +70,16 @@ const router = createBrowserRouter([
                 element: <MyLearningPage />,
               },
               {
+                path: "/my-learning/required-courses",
+                element: <RequiredCoursesPage />,
+              },
+              {
                 path: "/my-learning/favorite-courses",
                 element: <FavoriteCoursesPage />,
+              },
+              {
+                path: "/my-learning/completed-courses",
+                element: <CompletedCoursesPage />,
               },
             ],
           },

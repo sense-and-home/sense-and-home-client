@@ -2,15 +2,15 @@ import { getCourses } from "@/api/courseApi";
 import { CourseProgressCard } from "@/components/CourseProgressCard";
 import { useQuery } from "@tanstack/react-query";
 
-export function FavoriteCoursesPage() {
+export function RequiredCoursesPage() {
   const { isPending, data } = useQuery({
-    queryKey: ["favorite-courses"],
-    queryFn: () => getCourses({ onlyFavorites: true }),
+    queryKey: ["required-courses"],
+    queryFn: () => getCourses(),
   });
 
   return (
     <div>
-      <h1 className="heading mb-4">Избранное</h1>
+      <h1 className="heading mb-4">Обязательные</h1>
 
       <div className="space-y-8">
         {isPending ? (

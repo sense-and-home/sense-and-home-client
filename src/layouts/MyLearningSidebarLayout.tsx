@@ -29,7 +29,8 @@ export function MyLearningSidebarLayout() {
               className={({ isActive }) =>
                 `${isActive ? "font-medium" : "opacity-60"} transition-colors hover:underline hover:opacity-100`
               }
-              to="/current"
+              to="/my-learning"
+              end
             >
               Прохожу
             </NavLink>
@@ -38,7 +39,7 @@ export function MyLearningSidebarLayout() {
               className={({ isActive }) =>
                 `${isActive ? "font-medium" : "opacity-60"} transition-colors hover:underline hover:opacity-100`
               }
-              to="/obligatory"
+              to="/my-learning/required-courses"
             >
               Обязательные
             </NavLink>
@@ -56,7 +57,7 @@ export function MyLearningSidebarLayout() {
               className={({ isActive }) =>
                 `${isActive ? "font-medium" : "opacity-60"} transition-colors hover:underline hover:opacity-100`
               }
-              to="/finished"
+              to="/my-learning/completed-courses"
             >
               Пройдено
             </NavLink>

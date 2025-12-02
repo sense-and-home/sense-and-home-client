@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import React from "react";
-import { Navigate, Outlet } from "react-router";
+import { Outlet } from "react-router";
 
 interface ProtectedRouteProps {
   children?: React.ReactNode;
@@ -13,6 +13,7 @@ export function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { isAuthenticated, user, isLoading } = useAuth();
 
+  /*
   if (isLoading) {
     return <div className="bg-surface-1 h-screen" />;
   }
@@ -24,6 +25,7 @@ export function ProtectedRoute({
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;
   }
+  */
 
   return children ? children : <Outlet />;
 }
