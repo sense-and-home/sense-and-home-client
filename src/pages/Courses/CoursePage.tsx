@@ -11,7 +11,7 @@ import {
   MoveRightIcon,
   SparkleIcon,
 } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router";
 
 export function CoursePage() {
@@ -34,6 +34,8 @@ export function CoursePage() {
     queryKey: ["recommendedCourses"],
     queryFn: () => getCourses({ sort: "popular", pageSize: 7 }),
   });
+
+  const [isFavorite, setIsFavorite] = useState(course?.isFavorite ?? false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
@@ -120,7 +122,10 @@ export function CoursePage() {
         </div>
 
         <div className="w-full flex-shrink-0 space-y-2 sm:space-y-3 md:w-fit">
-          <Button className="bg-action text-action-foreground w-full sm:text-xl">
+          <Button
+            tabIndex={-1}
+            className="bg-action text-action-foreground w-full sm:text-xl"
+          >
             <NavLink
               className="border-none outline-none"
               to="/my-learning"
@@ -129,8 +134,11 @@ export function CoursePage() {
               Начать обучение
             </NavLink>
           </Button>
-          <Button className="border-action text-action flex w-full items-center justify-center gap-4 border-2 sm:text-lg">
-            Пройду позже <HeartIcon />
+          <Button
+            onClick={() => setIsFavorite(!isFavorite)}
+            className={`${isFavorite ? "bg-action text-action-foreground hover:bg-action/85" : "border-action text-action hover:bg-action/15"} flex w-full items-center justify-center gap-4 border-2 transition-colors sm:text-lg`}
+          >
+            Пройду позже <HeartIcon className="fill-action-foreground" />
           </Button>
         </div>
       </div>
