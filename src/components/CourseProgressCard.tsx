@@ -16,17 +16,17 @@ export function CourseProgressCard({
     <NavLink
       to={`/courses/${course.id}`}
       className={cn(
-        "block w-full space-y-4 rounded-lg p-4 shadow-[0_0_4px_rgba(0,0,0,0.25)]",
+        "block w-full space-y-4 rounded-lg px-2 py-4 text-center shadow-[0_0_4px_rgba(0,0,0,0.25)] sm:px-4",
         className,
       )}
       viewTransition
     >
-      <div className="grid grid-flow-col items-center justify-between gap-4">
-        <h2 className="course-title w-fit text-3xl font-semibold">
+      <div className="grid items-center gap-4 sm:grid-flow-col sm:justify-between">
+        <h2 className="course-title mx-auto w-fit text-center text-xl font-semibold sm:text-3xl">
           {course.title}
         </h2>
 
-        <div className="rounded-secondary h-full max-h-[100px] w-full max-w-[150px] overflow-hidden">
+        <div className="rounded-secondary h-full max-h-[200px] w-full overflow-hidden sm:max-h-[150px] sm:max-w-[200px]">
           <img
             className="course-image h-full w-full object-cover object-center"
             src={course.imageUrl}
