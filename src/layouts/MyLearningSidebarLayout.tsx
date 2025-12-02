@@ -19,7 +19,7 @@ export function MyLearningSidebarLayout() {
       </div>
 
       <aside
-        className={`bg-surface-2 absolute top-0 left-0 z-50 flex h-full w-full transform flex-col space-y-3 px-4 py-8 sm:max-w-72 md:col-span-1 md:flex ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out md:static md:h-auto md:translate-x-0`}
+        className={`bg-surface-2 md:bg-surface-2-secondary absolute top-0 left-0 z-50 flex h-full w-full transform flex-col space-y-3 px-4 py-8 sm:max-w-72 md:col-span-1 md:flex ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out md:static md:h-auto md:translate-x-0`}
       >
         <button
           className="absolute right-0 -mt-4 p-4 hover:cursor-pointer md:hidden"

@@ -15,6 +15,7 @@ export function CourseProgressCard({
   return (
     <NavLink
       to={`/courses/${course.id}`}
+      state={course}
       className={cn(
         "block w-full space-y-4 rounded-lg px-2 py-4 text-center shadow-[0_0_4px_rgba(0,0,0,0.25)] sm:px-4",
         className,
