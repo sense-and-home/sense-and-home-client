@@ -48,7 +48,6 @@ const router = createBrowserRouter([
   },
   {
     element: <ProtectedRoute />,
-
     children: [
       {
         element: <CoursesHeaderLayout />,

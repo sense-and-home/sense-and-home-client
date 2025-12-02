@@ -1,3 +1,4 @@
+import { api } from "@/api/apiClient";
 import { logIn } from "@/api/authApi";
 import { AuthContext } from "@/hooks/useAuth";
 import { tokenStorage } from "@/services/tokenStorage";
@@ -12,6 +13,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const handleForcedLogout = () => {
+      logout();
+    };
+
+    window.addEventListener("auth:logout", handleForcedLogout);
+    return () => window.removeEventListener("auth:logout", handleForcedLogout);
+  }, []);
+
+  useEffect(() => {
     const storedUser = tokenStorage.getUser();
     const accessToken = tokenStorage.getAccessToken();
 
@@ -24,10 +34,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     const response = await logIn({ email, password });
-    tokenStorage.setAccessToken(response.accessToken);
+    const { accessToken, refreshToken, user: userFromResponse } = response;
 
-    const userData = tokenStorage.getUser();
-    setUser(userData);
+    tokenStorage.setAccessToken(accessToken);
+    tokenStorage.setRefreshToken(refreshToken);
+    if (userFromResponse) tokenStorage.setUser(userFromResponse);
+
+    setUser(userFromResponse);
+    api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   };
 
   const logout = () => {

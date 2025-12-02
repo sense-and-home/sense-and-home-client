@@ -2,10 +2,10 @@ import { tokenStorage } from "@/services/tokenStorage";
 import { keysToCamelCase, keysToSnakeCase } from "@/utils/caseConverters";
 import axios, { type AxiosRequestConfig } from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: API_URL,
+  baseURL: "/api",
   headers: {
     Accept: "application/json",
   },
@@ -91,30 +91,36 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
-    console.log(error);
 
-    if (
-      (error.response.status === 403 || error.response.status === 401) &&
-      !originalRequest._retry
-    ) {
+    if (originalRequest.url?.includes("/auth/refresh")) {
+      window.dispatchEvent(new Event("auth:logout"));
+      return Promise.reject(error);
+    }
+
+    const status = error.response?.status;
+    if ((status === 401 || status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const response = await publicApi.post("/auth/refresh");
-        const { accessToken } = response.data;
+        // const refreshToken = tokenStorage.getRefreshToken();
+
+        const refreshResponse = await api.post("/auth/refresh");
+        const { accessToken } = refreshResponse.data;
 
         tokenStorage.setAccessToken(accessToken);
 
-        originalRequest.headers = {
-          ...originalRequest.headers,
-          Authorization: `Bearer ${accessToken}`,
-        };
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return api(originalRequest);
-      } catch (error) {
-        console.error(error);
+      } catch (refreshError) {
+        window.dispatchEvent(new Event("auth:logout"));
+
+        console.error(refreshError);
+
+        return Promise.reject(refreshError);
       }
     }
 

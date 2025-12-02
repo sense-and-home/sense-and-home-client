@@ -20,7 +20,6 @@ export function CoursesSearchbar() {
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
-    console.log(inputValue);
   }
 
   function handleSearch() {
