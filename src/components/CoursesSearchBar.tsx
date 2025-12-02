@@ -1,38 +1,42 @@
-import { getCourses } from "@/api/courseApi";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useDebounceValue } from "@/hooks/useDebounce";
-import { useQuery } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
-import { useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
-export function CoursesSearchbar() {
-  const [inputValue, setInputValue] = useState("");
-  const debouncedInputValue = useDebounceValue(inputValue, 1000);
+export function CoursesSearchBar({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [inputValue, setInputValue] = useState(value);
+  const debouncedInputValue = useDebounceValue(inputValue, 500);
+
   const inputRef = useRef<HTMLInputElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  const { refetch } = useQuery({
-    queryKey: ["courses", debouncedInputValue],
-    queryFn: () => getCourses({ search: debouncedInputValue }),
-    enabled: !!debouncedInputValue,
-  });
+  useEffect(() => {
+    onChange(debouncedInputValue);
+  }, [debouncedInputValue]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
   }
 
-  function handleSearch() {
-    refetch();
-    inputRef?.current?.blur();
-    buttonRef?.current?.blur();
-  }
-
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSearch();
+      onChange(inputValue);
+      inputRef.current?.blur();
     }
+  }
+
+  function handleClick() {
+    onChange(inputValue);
+    inputRef.current?.blur();
+    buttonRef.current?.blur();
   }
 
   return (
@@ -45,9 +49,10 @@ export function CoursesSearchbar() {
         <Input
           type="search"
           ref={inputRef}
-          className="ml-2 w-full border-none p-2 shadow-none outline-none"
+          value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          className="ml-2 w-full border-none p-2 shadow-none outline-none"
           id="search-input"
           placeholder="Название курса или навыка..."
         />
@@ -55,7 +60,7 @@ export function CoursesSearchbar() {
 
       <Button
         ref={buttonRef}
-        onClick={handleSearch}
+        onClick={handleClick}
         className="bg-accent-2 w-full outline-gray-500 focus:outline-2 sm:max-w-36"
       >
         Поиск

@@ -2,6 +2,7 @@ import { api } from "@/api/apiClient";
 import type {
   Course,
   CourseFavoriteRequest,
+  GetCourseByIdResponse,
   GetCoursesQueryParameters,
   GetCoursesResponse,
   GetFavoriteCoursesResponse,
@@ -13,7 +14,7 @@ export async function getCourses(params?: Partial<GetCoursesQueryParameters>) {
 }
 
 export async function getCourseById(id: string) {
-  const response = await api.get<Course>(`courses/${id}`);
+  const response = await api.get<GetCourseByIdResponse>(`courses/${id}`);
   return response.data;
 }
 

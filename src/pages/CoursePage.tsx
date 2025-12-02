@@ -1,6 +1,9 @@
+import { getCourseById, getCourses } from "@/api/courseApi";
 import CoursePageBackground from "@/assets/img/course-page-background.webp";
 import { CourseCard } from "@/components/CourseCard";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   HeartIcon,
@@ -9,18 +12,29 @@ import {
   SparkleIcon,
 } from "lucide-react";
 import { useCallback } from "react";
-import { NavLink } from "react-router";
-
-const titles = [
-  "Похожий курс",
-  "Ну очень похожий курс",
-  "Курс с ооооочень длинным названием",
-  "Похожий курс 2",
-  "Ну очень похожий курс 2",
-  "Курс о курсах",
-];
+import { NavLink, useLocation, useParams } from "react-router";
 
 export function CoursePage() {
+  const { id } = useParams();
+
+  const location = useLocation();
+  const courseState = location.state;
+
+  const { isLoading, data: course } = useQuery({
+    queryKey: [`course-${id}`],
+    queryFn: async () => {
+      const response = await getCourseById(id as string);
+      return response.course;
+    },
+    enabled: !courseState,
+    initialData: courseState ?? undefined,
+  });
+
+  const { data: recommendedCourses } = useQuery({
+    queryKey: ["recommendedCourses"],
+    queryFn: () => getCourses({ sort: "popular", pageSize: 7 }),
+  });
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     dragFree: true,
@@ -34,6 +48,10 @@ export function CoursePage() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
+
   return (
     <div className="mb-16 space-y-16">
       <div
@@ -45,32 +63,22 @@ export function CoursePage() {
         <div className="col-span-1 flex flex-col justify-between sm:col-span-2 lg:col-span-3">
           <div>
             <h1 className="course-page-title mb-4 text-3xl font-bold">
-              Как работает VR-тур в глазах клиента?
+              {course.title}
             </h1>
-            <p className="course-page-description mb-4">
-              Курс по работе с системой и интерфейсом Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Aliquid quo dignissimos quis
-              quisquam expedita vero nam, laboriosam sit labore quae possimus
-              accusamus, sapiente minus eaque quos in! Eveniet, quasi
-              consequatur.
-            </p>
+            <p className="course-page-description mb-4">{course.description}</p>
           </div>
 
           <ul className="course-page-badges flex flex-wrap gap-2 text-nowrap">
-            <li className="rounded-lg bg-red-700/50 px-2 py-1">VR\AR</li>
-            <li className="rounded-lg bg-blue-700/50 px-2 py-1">
-              Коммуникация
-            </li>
-            <li className="rounded-lg bg-green-700/50 px-2 py-1">
-              Управление туром
-            </li>
+            {course.tags.map((tag: string) => (
+              <Badge tone="dark" key={tag} text={tag} />
+            ))}
           </ul>
         </div>
 
         <div className="rounded-secondary col-span-1 flex max-h-64 w-full items-center justify-center overflow-hidden">
           <img
             className="course-page-image h-full w-full object-cover object-center"
-            src="https://placehold.co/300x300"
+            src={course.imageUrl}
             alt=""
           />
         </div>
@@ -126,14 +134,17 @@ export function CoursePage() {
 
         <div className="overflow-hidden select-none" ref={emblaRef}>
           <div className="mr-6 flex items-stretch gap-4 px-6 py-2 sm:mr-24 sm:gap-8 lg:px-24">
-            {titles.map((title) => (
-              <CourseCard
-                className="xs:basis-3/4 flex-shrink-0 basis-full xl:basis-3/7"
-                key={title}
-                title={title}
-                id={title}
-              />
-            ))}
+            {recommendedCourses?.courses.items.map((course) => {
+              if (course.id === id) return;
+
+              return (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  className="xs:basis-3/4 flex-shrink-0 basis-full xl:basis-3/7"
+                />
+              );
+            })}
           </div>
         </div>
 

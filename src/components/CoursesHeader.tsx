@@ -1,23 +1,18 @@
-import { NavLink, useLocation } from "react-router";
-import { CoursesSearchbar } from "./CoursesSearchBar";
+import { NavLink } from "react-router";
 
 export function CoursesHeader() {
-  const location = useLocation();
-
-  const hasSearchBar = location.pathname === "/courses";
-
   return (
     <header>
       <nav className="relative flex flex-col items-center py-4 sm:flex-row sm:items-start sm:p-4">
         <NavLink
           to="/"
-          className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline lg:absolute"
+          className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline sm:absolute"
         >
           S&H
         </NavLink>
 
-        <div className="m-auto grid w-full grid-flow-row px-4 sm:w-10/12">
-          <ul className="mt-3 flex flex-wrap justify-center gap-4 sm:justify-start">
+        <div className="m-auto px-4 sm:w-10/12">
+          <ul className="mt-3 flex flex-wrap justify-center gap-4 sm:justify-center lg:justify-start">
             <li>
               <NavLink
                 to="courses"
@@ -53,12 +48,6 @@ export function CoursesHeader() {
               </NavLink>
             </li>
           </ul>
-
-          {hasSearchBar && (
-            <div className="mt-4">
-              <CoursesSearchbar />
-            </div>
-          )}
         </div>
       </nav>
     </header>

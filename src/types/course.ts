@@ -36,6 +36,10 @@ export interface Course {
   steps: CourseStep[];
 }
 
+export interface GetCourseByIdResponse {
+  course: Course;
+}
+
 type VideoProvider = "youtube" | "vk" | "other";
 type LessonType = "video" | "text" | "quiz";
 
@@ -110,12 +114,16 @@ export interface GetCoursesQueryParameters {
   onlyEnrolled: boolean;
 }
 
-export interface GetCoursesResponse {
+export interface CoursesPaginated {
   items: Course[];
   page: number;
   pageSize: number;
   total: number;
   totalPages: number;
+}
+
+export interface GetCoursesResponse {
+  courses: CoursesPaginated;
 }
 
 export interface CourseFavoriteRequest {

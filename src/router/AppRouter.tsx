@@ -1,6 +1,6 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LandingPage } from "@/landing/LandingPage";
-import { CoursesHeaderLayout } from "@/layouts/CoursesHeaderLayout";
+import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";
 import { MyLearningSidebarLayout } from "@/layouts/MyLearningSidebarLayout";
 import { AuthPage } from "@/pages/AuthPage";
 import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        element: <CoursesHeaderLayout />,
+        element: <MainCoursesLayout />,
         children: [
           {
             path: "/courses",
