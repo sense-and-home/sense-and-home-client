@@ -1,5 +1,6 @@
 import { requestEmail } from "@/api/bookingApi";
 import { SmartLink } from "@/components/SmartLink";
+import { ThankYouModal } from "@/components/ThankYouModal";
 import { Button } from "@/components/ui/Button";
 import {
   footerAccount,
@@ -7,7 +8,6 @@ import {
   footerMain,
   logoLink,
 } from "@/config/navigation";
-import { ThankYouModal } from "@/landing/components/ThankYouModal";
 import { useState } from "react";
 
 export function Footer() {

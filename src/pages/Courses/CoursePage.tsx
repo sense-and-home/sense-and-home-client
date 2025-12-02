@@ -89,26 +89,32 @@ export function CoursePage() {
           <h2 className="text-3xl font-bold">Чему вы научитесь?</h2>
 
           <ul className="space-y-2 font-medium">
-            <li className="flex gap-1">
-              <SparkleIcon fill="text-surface-1-foreground" /> Lorem, ipsum
-              dolor sit amet consectetur adipisicing elit. Laboriosam illo earum
-              maxime perspiciatis aut rerum labore modi quia consequatur
-              impedit. Laborum quos quod magnam esse! Deserunt facilis quisquam
-              amet totam.
+            <li className="inline-flex items-start gap-2">
+              <SparkleIcon fill="text-surface-1-foreground" size={48} />
+              <span>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Laboriosam illo earum maxime perspiciatis aut rei quia
+                consequatur impedit. Laborum quos quod magnam esse! Deserunt
+                facilis quisquam amet totam.
+              </span>
             </li>
-            <li className="flex gap-1">
-              <SparkleIcon fill="text-surface-1-foreground" /> Lorem, ipsum
-              dolor sit amet consectetur adipisicing elit. Laboriosam illo earum
-              maxime perspiciatis aut rerum labore modi quia consequatur
-              impedit. Laborum quos quod magnam esse! Deserunt facilis quisquam
-              amet totam.
+            <li className="inline-flex items-start gap-2">
+              <SparkleIcon fill="text-surface-1-foreground" size={48} />
+              <span>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Laboriosam illo earum maxime perspiciatis aut rei quia
+                consequatur impedit. Laborum quos quod magnam esse! Deserunt
+                facilis quisquam amet totam.
+              </span>
             </li>
-            <li className="flex gap-1">
-              <SparkleIcon fill="text-surface-1-foreground" /> Lorem, ipsum
-              dolor sit amet consectetur adipisicing elit. Laboriosam illo earum
-              maxime perspiciatis aut rerum labore modi quia consequatur
-              impedit. Laborum quos quod magnam esse! Deserunt facilis quisquam
-              amet totam.
+            <li className="inline-flex items-start gap-2">
+              <SparkleIcon fill="text-surface-1-foreground" size={48} />
+              <span>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Laboriosam illo earum maxime perspiciatis aut rei quia
+                consequatur impedit. Laborum quos quod magnam esse! Deserunt
+                facilis quisquam amet totam.
+              </span>
             </li>
           </ul>
         </div>

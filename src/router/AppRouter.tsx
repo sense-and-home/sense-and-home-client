@@ -1,17 +1,17 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { LandingPage } from "@/landing/LandingPage";
 import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";
 import { MyLearningSidebarLayout } from "@/layouts/MyLearningSidebarLayout";
-import { AuthPage } from "@/pages/AuthPage";
-import { CompletedCoursesPage } from "@/pages/CompletedCoursesPage";
-import { CourseCatalogPage } from "@/pages/CourseCatalogPage";
-import { CoursePage } from "@/pages/CoursePage";
-import { DashboardPage } from "@/pages/DashboardPage";
-import { FavoriteCoursesPage } from "@/pages/FavoriteCoursesPage";
-import { ManagerDashboardPage } from "@/pages/ManagerDashboardPage";
-import { MapPage } from "@/pages/MapPage";
-import { MyLearningPage } from "@/pages/MyLearningPage";
-import { RequiredCoursesPage } from "@/pages/RequiredCoursesPage";
+import { AuthPage } from "@/pages/Auth/AuthPage";
+import { CourseCatalogPage } from "@/pages/Courses/CourseCatalogPage";
+import { CoursePage } from "@/pages/Courses/CoursePage";
+import { DashboardPage } from "@/pages/Dashboards/DashboardPage";
+import { ManagerDashboardPage } from "@/pages/Dashboards/ManagerDashboardPage";
+import { MapPage } from "@/pages/Dashboards/MapPage";
+import { LandingPage } from "@/pages/Landing/LandingPage";
+import { CompletedCoursesPage } from "@/pages/MyLearning/CompletedCoursesPage";
+import { FavoriteCoursesPage } from "@/pages/MyLearning/FavoriteCoursesPage";
+import { MyLearningPage } from "@/pages/MyLearning/MyLearningPage";
+import { RequiredCoursesPage } from "@/pages/MyLearning/RequiredCoursesPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([

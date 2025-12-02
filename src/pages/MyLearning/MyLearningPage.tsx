@@ -20,7 +20,7 @@ export function MyLearningPage() {
         ) : (
           <>
             {data?.courses.items?.length ? (
-              <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
+              <div className="mt-8 grid grid-flow-row gap-4">
                 {data.courses.items.map((course) => (
                   <CourseProgressCard key={course.id} course={course} />
                 ))}

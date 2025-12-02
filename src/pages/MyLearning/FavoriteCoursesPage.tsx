@@ -2,15 +2,15 @@ import { getCourses } from "@/api/courseApi";
 import { CourseProgressCard } from "@/components/CourseProgressCard";
 import { useQuery } from "@tanstack/react-query";
 
-export function CompletedCoursesPage() {
+export function FavoriteCoursesPage() {
   const { isPending, data } = useQuery({
-    queryKey: ["completed-courses"],
-    queryFn: () => getCourses(),
+    queryKey: ["favorite-courses"],
+    queryFn: () => getCourses({ onlyFavorites: true }),
   });
 
   return (
     <div>
-      <h1 className="heading mb-4">Пройденое</h1>
+      <h1 className="heading mb-4">Избранное</h1>
 
       <div className="space-y-8">
         {isPending ? (
@@ -20,7 +20,7 @@ export function CompletedCoursesPage() {
         ) : (
           <>
             {data?.courses.items?.length ? (
-              <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
+              <div className="mt-8 grid grid-flow-row gap-4">
                 {data.courses.items.map((course) => (
                   <CourseProgressCard key={course.id} course={course} />
                 ))}

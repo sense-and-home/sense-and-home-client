@@ -1,4 +1,7 @@
-import { Accordion, type AccordionItem } from "@/landing/components/Accordion";
+import {
+  Accordion,
+  type AccordionItem,
+} from "@/pages/Landing/components/Accordion";
 
 const items: AccordionItem[] = [
   {

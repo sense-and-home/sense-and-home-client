@@ -1,7 +1,7 @@
 import { requestCall } from "@/api/bookingApi";
 import CallBackBackground from "@/assets/img/call-back-background.webp";
 import { Button } from "@/components/ui/Button";
-import { Modal } from "@/landing/components/Modal";
+import { Modal } from "@/pages/Landing/components/Modal";
 import { formatPhoneNumber } from "@/utils";
 import React, { useState } from "react";
 
