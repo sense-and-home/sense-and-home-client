@@ -22,7 +22,7 @@ const badgeVariants = cva(["rounded-lg px-2 py-1"], {
 
 interface BadgeProps {
   text: string;
-  tone: "light" | "dark";
+  tone?: "light" | "dark";
 }
 
 export function Badge({

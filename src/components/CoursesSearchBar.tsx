@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/Input";
 import { useDebounceValue } from "@/hooks/useDebounce";
 import { SearchIcon } from "lucide-react";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useSearchParams } from "react-router";
 
 export function CoursesSearchBar({
   value,
@@ -11,7 +12,9 @@ export function CoursesSearchBar({
   value: string;
   onChange: (v: string) => void;
 }) {
-  const [inputValue, setInputValue] = useState(value);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParam = searchParams.get("search") ?? "";
+  const [inputValue, setInputValue] = useState((searchParam || value) ?? "");
   const debouncedInputValue = useDebounceValue(inputValue, 500);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -19,7 +22,15 @@ export function CoursesSearchBar({
 
   useEffect(() => {
     onChange(debouncedInputValue);
-  }, [onChange, debouncedInputValue]);
+
+    const urlParams = new URLSearchParams(searchParams.toString());
+    if (debouncedInputValue) {
+      urlParams.set("search", debouncedInputValue);
+    } else {
+      urlParams.delete("search");
+    }
+    setSearchParams(urlParams, { replace: true });
+  }, [onChange, debouncedInputValue, searchParams, setSearchParams]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
