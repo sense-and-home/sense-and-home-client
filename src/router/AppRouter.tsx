@@ -47,26 +47,32 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <CoursesHeaderLayout />,
+    element: <ProtectedRoute />,
+
     children: [
       {
-        path: "/courses",
-        element: <CourseCatalogPage />,
-      },
-      {
-        path: "/courses/:id",
-        element: <CoursePage />,
-      },
-      {
-        element: <MyLearningSidebarLayout />,
+        element: <CoursesHeaderLayout />,
         children: [
           {
-            path: "/my-learning",
-            element: <MyLearningPage />,
+            path: "/courses",
+            element: <CourseCatalogPage />,
           },
           {
-            path: "/my-learning/favorite-courses",
-            element: <FavoriteCoursesPage />,
+            path: "/courses/:id",
+            element: <CoursePage />,
+          },
+          {
+            element: <MyLearningSidebarLayout />,
+            children: [
+              {
+                path: "/my-learning",
+                element: <MyLearningPage />,
+              },
+              {
+                path: "/my-learning/favorite-courses",
+                element: <FavoriteCoursesPage />,
+              },
+            ],
           },
         ],
       },

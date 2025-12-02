@@ -181,14 +181,8 @@ export function AuthPage() {
   const applyTokensFromResponse = (data: any) => {
     const accessToken =
       data?.accessToken || data?.token || data?.access_token || data?.jwt;
-    const refreshToken =
-      data?.refreshToken ||
-      data?.refresh_token ||
-      data?.refreshTokenValue ||
-      data?.refresh;
 
     if (accessToken) tokenStorage.setAccessToken(accessToken);
-    if (refreshToken) tokenStorage.setRefreshToken(refreshToken);
 
     if (data?.user) tokenStorage.setUser(data.user);
     if (!data.user && data?.email) {

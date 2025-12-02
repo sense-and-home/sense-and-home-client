@@ -117,7 +117,7 @@ export function ManagerDashboardPage() {
 
             <button
               onClick={handleLogout}
-              className="hidden rounded-md border border-white/20 px-3 py-1 text-sm hover:bg-white/5 md:inline-block"
+              className="rounded-md border border-white/20 px-3 py-1 text-sm hover:bg-white/5"
             >
               Выйти
             </button>

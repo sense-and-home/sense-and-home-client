@@ -15,6 +15,7 @@ export function CoursesSearchbar() {
   const { refetch } = useQuery({
     queryKey: ["courses", debouncedInputValue],
     queryFn: () => getCourses({ search: debouncedInputValue }),
+    enabled: !!debouncedInputValue,
   });
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {

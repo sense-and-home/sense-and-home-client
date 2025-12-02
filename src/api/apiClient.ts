@@ -9,6 +9,7 @@ const axiosConfig: AxiosRequestConfig = {
   headers: {
     Accept: "application/json",
   },
+  withCredentials: true,
 };
 
 // public api for routes that DON'T require auth
@@ -94,14 +95,14 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     console.log(error);
 
-    if (error.response.status === 403 && !originalRequest._retry) {
+    if (
+      (error.response.status === 403 || error.response.status === 401) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       try {
-        const refreshToken = tokenStorage.getRefreshToken();
-        const response = await publicApi.post("/auth/refresh", {
-          refreshToken,
-        });
+        const response = await publicApi.post("/auth/refresh");
         const { accessToken } = response.data;
 
         tokenStorage.setAccessToken(accessToken);
