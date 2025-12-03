@@ -17,7 +17,7 @@ export function CourseProgressCard({
       to={`/courses/${course.id}`}
       state={course}
       className={cn(
-        "block w-full space-y-4 rounded-lg px-2 py-4 text-center shadow-[0_0_4px_rgba(0,0,0,0.25)] sm:px-4",
+        "block w-full space-y-4 rounded-lg px-2 py-4 text-center shadow-[0_0_4px_rgba(0,0,0,0.25)] sm:px-4 sm:text-start",
         className,
       )}
       viewTransition
@@ -53,7 +53,7 @@ export function CourseProgressCard({
         </p>
       </div>
 
-      <Button className="bg-action/20 hover:bg-action/35 transition-colors">
+      <Button className="bg-action/20 hover:bg-action/35 text-center transition-colors sm:text-start">
         Продолжить
       </Button>
     </NavLink>
