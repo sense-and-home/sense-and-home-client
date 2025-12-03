@@ -25,11 +25,11 @@ export async function getFavoriteCourses() {
 }
 
 export async function addCourseToFavorites(data: CourseFavoriteRequest) {
-  const response = await api.post<Course>("courses", data);
+  const response = await api.post<Course>("courses/favorites", data);
   return response.data;
 }
 
 export async function removeCourseFromFavorites(data: CourseFavoriteRequest) {
-  const response = await api.delete<Course>("courses", { data });
+  const response = await api.delete<Course>("courses/favorites", { data });
   return response.data;
 }

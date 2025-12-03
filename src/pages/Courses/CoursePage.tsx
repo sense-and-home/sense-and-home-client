@@ -1,9 +1,16 @@
-import { getCourseById, getCourses } from "@/api/courseApi";
+import {
+  addCourseToFavorites,
+  getCourseById,
+  getCourses,
+  removeCourseFromFavorites,
+} from "@/api/courseApi";
 import CoursePageBackground from "@/assets/img/course-page-background.webp";
 import { CourseCard } from "@/components/CourseCard";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/main";
+import type { Course } from "@/types/course";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   HeartIcon,
@@ -11,7 +18,7 @@ import {
   MoveRightIcon,
   SparkleIcon,
 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { NavLink, useLocation, useParams } from "react-router";
 
 export function CoursePage() {
@@ -20,14 +27,13 @@ export function CoursePage() {
   const location = useLocation();
   const courseState = location.state;
 
-  const { isLoading, data: course } = useQuery({
+  const { isLoading, data: course } = useQuery<Course>({
     queryKey: [`course-${id}`],
     queryFn: async () => {
       const response = await getCourseById(id as string);
       return response.course;
     },
-    enabled: !courseState,
-    initialData: courseState ?? undefined,
+    initialData: (courseState as Course) ?? undefined,
   });
 
   const { data: recommendedCourses } = useQuery({
@@ -35,12 +41,48 @@ export function CoursePage() {
     queryFn: () => getCourses({ sort: "popular", pageSize: 7 }),
   });
 
-  const [isFavorite, setIsFavorite] = useState(course?.isFavorite ?? false);
-
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     dragFree: true,
   });
+
+  const { mutate: addFavoriteMutate, isPending: addFavoriteIsLoading } =
+    useMutation({
+      mutationFn: (payload: { courseId: string }) =>
+        addCourseToFavorites(payload),
+
+      onSuccess: () => {
+        queryClient.setQueryData<Course>([`course-${id}`], (old) =>
+          old ? { ...old, isFavorite: true } : old,
+        );
+      },
+    });
+
+  const { mutate: removeFavoriteMutate, isPending: removeFavoriteIsLoading } =
+    useMutation({
+      mutationFn: (payload: { courseId: string }) =>
+        removeCourseFromFavorites(payload),
+
+      onSuccess: () => {
+        queryClient.setQueryData<Course>([`course-${id}`], (old) =>
+          old ? { ...old, isFavorite: false } : old,
+        );
+      },
+    });
+
+  const toggleFavorite = () => {
+    if (!course) return;
+
+    const payload = { courseId: course.id };
+
+    if (course.isFavorite) {
+      removeFavoriteMutate(payload);
+    } else {
+      addFavoriteMutate(payload);
+    }
+  };
+
+  const isMutating = addFavoriteIsLoading || removeFavoriteIsLoading;
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -128,17 +170,24 @@ export function CoursePage() {
           >
             <NavLink
               className="border-none outline-none"
-              to="/my-learning"
+              to={`/courses/${course.id}/steps/${course?.lastStepId || course?.steps?.[0]?.id}`}
+              state={course}
               viewTransition
             >
               Начать обучение
             </NavLink>
           </Button>
           <Button
-            onClick={() => setIsFavorite(!isFavorite)}
-            className={`${isFavorite ? "bg-action text-action-foreground hover:bg-action/85" : "border-action text-action hover:bg-action/15"} flex w-full items-center justify-center gap-4 border-2 transition-colors sm:text-lg`}
+            onClick={toggleFavorite}
+            disabled={isMutating}
+            className={`${
+              course.isFavorite
+                ? "bg-action text-action-foreground hover:bg-action/85 hover:border-action/85"
+                : "text-action hover:bg-action/15"
+            } border-action flex w-full items-center justify-center gap-4 border-2 transition-colors sm:text-lg`}
           >
-            Пройду позже <HeartIcon className="fill-action-foreground" />
+            {course.isFavorite ? "В избранном" : "Пройду позже"}
+            <HeartIcon className="fill-action-foreground" />
           </Button>
         </div>
       </div>
