@@ -165,18 +165,20 @@ export function CoursePage() {
 
         <div className="w-full flex-shrink-0 space-y-2 sm:space-y-3 md:w-fit">
           <Button
-            tabIndex={-1}
-            className="bg-action text-action-foreground w-full sm:text-xl"
+            asChild
+            className="bg-action text-action-foreground hover:bg-action/85 w-full transition-colors sm:text-xl"
           >
             <NavLink
-              className="border-none outline-none"
+              className="block"
               to={`/courses/${course.id}/steps/${course?.lastStepId || course?.steps?.[0]?.id}`}
               state={course}
               viewTransition
+              prefetch="render"
             >
               Начать обучение
             </NavLink>
           </Button>
+
           <Button
             onClick={toggleFavorite}
             disabled={isMutating}

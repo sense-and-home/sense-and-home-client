@@ -1,4 +1,5 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { LessonLayout } from "@/layouts/LessonLayout";
 import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";
 import { MyLearningSidebarLayout } from "@/layouts/MyLearningSidebarLayout";
 import { AuthPage } from "@/pages/Auth/AuthPage";
@@ -8,6 +9,7 @@ import { DashboardPage } from "@/pages/Dashboards/DashboardPage";
 import { ManagerDashboardPage } from "@/pages/Dashboards/ManagerDashboardPage";
 import { MapPage } from "@/pages/Dashboards/MapPage";
 import { LandingPage } from "@/pages/Landing/LandingPage";
+import { LessonPage } from "@/pages/Lessons/LessonPage";
 import { CompletedCoursesPage } from "@/pages/MyLearning/CompletedCoursesPage";
 import { FavoriteCoursesPage } from "@/pages/MyLearning/FavoriteCoursesPage";
 import { MyLearningPage } from "@/pages/MyLearning/MyLearningPage";
@@ -61,6 +63,15 @@ const router = createBrowserRouter([
           {
             path: "/courses/:id",
             element: <CoursePage />,
+          },
+          {
+            element: <LessonLayout />,
+            children: [
+              {
+                path: "/courses/:id/steps/:stepId",
+                element: <LessonPage />,
+              },
+            ],
           },
           {
             element: <MyLearningSidebarLayout />,

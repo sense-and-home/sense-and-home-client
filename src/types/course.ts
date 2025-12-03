@@ -3,10 +3,10 @@ interface CourseAuthor {
   fullName: string;
 }
 
-interface CourseStep {
+export interface CourseStep {
   id: string;
   title: string;
-  stepTypd: string;
+  stepType: string;
   order: number;
   durationMinutes: number;
   preview: string;
@@ -40,8 +40,8 @@ export interface GetCourseByIdResponse {
   course: Course;
 }
 
-type VideoProvider = "youtube" | "vk" | "other";
-type LessonType = "video" | "text" | "quiz";
+export type VideoProvider = "youtube" | "vk" | "other";
+export type LessonType = "video" | "text" | "quiz";
 
 export interface Lesson {
   id: string;

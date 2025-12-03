@@ -13,16 +13,18 @@ export function CourseProgressCard({
   className,
 }: CourseProgressCardProps) {
   return (
-    <NavLink
-      to={`/courses/${course.id}`}
-      state={course}
+    <div
       className={cn(
         "block w-full space-y-4 rounded-lg px-2 py-4 text-center shadow-[0_0_4px_rgba(0,0,0,0.25)] sm:px-4 sm:text-start",
         className,
       )}
-      viewTransition
     >
-      <div className="grid items-center gap-4 sm:grid-flow-col sm:justify-between">
+      <NavLink
+        to={`/courses/${course.id}`}
+        state={course}
+        className="grid items-center gap-4 sm:grid-flow-col sm:justify-between"
+        viewTransition
+      >
         <h2 className="course-title mx-auto w-fit text-center text-xl font-semibold sm:text-3xl">
           {course.title}
         </h2>
@@ -34,12 +36,12 @@ export function CourseProgressCard({
             alt=""
           />
         </div>
-      </div>
+      </NavLink>
 
       <div className="relative h-2 w-full overflow-hidden rounded-lg bg-gray-200">
         <div
           className="bg-action h-full rounded-lg transition-all duration-300"
-          style={{ width: `${10}%` }}
+          style={{ width: `${course.progressPercent}%` }}
         />
       </div>
 
@@ -53,9 +55,20 @@ export function CourseProgressCard({
         </p>
       </div>
 
-      <Button className="bg-action/20 hover:bg-action/35 text-center transition-colors sm:text-start">
-        Продолжить
+      <Button
+        asChild
+        className="bg-action/20 hover:bg-action/35 text-center transition-colors sm:text-start"
+      >
+        <NavLink
+          to={`/courses/${course.id}/steps/${course?.lastStepId || course?.steps?.[0]?.id}`}
+          state={course}
+          className="inline-block"
+          viewTransition
+          prefetch="intent"
+        >
+          Продолжить
+        </NavLink>
       </Button>
-    </NavLink>
+    </div>
   );
 }

@@ -1,6 +1,12 @@
 import { getCourseById } from "@/api/courseApi";
-import type { Course } from "@/types/course";
+import type {
+  Course,
+  CourseStep,
+  LessonType,
+  VideoProvider,
+} from "@/types/course";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 
 export function LessonPage() {
@@ -14,7 +20,7 @@ export function LessonPage() {
     },
   });
 
-  const currentStep = course?.steps?.find((step) => step.id === stepId);
+  const currentStep = course?.steps.find((step) => step.id === stepId);
 
   if (isLoading) {
     return <div className="bg-surface-1 h-screen" />;
@@ -24,25 +30,22 @@ export function LessonPage() {
     case "video":
       return (
         <div>
-          <div>{currentStep?.stepType}</div>
           <div className="text-lg font-bold">{currentStep?.title}</div>
         </div>
       );
     case "text":
       return (
         <div>
-          <div>{currentStep?.stepType}</div>
           <div className="text-lg font-bold">{currentStep?.title}</div>
         </div>
       );
     case "quiz":
       return (
         <div>
-          <div>{currentStep?.stepType}</div>
           <div className="text-lg font-bold">{currentStep?.title}</div>
         </div>
       );
     default:
-      return <div>Урок не найден :(</div>;
+      return <div>Урок не найден</div>;
   }
 }
