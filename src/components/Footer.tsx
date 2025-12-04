@@ -9,11 +9,12 @@ import {
   logoLink,
 } from "@/config/navigation";
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 
 export function Footer() {
-  const { user } = useAuth();
-  const isManager = user?.role === "manager";
+  // TODO handle footer links properly
+  // const { user } = useAuth();
+  // const isManager = user?.role === "manager";
 
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,13 +49,13 @@ export function Footer() {
     }
   };
 
-  const footerMainLinks = [...footerMain];
-  if (isManager) {
-    footerMainLinks.push(
-      { id: "my-learning", name: "Моё обучение", href: "/my-learning" },
-      { id: "courses", name: "Каталог", href: "/courses" },
-    );
-  }
+  const footerAccountLinks = [...footerAccount];
+  // if (isManager) {
+  footerAccountLinks.push(
+    { id: "my-learning", name: "Моё обучение", href: "/my-learning" },
+    { id: "courses", name: "Каталог", href: "/courses" },
+  );
+  // }
 
   return (
     <div className="bg-surface-1 text-surface-1-foreground px-2 py-8 md:px-4 lg:px-8">
@@ -67,7 +68,7 @@ export function Footer() {
         </SmartLink>
 
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
-          {footerMainLinks.map((link) => (
+          {footerMain.map((link) => (
             <li key={link.id ?? link.name}>
               <SmartLink to={link.href} className="hover:underline">
                 {link.name}
@@ -77,7 +78,7 @@ export function Footer() {
         </ul>
 
         <ul className="space-y-2 text-lg leading-relaxed md:text-xl">
-          {footerAccount.map((link) => (
+          {footerAccountLinks.map((link) => (
             <li key={link.id ?? link.name}>
               <SmartLink to={link.href} className="hover:underline">
                 {link.name}
