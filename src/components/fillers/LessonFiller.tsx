@@ -1,6 +1,6 @@
 export function LessonFiller() {
   return (
-    <div className="prose max-w-none space-y-6 p-4">
+    <div className="prose max-w-none space-y-6">
       <h3 className="text-xl font-semibold">Введение</h3>
       <p>
         Когда мало просто{" "}

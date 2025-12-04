@@ -10,6 +10,7 @@ import { NavLink, useParams } from "react-router";
 export function LessonPage() {
   const { id, stepId } = useParams();
 
+  // TODO handle stepId properly, assuming it's always returned from the backend
   const { isLoading, data: course } = useQuery<Course>({
     queryKey: [`course-${id}`],
     queryFn: async () => {
@@ -18,16 +19,23 @@ export function LessonPage() {
     },
   });
 
-  if (isLoading || !course) {
+  if (isLoading || !course || !course.steps || course.steps.length === 0) {
     return <div className="bg-surface-1 h-screen" />;
   }
 
-  const currentStepIndex = course.steps.findIndex((step) => step.id === stepId);
-  const currentStep = course.steps[currentStepIndex ?? 0];
+  const currentStepId =
+    stepId && stepId !== "undefined" ? stepId : course.steps[0].id;
 
-  const prevStep = course.steps[currentStepIndex - 1];
-  const nextStep = course.steps[currentStepIndex + 1];
+  const currentStepIndex = course.steps.findIndex(
+    (step) => step.id === currentStepId,
+  );
 
+  const safeStepIndex = currentStepIndex >= 0 ? currentStepIndex : 0;
+  const currentStep = course.steps[safeStepIndex];
+  const prevStep = course.steps[safeStepIndex - 1];
+  const nextStep = course.steps[safeStepIndex + 1];
+
+  // TODO create separate components
   switch (currentStep?.stepType) {
     case "video":
       return (
