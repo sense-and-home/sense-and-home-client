@@ -74,11 +74,11 @@ export function LessonLayout() {
           {course?.steps?.map((step, i) => (
             <li className="text-lg font-bold" key={step.id}>
               <NavLink
+                onClick={() => setIsOpen(!isOpen)}
                 className={({ isActive }) =>
                   `${isActive ? "underline" : ""} block py-1 hover:underline`
                 }
                 to={`/courses/${course.id}/steps/${step.id}`}
-                viewTransition
               >
                 {i + 1}. {step.title}
               </NavLink>
