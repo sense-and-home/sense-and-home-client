@@ -34,15 +34,12 @@ const router = createBrowserRouter([
     element: <AuthPage />,
   },
   {
+    //  redirectRoles={{ user: "/manager-dashboard" }}
     element: <ProtectedRoute />,
     children: [
       {
         path: "/dashboard",
         element: <DashboardPage />,
-      },
-      {
-        path: "/manager-dashboard",
-        element: <ManagerDashboardPage />,
       },
       {
         path: "/map",
@@ -51,8 +48,18 @@ const router = createBrowserRouter([
     ],
   },
   {
+    // {/*  allowedRoles={["manager"]} */}
     element: <ProtectedRoute />,
     children: [
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/manager-dashboard",
+            element: <ManagerDashboardPage />,
+          },
+        ],
+      },
       {
         element: <MainCoursesLayout />,
         children: [
