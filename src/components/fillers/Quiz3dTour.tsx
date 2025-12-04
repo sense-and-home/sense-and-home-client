@@ -47,7 +47,7 @@ export function Quiz3DTour({ onFinish }: { onFinish?: () => void }) {
   const allAnswered = answers.every((a) => a !== null);
 
   const score = answers.reduce((acc, answer, i) => {
-    return answer === quizQuestions[i].correct ? acc + 1 : acc;
+    return answer === quizQuestions[i].correct ? (acc as number) + 1 : acc;
   }, 0);
 
   function submitQuiz() {
