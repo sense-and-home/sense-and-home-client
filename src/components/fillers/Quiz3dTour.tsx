@@ -130,7 +130,7 @@ export function Quiz3DTour({ onFinish }: { onFinish?: () => void }) {
         <Button
           disabled={!allAnswered}
           onClick={submitQuiz}
-          className="border-action text-action hover:bg-action/15 border-2"
+          className="border-action text-action hover:bg-action/15 w-full border-2 sm:w-fit"
         >
           Завершить тест
         </Button>

@@ -50,9 +50,7 @@ export function CourseProgressCard({
           <span className="font-semibold">{course.progressPercent}%</span>{" "}
           материала пройдено
         </p>
-        <p>
-          <span className="font-semibold">???/100</span> баллов
-        </p>
+        <p>{/* <span className="font-semibold">???/100</span> баллов */}</p>
       </div>
 
       <Button

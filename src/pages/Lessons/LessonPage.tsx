@@ -64,19 +64,19 @@ export function LessonPage() {
             подробностях, насколько это невероятно!
           </div>
 
-          <div className="flex justify-between gap-2">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row">
             {prevStep ? (
               <Button
                 asChild
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${prevStep?.id}`}
                   viewTransition
                 >
-                  <span>Предыдущий шаг</span>
                   <ArrowLeftIcon />
+                  <span>Предыдущий шаг</span>
                 </NavLink>
               </Button>
             ) : (
@@ -89,7 +89,7 @@ export function LessonPage() {
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${nextStep?.id}`}
                   viewTransition
                 >
@@ -110,19 +110,19 @@ export function LessonPage() {
 
           <LessonFiller />
 
-          <div className="flex justify-between gap-2">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row">
             {prevStep ? (
               <Button
                 asChild
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${prevStep?.id}`}
                   viewTransition
                 >
-                  <span>Предыдущий шаг</span>
                   <ArrowLeftIcon />
+                  <span>Предыдущий шаг</span>
                 </NavLink>
               </Button>
             ) : (
@@ -135,7 +135,7 @@ export function LessonPage() {
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${nextStep?.id}`}
                   viewTransition
                 >
@@ -156,19 +156,19 @@ export function LessonPage() {
 
           <Quiz3DTour />
 
-          <div className="flex justify-between gap-2">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row">
             {prevStep ? (
               <Button
                 asChild
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${prevStep?.id}`}
                   viewTransition
                 >
-                  <span>Предыдущий шаг</span>
                   <ArrowLeftIcon />
+                  <span>Предыдущий шаг</span>
                 </NavLink>
               </Button>
             ) : (
@@ -181,7 +181,7 @@ export function LessonPage() {
                 className="border-action text-action hover:bg-action/15 border-2"
               >
                 <NavLink
-                  className="flex gap-2"
+                  className="flex items-center justify-center gap-2"
                   to={`/courses/${course.id}/steps/${nextStep?.id}`}
                   viewTransition
                 >
