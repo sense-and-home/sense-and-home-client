@@ -93,7 +93,7 @@ export function Footer() {
           Мы открыты к сотрудничеству
         </h2>
         <p className="mb-6 text-lg md:mb-4 md:text-xl">
-          Оставьте почту и мы свяжемся с Вами в течении дня!
+          Оставьте почту и мы свяжемся с Вами в течение дня!
         </p>
 
         <div className="flex flex-col items-start justify-between gap-6 text-lg md:text-xl lg:flex-row lg:items-center lg:gap-0">

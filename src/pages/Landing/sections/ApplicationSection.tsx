@@ -310,7 +310,7 @@ export function ApplicationSection() {
       <ThankYouModal
         isOpen={isThankYouModalOpen}
         onClose={() => setIsThankYouModalOpen(false)}
-        message="Мы свяжемся с Вами в течении часа"
+        message="Мы свяжемся с Вами в течение часа"
       />
     </div>
   );
