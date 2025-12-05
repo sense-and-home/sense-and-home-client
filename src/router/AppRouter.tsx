@@ -14,6 +14,7 @@ import { CompletedCoursesPage } from "@/pages/MyLearning/CompletedCoursesPage";
 import { FavoriteCoursesPage } from "@/pages/MyLearning/FavoriteCoursesPage";
 import { MyLearningPage } from "@/pages/MyLearning/MyLearningPage";
 import { RequiredCoursesPage } from "@/pages/MyLearning/RequiredCoursesPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
