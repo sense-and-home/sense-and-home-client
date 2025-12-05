@@ -74,7 +74,7 @@ export const footerAccount: LinkDef[] = [
 
 export const footerLegal: LinkDef[] = [
   { id: "terms", name: "Договор оферты", href: "/terms" },
-  { id: "inn", name: "ИНН 1234567890234567", href: "/legal" },
+  { id: "inn", name: "ИНН 751202967940", href: "/legal" },
   { id: "company", name: 'ООО "Sense&Home"', href: "/legal" },
 ];
 
