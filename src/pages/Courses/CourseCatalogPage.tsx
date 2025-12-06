@@ -1,6 +1,7 @@
 import { getCourses } from "@/api/courseApi";
 import { CourseCard } from "@/components/CourseCard";
 import { CoursesSearchBar } from "@/components/CoursesSearchBar";
+import { CourseCardSkeleton } from "@/components/skeletons/CourseCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -11,6 +12,8 @@ export function CourseCatalogPage() {
     queryKey: ["courses", search],
     queryFn: () => getCourses({ search }),
   });
+
+  const skeletons = Array.from({ length: 4 });
 
   return (
     <div>
@@ -25,8 +28,10 @@ export function CourseCatalogPage() {
         </p>
 
         {isPending ? (
-          <div className="p-32 text-center text-2xl font-semibold">
-            Загрузка...
+          <div className="mt-8 grid grid-flow-row gap-4 lg:grid-cols-2 lg:gap-8">
+            {skeletons.map((_, i) => (
+              <CourseCardSkeleton key={i} />
+            ))}
           </div>
         ) : (
           <>

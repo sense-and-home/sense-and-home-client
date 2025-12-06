@@ -1,4 +1,3 @@
-// AppRouter.tsx
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LessonLayout } from "@/layouts/LessonLayout";
 import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";

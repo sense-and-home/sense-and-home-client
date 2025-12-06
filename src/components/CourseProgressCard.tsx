@@ -29,11 +29,11 @@ export function CourseProgressCard({
           {course.title}
         </h2>
 
-        <div className="rounded-secondary h-full max-h-[200px] w-full overflow-hidden sm:max-h-[150px] sm:max-w-[200px]">
+        <div className="rounded-secondary relative h-36 w-full overflow-hidden sm:h-32 sm:w-40">
           <img
-            className="course-image h-full w-full object-cover object-center"
             src={course.imageUrl}
-            alt=""
+            alt={course.title}
+            className="course-image absolute inset-0 h-full w-full bg-gray-200 object-cover"
           />
         </div>
       </NavLink>
@@ -50,7 +50,6 @@ export function CourseProgressCard({
           <span className="font-semibold">{course.progressPercent}%</span>{" "}
           материала пройдено
         </p>
-        <p>{/* <span className="font-semibold">???/100</span> баллов */}</p>
       </div>
 
       <Button

@@ -1,12 +1,15 @@
 import { getCourses } from "@/api/courseApi";
 import { CourseProgressCard } from "@/components/CourseProgressCard";
+import { CourseProgressCardSkeleton } from "@/components/skeletons/CourseProgressCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 
 export function RequiredCoursesPage() {
   const { isPending, data } = useQuery({
     queryKey: ["required-courses"],
-    queryFn: () => getCourses(),
+    queryFn: () => getCourses(/*{ onlyEnrolled: true }*/),
   });
+
+  const skeletons = Array.from({ length: 3 });
 
   return (
     <div>
@@ -14,8 +17,10 @@ export function RequiredCoursesPage() {
 
       <div className="space-y-8">
         {isPending ? (
-          <div className="p-32 text-center text-2xl font-semibold">
-            Загрузка...
+          <div className="mt-8 grid grid-flow-row gap-4">
+            {skeletons.map((_, i) => (
+              <CourseProgressCardSkeleton key={i} />
+            ))}
           </div>
         ) : (
           <>
