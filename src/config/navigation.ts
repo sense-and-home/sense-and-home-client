@@ -34,6 +34,12 @@ export const navLinks: LinkDef[] = [
     href: "https://t.me/Sense_home_support",
     kind: "external",
   },
+  {
+    id: "",
+    name: "Образовательная платформа",
+    href: "/my-learning",
+    kind: "internal",
+  },
 ];
 
 export const authLinks: LinkDef[] = [

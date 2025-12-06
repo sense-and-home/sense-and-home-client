@@ -55,6 +55,7 @@ export function SmartLink({
         className={({ isActive }) =>
           `${className ?? ""} ${isActive && activeClassName ? activeClassName : ""}`.trim()
         }
+        viewTransition
         {...(rest as any)}
       >
         {children}
