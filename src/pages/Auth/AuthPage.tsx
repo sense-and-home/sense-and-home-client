@@ -1,13 +1,13 @@
-import { logIn, recoverPassword, signUp } from "@/api/authApi";
+import { recoverPassword, signUp } from "@/api/authApi";
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import SignUpBackground from "@/assets/img/sign-up-background.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
-import { tokenStorage } from "@/services/tokenStorage";
 import { validation } from "@/utils/validation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 
 type AuthMode = "registration" | "login";
@@ -40,19 +40,15 @@ interface ValidationErrors {
 export function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, login } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (!isLoading && isAuthenticated)
       navigate("/dashboard", { replace: true });
-    }
   }, [isAuthenticated, isLoading, navigate]);
 
-  const getAuthModeFromUrl = (): AuthMode => {
-    if (location.pathname === "/login") return "login";
-    return "registration";
-  };
+  const getAuthModeFromUrl = (): AuthMode =>
+    location.pathname === "/login" ? "login" : "registration";
 
   const [authMode, setAuthMode] = useState<AuthMode>(getAuthModeFromUrl());
   const [currentStep, setCurrentStep] = useState(1);
@@ -64,7 +60,6 @@ export function AuthPage() {
     company: "",
     specialization: "",
   });
-
   const [error, setError] = useState<ErrorState>({ show: false, message: "" });
   const [timer, setTimer] = useState<TimerState>({ active: false, seconds: 0 });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
@@ -99,13 +94,13 @@ export function AuthPage() {
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (timer.active && timer.seconds > 0) {
-      interval = setInterval(() => {
-        setTimer((prev) => ({ ...prev, seconds: prev.seconds - 1 }));
-      }, 1000);
+      interval = setInterval(
+        () => setTimer((p) => ({ ...p, seconds: p.seconds - 1 })),
+        1000,
+      );
     } else if (timer.seconds === 0 && timer.active) {
       setTimer({ active: false, seconds: 0 });
     }
-
     return () => {
       if (interval) clearInterval(interval);
     };
@@ -114,18 +109,13 @@ export function AuthPage() {
   const startTimer = () => setTimer({ active: true, seconds: 60 });
 
   const handleNextStep = () => {
-    if (validateCurrentStep()) {
-      const nextStep = currentStep + 1;
-      if (nextStep <= totalSteps) {
-        setCurrentStep(nextStep);
-        setStepHistory((h) => [...h, nextStep]);
-        setError({ show: false, message: "" });
-        setValidationErrors({});
-      } else {
-        if (authMode === "login") {
-          navigate("/dashboard");
-        }
-      }
+    if (!validateCurrentStep()) return;
+    const next = currentStep + 1;
+    if (next <= totalSteps) {
+      setCurrentStep(next);
+      setStepHistory((h) => [...h, next]);
+      setError({ show: false, message: "" });
+      setValidationErrors({});
     }
   };
 
@@ -139,58 +129,88 @@ export function AuthPage() {
     }
   };
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (validationErrors[field as keyof ValidationErrors]) {
+  const handleInputChange = useCallback(
+    (field: keyof FormData, value: string) => {
+      setFormData((p) => ({ ...p, [field]: value }));
+
       setValidationErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field as keyof ValidationErrors];
-        return newErrors;
+        if (field in prev) {
+          const next = { ...prev };
+          delete next[field as keyof ValidationErrors];
+          return next;
+        }
+
+        return prev;
       });
-    }
-  };
+    },
+    [],
+  );
+
+  const onFullNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange("fullName", e.target.value),
+    [handleInputChange],
+  );
+  const onEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange("email", e.target.value),
+    [handleInputChange],
+  );
+  const onPasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange("password", e.target.value),
+    [handleInputChange],
+  );
+  const onCompanyChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange("company", e.target.value),
+    [handleInputChange],
+  );
+  const onSpecializationChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange("specialization", e.target.value),
+    [handleInputChange],
+  );
 
   const validateCurrentStep = (): boolean => {
     const errors: ValidationErrors = {};
-
     switch (currentStep) {
       case 1:
-        if (!validation.email(formData.email)) {
+        if (!validation.email(formData.email))
           errors.email = "Введите корректный email";
-        }
-        if (authMode === "registration" && !formData.fullName.trim()) {
+        if (authMode === "registration" && !formData.fullName.trim())
           errors.fullName = "Введите имя и фамилию";
-        }
         break;
       case 2:
         if (authMode === "registration") {
-          if (!validation.company(formData.company)) {
+          if (!validation.company(formData.company))
             errors.company = "Введите название компании";
-          }
-          if (!validation.specialization(formData.specialization)) {
+          if (!validation.specialization(formData.specialization))
             errors.specialization = "Введите должность";
-          }
         }
         break;
     }
-
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const applyTokensFromResponse = (data: any) => {
-    const accessToken =
-      data?.accessToken || data?.token || data?.access_token || data?.jwt;
+  const getBackendMessage = (err: any, fallback = "Произошла ошибка") =>
+    err?.response?.data?.message || err?.message || fallback;
 
-    if (accessToken) tokenStorage.setAccessToken(accessToken);
+  const handleLogin = async () => {
+    setIsFormLoading(true);
+    setError({ show: false, message: "" });
 
-    if (data?.user) tokenStorage.setUser(data.user);
-    if (!data.user && data?.email) {
-      try {
-        tokenStorage.setUser({ ...data } as any);
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      await login(formData.email, formData.password);
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError({
+        show: true,
+        message: getBackendMessage(err, "Произошла ошибка при входе"),
+      });
+    } finally {
+      setIsFormLoading(false);
     }
   };
 
@@ -199,13 +219,6 @@ export function AuthPage() {
     setError({ show: false, message: "" });
 
     try {
-      console.log("Sending registration request:", {
-        full_name: formData.fullName,
-        email: formData.email,
-        specialization_title: formData.specialization,
-        company_name: formData.company,
-      });
-
       const response = await signUp({
         fullName: formData.fullName,
         email: formData.email,
@@ -213,30 +226,16 @@ export function AuthPage() {
         companyName: formData.company,
       } as any);
 
-      // response shape may vary; normalise and store tokens/user if present
-      applyTokensFromResponse(response);
-
-      console.log("Registration response:", response);
+      if (response?.user?.email) {
+        setFormData((p) => ({ ...p, email: response.user.email || p.email }));
+      }
 
       handleNextStep();
     } catch (err: any) {
-      console.error("Registration error:", err);
-      const code =
-        err?.code || err?.response?.data?.code || err?.response?.status;
-
-      if (code === 2000) {
-        setError({
-          show: true,
-          message: "Пользователь с таким email уже существует",
-        });
-      } else if (code === 2001) {
-        setError({ show: true, message: "Ошибка валидации данных" });
-      } else {
-        setError({
-          show: true,
-          message: err?.message || "Произошла ошибка при регистрации",
-        });
-      }
+      setError({
+        show: true,
+        message: getBackendMessage(err, "Произошла ошибка при регистрации"),
+      });
     } finally {
       setIsFormLoading(false);
     }
@@ -247,75 +246,13 @@ export function AuthPage() {
     setError({ show: false, message: "" });
 
     try {
-      console.log("Sending password verification request:", {
-        email: formData.email,
-        password: formData.password,
-      });
-
-      const response = await logIn({
-        email: formData.email,
-        password: formData.password,
-      } as any);
-
-      console.log("Password verification response:", response);
-
-      applyTokensFromResponse(response);
-
+      await login(formData.email, formData.password);
       navigate("/dashboard");
     } catch (err: any) {
-      console.error("Password verification error:", err);
-      const code =
-        err?.code || err?.response?.data?.code || err?.response?.status;
-      if (code === 3000) {
-        setError({ show: true, message: "Неверный пароль" });
-      } else {
-        setError({
-          show: true,
-          message: err?.message || "Произошла ошибка при входе",
-        });
-      }
-    } finally {
-      setIsFormLoading(false);
-    }
-  };
-
-  const handleLogin = async () => {
-    setIsFormLoading(true);
-    setError({ show: false, message: "" });
-
-    try {
-      console.log("Sending login request:", {
-        email: formData.email,
-        password: formData.password,
+      setError({
+        show: true,
+        message: getBackendMessage(err, "Произошла ошибка при проверке пароля"),
       });
-
-      const response = await logIn({
-        email: formData.email,
-        password: formData.password,
-      } as any);
-
-      console.log("Login response:", response);
-
-      applyTokensFromResponse(response);
-
-      navigate("/dashboard");
-    } catch (err: any) {
-      console.error("Login error:", err);
-      const code =
-        err?.code || err?.response?.data?.code || err?.response?.status;
-      if (code === 3000) {
-        setError({ show: true, message: "Неверный пароль" });
-      } else if (code === 3001) {
-        setError({
-          show: true,
-          message: "Ваш аккаунт неактивен. Обратитесь в поддержку.",
-        });
-      } else {
-        setError({
-          show: true,
-          message: err?.message || "Произошла ошибка при входе",
-        });
-      }
     } finally {
       setIsFormLoading(false);
     }
@@ -332,61 +269,41 @@ export function AuthPage() {
         return;
       }
 
-      const response = await recoverPassword({ email: formData.email } as any);
-      console.log("Recover password response:", response);
-
+      await recoverPassword({ email: formData.email } as any);
       setPasswordRecovery(true);
       startTimer();
     } catch (err: any) {
-      console.error("Recover password error:", err);
-      const code =
-        err?.code || err?.response?.data?.code || err?.response?.status;
-
-      if (code === 400 || code === 404) {
-        setError({
-          show: true,
-          message: "Пользователь с таким email не найден",
-        });
-      } else {
-        setError({
-          show: true,
-          message: err?.message || "Не удалось отправить письмо восстановления",
-        });
-      }
+      setError({
+        show: true,
+        message: getBackendMessage(
+          err,
+          "Не удалось отправить письмо восстановления",
+        ),
+      });
     } finally {
       setIsFormLoading(false);
     }
   };
 
-  const handleAuthModeToggle = (mode: AuthMode) => {
-    if (mode === "login") {
-      navigate("/login");
-    } else {
-      navigate("/registration");
-    }
-  };
+  const handleAuthModeToggle = (mode: AuthMode) =>
+    navigate(mode === "login" ? "/login" : "/registration");
 
-  if (isLoading || isAuthenticated) {
+  if (isLoading || isAuthenticated)
     return <div className="bg-surface-1 h-screen" />;
-  }
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        if (authMode === "registration") {
+        if (authMode === "registration")
           return (
             <div className="space-y-4">
               <div className="flex flex-col gap-2">
-                <input
-                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
-                    validationErrors.fullName ? "border-2 border-red-500" : ""
-                  }`}
-                  type="text"
+                <Input
+                  shape="round"
                   value={formData.fullName}
-                  onChange={(e) =>
-                    handleInputChange("fullName", e.target.value)
-                  }
+                  onChange={onFullNameChange}
                   placeholder="Имя Фамилия"
+                  intent={validationErrors.fullName ? "error" : "normal"}
                 />
                 {validationErrors.fullName && (
                   <p className="text-sm text-red-500">
@@ -394,14 +311,13 @@ export function AuthPage() {
                   </p>
                 )}
 
-                <input
-                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
-                    validationErrors.email ? "border-2 border-red-500" : ""
-                  }`}
-                  type="email"
+                <Input
+                  shape="round"
                   value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  onChange={onEmailChange}
                   placeholder="----------@mail.ru корпоративный"
+                  intent={validationErrors.email ? "error" : "normal"}
+                  type="email"
                 />
                 {validationErrors.email && (
                   <p className="text-sm text-red-500">
@@ -424,78 +340,65 @@ export function AuthPage() {
               </div>
             </div>
           );
-        } else {
-          return (
-            <div className="space-y-4">
-              <div className="flex flex-col gap-2">
-                <input
-                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
-                    validationErrors.email ? "border-2 border-red-500" : ""
-                  }`}
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="----------@mail.ru корпоративный"
-                />
-                {validationErrors.email && (
-                  <p className="text-sm text-red-500">
-                    {validationErrors.email}
-                  </p>
-                )}
 
-                <input
-                  className="bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg"
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    handleInputChange("password", e.target.value)
-                  }
-                  placeholder="Введите пароль"
-                />
+        return (
+          <div className="space-y-4">
+            <div className="flex flex-col gap-2">
+              <Input
+                shape="round"
+                value={formData.email}
+                onChange={onEmailChange}
+                placeholder="----------@mail.ru корпоративный"
+                intent={validationErrors.email ? "error" : "normal"}
+                type="email"
+              />
+              {validationErrors.email && (
+                <p className="text-sm text-red-500">{validationErrors.email}</p>
+              )}
 
-                {passwordRecovery && (
-                  <p className="text-center text-white/80">
-                    На почту Вам пришел новый пароль. Введите его и используйте
-                    при следующих входах.
-                  </p>
-                )}
+              <Input
+                shape="round"
+                value={formData.password}
+                onChange={onPasswordChange}
+                placeholder="Введите пароль"
+                type="password"
+              />
 
-                <button
-                  onClick={() => {
-                    // trigger password recovery flow
-                    handlePasswordRecovery();
-                  }}
-                  disabled={timer.active}
-                  className={`bg-transparent text-white disabled:opacity-50 ${
-                    timer.active ? "" : "hover:cursor-pointer hover:underline"
-                  }`}
-                >
-                  {timer.active
-                    ? `Отправить еще раз через ${timer.seconds} сек`
-                    : "Восстановить пароль"}
-                </button>
+              {passwordRecovery && (
+                <p className="text-center text-white/80">
+                  На почту Вам пришел новый пароль. Введите его и используйте
+                  при следующих входах.
+                </p>
+              )}
 
-                {error.show && (
-                  <p className="text-center text-red-500">{error.message}</p>
-                )}
-              </div>
+              <button
+                onClick={handlePasswordRecovery}
+                disabled={timer.active}
+                className={`bg-transparent text-white disabled:opacity-50 ${timer.active ? "" : "hover:cursor-pointer hover:underline"}`}
+              >
+                {timer.active
+                  ? `Отправить еще раз через ${timer.seconds} сек`
+                  : "Восстановить пароль"}
+              </button>
+
+              {error.show && (
+                <p className="text-center text-red-500">{error.message}</p>
+              )}
             </div>
-          );
-        }
+          </div>
+        );
 
       case 2:
-        if (authMode === "registration") {
+        if (authMode === "registration")
           return (
             <div className="space-y-4">
               <div className="flex flex-col gap-2">
-                <input
-                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
-                    validationErrors.company ? "border-2 border-red-500" : ""
-                  }`}
-                  type="text"
+                <Input
+                  shape="round"
                   value={formData.company}
-                  onChange={(e) => handleInputChange("company", e.target.value)}
+                  onChange={onCompanyChange}
                   placeholder="Компания"
+                  intent={validationErrors.company ? "error" : "normal"}
                 />
                 {validationErrors.company && (
                   <p className="text-sm text-red-500">
@@ -503,18 +406,12 @@ export function AuthPage() {
                   </p>
                 )}
 
-                <input
-                  className={`bg-surface-2 rounded-primary inline-block w-full px-4 py-3 text-base text-black md:px-8 md:text-lg ${
-                    validationErrors.specialization
-                      ? "border-2 border-red-500"
-                      : ""
-                  }`}
-                  type="text"
+                <Input
+                  shape="round"
                   value={formData.specialization}
-                  onChange={(e) =>
-                    handleInputChange("specialization", e.target.value)
-                  }
+                  onChange={onSpecializationChange}
                   placeholder="Должность в компании"
+                  intent={validationErrors.specialization ? "error" : "normal"}
                 />
                 {validationErrors.specialization && (
                   <p className="text-sm text-red-500">
@@ -527,16 +424,15 @@ export function AuthPage() {
               )}
             </div>
           );
-        } else {
-          return (
-            <div className="space-y-4 text-center">
-              <p className="text-xl text-white">Вы успешно вошли в систему!</p>
-              <p className="text-lg text-white/80">
-                Нажмите "Продолжить" для перехода в личный кабинет
-              </p>
-            </div>
-          );
-        }
+
+        return (
+          <div className="space-y-4 text-center">
+            <p className="text-xl text-white">Вы успешно вошли в систему!</p>
+            <p className="text-lg text-white/80">
+              Нажмите "Продолжить" для перехода в личный кабинет
+            </p>
+          </div>
+        );
 
       case 3:
         return (
@@ -547,12 +443,12 @@ export function AuthPage() {
                 его ниже и используйте при повторном входе.
               </p>
 
-              <input
-                className="bg-surface-2 rounded-primary текст-base inline-block w-full px-4 py-3 text-black md:px-8 md:text-lg"
-                type="password"
+              <Input
+                shape="round"
                 value={formData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
+                onChange={onPasswordChange}
                 placeholder="Введите пароль"
+                type="password"
               />
 
               {error.show && (
@@ -562,25 +458,13 @@ export function AuthPage() {
               <button
                 onClick={startTimer}
                 disabled={timer.active}
-                className={`bg-transparent text-white disabled:opacity-50 ${
-                  timer.active ? "" : "hover:cursor-pointer hover:underline"
-                }`}
+                className={`bg-transparent text-white disabled:opacity-50 ${timer.active ? "" : "hover:cursor-pointer hover:underline"}`}
               >
                 {timer.active
                   ? `Отправить еще раз через ${timer.seconds} сек`
                   : "Отправить еще раз"}
               </button>
             </div>
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className="space-y-4 text-center">
-            <p className="text-xl text-white">Регистрация завершена!</p>
-            <p className="text-lg text-white/80">
-              Нажмите "Завершить" для перехода в личный кабинет
-            </p>
           </div>
         );
 
@@ -591,19 +475,12 @@ export function AuthPage() {
 
   const handleMainButtonClick = () => {
     if (authMode === "registration") {
-      if (currentStep === totalSteps) {
-        handlePasswordVerification();
-      } else if (currentStep === 2) {
-        handleRegistration();
-      } else {
-        handleNextStep();
-      }
+      if (currentStep === totalSteps) handlePasswordVerification();
+      else if (currentStep === 2) handleRegistration();
+      else handleNextStep();
     } else {
-      if (currentStep === 1) {
-        handleLogin();
-      } else {
-        handleNextStep();
-      }
+      if (currentStep === 1) handleLogin();
+      else handleNextStep();
     }
   };
 

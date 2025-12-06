@@ -1,21 +1,31 @@
 import { cn } from "@/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type ComponentProps } from "react";
+import type { ComponentProps } from "react";
+import React from "react";
 
-const inputVariants = cva([""], {
-  variants: {
-    shape: {
-      soft: "rounded-lg",
-      round: "rounded-primary",
+const inputVariants = cva(
+  ["w-full text-base", "bg-surface-2 text-surface-2-foreground"],
+  {
+    variants: {
+      shape: {
+        soft: "rounded-lg",
+        round: "rounded-primary px-4 py-3 md:px-8 md:text-lg",
+      },
+
+      intent: {
+        normal: "",
+        error: "border-2 border-red-500",
+      },
+    },
+
+    defaultVariants: {
+      shape: "soft",
+      intent: "normal",
     },
   },
+);
 
-  defaultVariants: {
-    shape: "soft",
-  },
-});
-
-export function Input({
+function InputImpl({
   shape,
   className,
   type,
@@ -29,3 +39,6 @@ export function Input({
     />
   );
 }
+
+export const Input = React.memo(InputImpl);
+Input.displayName = "Input";

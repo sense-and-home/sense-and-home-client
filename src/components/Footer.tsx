@@ -9,6 +9,7 @@ import {
   logoLink,
 } from "@/config/navigation";
 import { useState } from "react";
+import { Input } from "./ui/Input";
 // import { useAuth } from "@/hooks/useAuth";
 
 export function Footer() {
@@ -62,7 +63,7 @@ export function Footer() {
       <div className="mb-8 flex flex-col gap-8 md:flex-row md:gap-16">
         <SmartLink
           to={logoLink.href}
-          className="justify-self-center font-[Abhaya_Libre] text-4xl leading-[1] font-extrabold hover:underline md:text-[50px]"
+          className="h-fit justify-self-center font-[Abhaya_Libre] text-4xl leading-[1] font-extrabold hover:underline md:text-[50px]"
         >
           {logoLink.name}
         </SmartLink>
@@ -101,8 +102,8 @@ export function Footer() {
             onSubmit={handleSubmit}
             className="flex w-full flex-col gap-3 sm:flex-row sm:gap-0 lg:w-auto"
           >
-            <input
-              className="bg-surface-2 rounded-primary inline-block w-full px-6 py-3 text-base text-black sm:w-auto sm:min-w-md md:px-8 md:text-lg"
+            <Input
+              shape="round"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
