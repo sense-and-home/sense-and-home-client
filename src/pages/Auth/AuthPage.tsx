@@ -125,7 +125,7 @@ export function AuthPage() {
       setStepHistory(newHistory);
       setCurrentStep(newHistory[newHistory.length - 1]);
     } else {
-      navigate("/");
+      navigate("/", { viewTransition: true });
     }
   };
 
@@ -203,7 +203,7 @@ export function AuthPage() {
 
     try {
       await login(formData.email, formData.password);
-      navigate("/dashboard");
+      navigate("/dashboard", { viewTransition: true });
     } catch (err: any) {
       setError({
         show: true,
@@ -247,7 +247,7 @@ export function AuthPage() {
 
     try {
       await login(formData.email, formData.password);
-      navigate("/dashboard");
+      navigate("/dashboard", { viewTransition: true });
     } catch (err: any) {
       setError({
         show: true,
@@ -506,6 +506,7 @@ export function AuthPage() {
           <NavLink
             to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
+            viewTransition
           >
             S&H
           </NavLink>

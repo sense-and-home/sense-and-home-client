@@ -7,6 +7,7 @@ export function CoursesHeader() {
         <NavLink
           to="/"
           className="mr-6 font-[Abhaya_Libre] text-[36px] leading-none font-extrabold hover:underline sm:absolute"
+          viewTransition
         >
           S&H
         </NavLink>

@@ -43,6 +43,7 @@ export function DashboardPage() {
             <NavLink
               to="/"
               className="flex items-center gap-2 text-white hover:underline"
+              viewTransition
             >
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">На главную</span>
@@ -57,6 +58,7 @@ export function DashboardPage() {
           <NavLink
             to="/"
             className="top-4 left-1/2 text-center font-[Abhaya_Libre] text-[50px] leading-none font-extrabold hover:underline md:absolute md:-translate-x-1/2"
+            viewTransition
           >
             S&H
           </NavLink>
@@ -145,6 +147,7 @@ export function DashboardPage() {
                 <NavLink
                   to="/map"
                   className="flex items-center gap-2 text-white transition-colors hover:text-white/80"
+                  viewTransition
                 >
                   <span className="text-lg font-bold italic">
                     На карту объектов

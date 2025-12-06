@@ -1,7 +1,7 @@
 import ArrowBackIcon from "@/assets/icons/arrow-back.svg";
 import { CustomMarquee } from "@/components/CustomMarquee";
+import { MapFiller } from "@/components/fillers/MapFiller";
 import { Footer } from "@/components/Footer";
-import { MapComponent } from "@/components/MapComponent";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
@@ -24,6 +24,7 @@ export function MapPage() {
             <NavLink
               to="/dashboard"
               className="flex items-center gap-2 text-white hover:underline"
+              viewTransition
             >
               <img src={ArrowBackIcon} alt="Назад" className="h-6 w-6" />
               <span className="text-sm font-medium">В личный кабинет</span>
@@ -39,7 +40,7 @@ export function MapPage() {
         </div>
 
         <div className="mx-auto h-[700px] px-2 py-8 md:px-4">
-          <MapComponent />
+          <MapFiller />
         </div>
 
         <CustomMarquee className="absolute! bottom-0" />

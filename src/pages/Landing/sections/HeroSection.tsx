@@ -4,14 +4,25 @@ import HeroLogo from "@/assets/img/hero-logo.webp";
 import { CustomMarquee } from "@/components/CustomMarquee";
 import { SmartLink } from "@/components/SmartLink";
 import { authLinks, heroLink, logoLink, navLinks } from "@/config/navigation";
+import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen((v) => !v);
   };
+
+  const visibleAuthLinks = isAuthenticated
+    ? authLinks.filter(
+        (link) =>
+          !["/login", "/registration", "/auth"].includes(
+            (link.href as string) ?? "",
+          ),
+      )
+    : authLinks;
 
   return (
     <div
@@ -26,11 +37,7 @@ export function HeroSection() {
             <li key={link.id ?? link.name}>
               <SmartLink
                 to={link.href}
-                className={`hover:underline ${link.kind === "internal" && link.href === "/" ? "font-semibold" : ""} ${
-                  link.kind !== "internal" && !link.kind ? "" : ""
-                } ${!("kind" in link) && link.href === "/" ? "font-semibold" : ""} ${link.kind === "anchor" ? "" : ""} ${
-                  (link as any).active === false ? "opacity-40" : ""
-                }`}
+                className={`hover:underline ${link.kind === "internal" && link.href === "/" ? "font-semibold" : ""}`}
               >
                 {link.name}
               </SmartLink>
@@ -46,7 +53,7 @@ export function HeroSection() {
         </SmartLink>
 
         <div className="rounded-primary flex justify-center justify-self-end bg-white/5 text-xl font-semibold">
-          {authLinks.map((authLink, index) => (
+          {visibleAuthLinks.map((authLink, index) => (
             <SmartLink
               key={authLink.id ?? authLink.name}
               to={authLink.href}
@@ -102,7 +109,7 @@ export function HeroSection() {
               <SmartLink
                 key={link.id ?? link.name}
                 to={link.href}
-                className={`text-xl hover:underline ${link.kind === "anchor" ? "" : ""}`}
+                className="text-xl hover:underline"
                 onClick={toggleMenu}
               >
                 {link.name}
@@ -111,7 +118,7 @@ export function HeroSection() {
 
             <div className="border-t border-white/20 pt-6">
               <div className="flex flex-col space-y-3">
-                {authLinks.map((authLink, index) => (
+                {visibleAuthLinks.map((authLink, index) => (
                   <SmartLink
                     key={authLink.id ?? authLink.name}
                     to={authLink.href}
@@ -162,5 +169,3 @@ export function HeroSection() {
     </div>
   );
 }
-
-export default HeroSection;

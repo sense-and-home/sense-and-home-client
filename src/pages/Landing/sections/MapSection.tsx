@@ -1,4 +1,4 @@
-import { MapComponent } from "@/components/MapComponent";
+import { MapFiller } from "@/components/fillers/MapFiller";
 
 export function MapSection() {
   return (
@@ -25,7 +25,7 @@ export function MapSection() {
       </div>
 
       <div className="rounded-secondary h-[400px] w-full overflow-hidden lg:h-[500px]">
-        <MapComponent />
+        <MapFiller />
       </div>
     </div>
   );
