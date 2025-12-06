@@ -1,3 +1,4 @@
+// AppRouter.tsx
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LessonLayout } from "@/layouts/LessonLayout";
 import { MainCoursesLayout } from "@/layouts/MainCoursesLayout";
@@ -18,76 +19,46 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
+  { path: "/auth", element: <AuthPage /> },
+  { path: "/registration", element: <AuthPage /> },
+  { path: "/login", element: <AuthPage /> },
+
   {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/auth",
-    element: <AuthPage />,
-  },
-  {
-    path: "/registration",
-    element: <AuthPage />,
-  },
-  {
-    path: "/login",
-    element: <AuthPage />,
-  },
-  {
-    //  redirectRoles={{ user: "/manager-dashboard" }}
     element: <ProtectedRoute />,
     children: [
+      { path: "/dashboard", element: <DashboardPage /> },
+      { path: "/map", element: <MapPage /> },
+
       {
-        path: "/dashboard",
-        element: <DashboardPage />,
-      },
-      {
-        path: "/map",
-        element: <MapPage />,
-      },
-    ],
-  },
-  {
-    // {/*  allowedRoles={["manager"]} */}
-    element: <ProtectedRoute />,
-    children: [
-      {
-        element: <ProtectedRoute />,
+        element: (
+          <ProtectedRoute
+            allowedRoles={["manager"]}
+            redirectRoles={{ user: "/dashboard" }}
+          />
+        ),
         children: [
-          {
-            path: "/manager-dashboard",
-            element: <ManagerDashboardPage />,
-          },
+          { path: "/manager-dashboard", element: <ManagerDashboardPage /> },
         ],
       },
+
       {
         element: <MainCoursesLayout />,
         children: [
-          {
-            path: "/courses",
-            element: <CourseCatalogPage />,
-          },
-          {
-            path: "/courses/:id",
-            element: <CoursePage />,
-          },
+          { path: "/courses", element: <CourseCatalogPage /> },
+          { path: "/courses/:id", element: <CoursePage /> },
+
           {
             element: <LessonLayout />,
             children: [
-              {
-                path: "/courses/:id/steps/:stepId",
-                element: <LessonPage />,
-              },
+              { path: "/courses/:id/steps/:stepId", element: <LessonPage /> },
             ],
           },
+
           {
             element: <MyLearningSidebarLayout />,
             children: [
-              {
-                path: "/my-learning",
-                element: <MyLearningPage />,
-              },
+              { path: "/my-learning", element: <MyLearningPage /> },
               {
                 path: "/my-learning/required-courses",
                 element: <RequiredCoursesPage />,
@@ -104,10 +75,8 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "*",
-        element: <NotFoundPage />,
-      },
+
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
 ]);
