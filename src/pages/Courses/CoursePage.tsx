@@ -98,7 +98,7 @@ export function CoursePage() {
   return (
     <div className="mb-16 space-y-16">
       <div
-        className="text-surface-1-foreground grid grid-cols-1 gap-8 bg-cover px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-24"
+        className="text-surface-1-foreground grid grid-cols-1 gap-8 bg-cover px-2 py-16 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-24"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${CoursePageBackground})`,
         }}
@@ -153,7 +153,7 @@ export function CoursePage() {
         </div>
       </div>
 
-      <div className="flex gap-8 px-6 lg:px-24">
+      <div className="flex gap-8 px-2 sm:px-6 lg:px-24">
         <div className="space-y-4">
           <h2 className="text-3xl font-bold">Чему вы научитесь?</h2>
 
@@ -218,7 +218,9 @@ export function CoursePage() {
       </div>
 
       <div className="space-y-4 sm:space-y-8">
-        <h2 className="px-6 text-3xl font-bold lg:px-24">Похожие курсы</h2>
+        <h2 className="px-2 text-3xl font-bold sm:px-6 lg:px-24">
+          Похожие курсы
+        </h2>
 
         <div className="overflow-hidden select-none" ref={emblaRef}>
           <div className="mr-6 flex items-stretch gap-4 px-6 py-2 sm:mr-24 sm:gap-8 lg:px-24">

@@ -42,9 +42,13 @@ export function Footer() {
       setEmail("");
     } catch (error: any) {
       console.error("Email request error:", error);
-      setErrorMessage(
-        error?.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
-      );
+
+      const serverMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Произошла ошибка. Пожалуйста, попробуйте снова.";
+
+      setErrorMessage(serverMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -114,9 +118,9 @@ export function Footer() {
               shape="round"
               type="submit"
               disabled={isSubmitting}
-              className="bg-surface-2 px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer disabled:bg-black/50 md:px-8 md:text-lg"
+              className="bg-surface-2 disabled:bg-surface-2/80 px-6 py-3 text-base font-bold whitespace-nowrap text-black hover:cursor-pointer md:px-8 md:text-lg"
             >
-              {isSubmitting ? "Отправка..." : "Отправить"}
+              Отправить
             </Button>
           </form>
 

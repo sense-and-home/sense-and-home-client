@@ -34,9 +34,9 @@ export function CourseCard({ course, className }: CourseCardProps) {
         </ul>
       </div>
 
-      <div className="rounded-secondary relative mt-2 h-full max-h-48 w-full flex-shrink-0 overflow-hidden sm:mt-0 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-56 lg:w-56">
+      <div className="rounded-secondary relative mt-2 h-48 min-h-24 w-full overflow-hidden sm:mt-0 sm:h-40 sm:w-40 sm:flex-shrink-0 md:h-48 md:w-48 lg:h-56 lg:w-56">
         <img
-          className="course-image absolute h-full w-full bg-gray-200 object-cover object-center"
+          className="course-image h-full w-full bg-gray-200 object-cover object-center"
           src={course.thumbnailUrl}
           alt=""
         />

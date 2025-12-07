@@ -15,7 +15,7 @@ export function CourseCardSkeleton() {
         </ul>
       </div>
 
-      <div className="rounded-secondary mt-2 h-full max-h-48 w-full flex-shrink-0 overflow-hidden bg-gray-200 sm:mt-0 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-56 lg:w-56" />
+      <div className="rounded-secondary mt-2 h-48 w-full overflow-hidden bg-gray-200 sm:mt-0 sm:h-40 sm:w-40 sm:flex-shrink-0 md:h-48 md:w-48 lg:h-56 lg:w-56" />
     </div>
   );
 }

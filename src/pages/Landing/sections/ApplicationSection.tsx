@@ -108,10 +108,14 @@ export function ApplicationSection() {
       setFormData({ name: "", phone: "", email: "", file: null });
     } catch (error: any) {
       console.error("Consultation request error:", error);
+      const serverMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Произошла ошибка. Пожалуйста, попробуйте снова.";
+
       setErrors((prev) => ({
         ...prev,
-        general:
-          error.message || "Произошла ошибка. Пожалуйста, попробуйте снова.",
+        general: serverMessage,
       }));
     } finally {
       setIsSubmitting(false);

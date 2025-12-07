@@ -17,7 +17,7 @@ export function CourseCatalogPage() {
 
   return (
     <div>
-      <div className="m-auto px-4 sm:w-10/12 sm:px-4">
+      <div className="m-auto px-2 sm:w-10/12 sm:px-4">
         <CoursesSearchBar value={search} onChange={setSearch} />
       </div>
 
